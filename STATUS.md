@@ -1,7 +1,11 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-26
-**Fase:** 2 (Dry Run 001 uitgevoerd)
+**Fase:** 4 (finale beslissing vastgelegd)
+
+- [klaar] Fase-4 besluitdocument opgeleverd: `docs/GO_NO_GO.md`
+- [klaar] Beslissing: **R&D only** (geen productiepilot in huidige staat)
+- [klaar] Next-step investering en stop-criteria vastgelegd voor volgende iteratie
 
 - [klaar] Fase-3 POC wrapper JSON in/out toegevoegd (`scripts/poc_wrapper.py`, `data/poc_input_example.json`, `docs/POC_INTEGRATION_001.md`).
 
@@ -26,13 +30,15 @@
   - `dashboard/index.html` toont claim summary (groepen/runs/tabel)
 - [x] Deterministische timestamp-optie toegevoegd aan runner: `scripts/run_matrix.py --ts-utc ...`
 
-## Nu bezig
-1. `docs/CLAIM_EVAL_001.md` opgeleverd: voorlopige claimstatus = **3x INCONCLUSIVE** (dry-run blijft stubbed, dus nog geen performancebewijs).
+## Compacte besluitstatus
+1. Claim-evidence blijft **3x INCONCLUSIVE** (`docs/CLAIM_EVAL_001.md`), dus geen GO-pilot.
+2. `BENCHMARK_RESULTS.md` ontbreekt nog; huidige summary bevat alleen technische runstatus (`ok/error`), geen prestatiemetrics.
+3. Volgende iteratie is expliciet afgebakend op echte metrics, UPOW 1->4 worker-metingen, regressietests en rapportage.
 
-## Open / volgende acties
+## Open / volgende acties (volgende iteratie)
 1. Stub-executie vervangen door echte runner met metrics (`steps`, `runtime_sec`, `score_main`, etc.).
-2. `BENCHMARK_RESULTS.md` opstellen met echte metricvergelijking per claim.
-3. UPOW-meetpad toevoegen (1→4 workers) met throughput/success-rate/reproduceerbaarheid/kost.
+2. `BENCHMARK_RESULTS.md` opleveren met echte metricvergelijking per claim.
+3. UPOW-meetpad uitvoeren (1->4 workers) met throughput/success-rate/reproduceerbaarheid/kost.
 4. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
 
 ## Blokkades
