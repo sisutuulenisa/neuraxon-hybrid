@@ -37,9 +37,13 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Eerste dry-run matrix tooling uitvoeren en samenvatten (`docs/DRY_RUN_001.md`, `benchmarks/results/summary/claim_summary.csv`)
 - [x] Transparante rapportage op basis van huidige outputs (`BENCHMARK_RESULTS.md`)
 - [x] Echte benchmarkmeting met task/claim-metrics per run (geen stub-status)
-- [ ] Claimbewijs met PASS/FAIL tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
+- [x] Expliciete claim-evaluatie tegen protocol-drempels (`docs/CLAIM_EVAL_002.md`)
+  - dual-weight plasticity: FAIL
+  - SOC: INCONCLUSIVE
+  - UPOW: INCONCLUSIVE
+- [ ] Volledige protocolmetricdekking zodat 3/3 claims volledig beslisbaar zijn (nu nog ontbrekende metrics)
 
-**Deliverable (huidige stand):** `BENCHMARK_RESULTS.md` met expliciete meetgaten
+**Deliverable (huidige stand):** `BENCHMARK_RESULTS.md` + `docs/CLAIM_EVAL_002.md`
 
 ## Fase 3 — Integratie-POC (dag 3)
 - [x] Mini-wrapper maken (JSON in/out)

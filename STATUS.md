@@ -1,11 +1,15 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-26
-**Fase:** 4 (besluit vastgelegd, fase-2 metrics uitgebreid)
+**Fase:** 4 (besluit vastgelegd, fase-2 claim-evaluatie geüpdatet)
 
 - [klaar] Fase-4 besluitdocument opgeleverd: `docs/GO_NO_GO.md`
 - [klaar] Beslissing: **R&D only** (geen productiepilot in huidige staat)
 - [klaar] Next-step investering + stop-criteria vastgelegd in `docs/GO_NO_GO.md`
+- [klaar] Claim-evaluatie tegen protocol-drempels geüpdatet: `docs/CLAIM_EVAL_002.md`
+  - dual-weight plasticity: **FAIL**
+  - SOC: **INCONCLUSIVE**
+  - UPOW: **INCONCLUSIVE**
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
@@ -23,15 +27,17 @@
   - `forgetting_delta` (waar van toepassing)
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
-- [ ] Claim PASS/FAIL evaluatie tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
+- [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
 - [ ] UPOW-schaalmetingen (1->4 workers, throughput/success-rate/reproduceerbaarheid/kost)
 - [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, throughput/kost)
 
 ## Huidige conclusie
 - Pipeline-integriteit voor fase-2 matrix-output is aantoonbaar.
-- De matrixflow bevat nu echte run-level metrics (geen stub-status-only output meer).
-- Claim-validatie blijft **INCONCLUSIVE** totdat alle protocolmetrics en PASS/FAIL-evaluatie aanwezig zijn.
-- Daarom is de formele beslissing nu: **R&D only**.
+- Claimstatus op basis van `docs/CLAIM_EVAL_002.md`:
+  - dual-weight plasticity = **FAIL** (T90-drempel niet gehaald op Use-case A)
+  - SOC = **INCONCLUSIVE** (verplichte SOC-metrics ontbreken)
+  - UPOW = **INCONCLUSIVE** (distributed schaal-/kostmetrics ontbreken)
+- Daarom blijft de formele beslissing: **R&D only**.
 
 ## Korte statusformat voor updates
 - `[bezig]`
