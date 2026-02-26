@@ -1,46 +1,23 @@
 # STATUS — Neuraxon evaluatie
 
-**Laatste update:** 2026-02-26
-**Fase:** 2 (Dry Run 001 uitgevoerd)
+**Laatste update:** 2026-02-26  
+**Fase:** 2 (benchmarkrapportage van huidige outputs afgerond)
 
-- [klaar] Fase-3 POC wrapper JSON in/out toegevoegd (`scripts/poc_wrapper.py`, `data/poc_input_example.json`, `docs/POC_INTEGRATION_001.md`).
+## Aantoonbaar afgerond
+- [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
+- [x] Dry-run rapport beschikbaar: `docs/DRY_RUN_001.md`
+- [x] Raw benchmark-output aanwezig:
+  - `benchmarks/results/raw/usecase_a_drift.csv` (25 runs)
+  - `benchmarks/results/raw/usecase_b_perturbation.csv` (25 runs)
+- [x] Samenvattingsoutput aanwezig: `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 runs)
+- [x] Benchmarkresultaten transparant gerapporteerd: `BENCHMARK_RESULTS.md`
 
-## Bootstrap fase 2 — afgerond
-- [x] API-compat document: `docs/API_COMPAT_V1_V2.md`
-- [x] Minimale CI workflow: `.github/workflows/phase2_bootstrap_ci.yml`
-- [x] Run-matrix generator: `scripts/run_matrix.py`
-- [x] Claims samenvatting: `scripts/summarize_claims.py`
-- [x] Smoke + fallback tests lokaal groen
+## Expliciet nog niet afgerond
+- [ ] Echte modelexecutie per matrix-run (runner is nog stubbed op `status=ok`)
+- [ ] Performance-metrics in raw output (`steps`, `runtime_sec`, `score_main`, `forgetting_delta`, etc.)
+- [ ] Claim PASS/FAIL evaluatie tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
+- [ ] UPOW-schaalmetingen (1->4 workers, throughput/success-rate/reproduceerbaarheid/kost)
 
-## Dry Run 001 — outputs geproduceerd
-- [x] Manifesten aangemaakt:
-  - `benchmarks/manifests/usecase_a_drift.json`
-  - `benchmarks/manifests/usecase_b_perturbation.json`
-- [x] Raw run-matrix CSV's gegenereerd (elk 25 rijen):
-  - `benchmarks/results/raw/usecase_a_drift.csv`
-  - `benchmarks/results/raw/usecase_b_perturbation.csv`
-- [x] Claims summary gegenereerd:
-  - `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 rijen)
-- [x] Dashboard-zichtbaarheid toegevoegd voor dry-run outputs:
-  - `scripts/export_summary_json.py` (`claim_summary.csv` -> `dashboard/data/claim_summary.json`)
-  - `dashboard/index.html` toont claim summary (groepen/runs/tabel)
-- [x] Deterministische timestamp-optie toegevoegd aan runner: `scripts/run_matrix.py --ts-utc ...`
-
-## Nu bezig
-1. `docs/CLAIM_EVAL_001.md` opgeleverd: voorlopige claimstatus = **3x INCONCLUSIVE** (dry-run blijft stubbed, dus nog geen performancebewijs).
-
-## Open / volgende acties
-1. Stub-executie vervangen door echte runner met metrics (`steps`, `runtime_sec`, `score_main`, etc.).
-2. `BENCHMARK_RESULTS.md` opstellen met echte metricvergelijking per claim.
-3. UPOW-meetpad toevoegen (1→4 workers) met throughput/success-rate/reproduceerbaarheid/kost.
-4. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
-
-## Blokkades
-- Runner heeft pip/install beperkingen; workflow en lokale checks gebruiken daarom bewust geen externe pytest-install.
-- Huidige matrix-runner markeert runs nog als stub (`status=ok`), dus nog geen prestatiebewijs.
-
-## Korte statusformat voor updates
-- `[bezig]`
-- `[klaar]`
-- `[volgende]`
-- `[ETA]`
+## Huidige conclusie
+- Pipeline-integriteit voor fase-2 matrix-output is aantoonbaar.
+- Claim-validatie blijft **INCONCLUSIVE** totdat echte metrics worden gemeten en geëvalueerd.
