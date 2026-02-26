@@ -1,0 +1,26 @@
+{
+  "project": "neuraxon-hybrid",
+  "repoPath": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid",
+  "tasks": [
+    {
+      "id": "neuraxon-phase2-claim-eval-2026-02-26",
+      "description": "Evaluate dry-run claims and produce CLAIM_EVAL_001",
+      "baseRef": "origin/feat/neuraxon-phase2-dashboard-integration-2026-02-26",
+      "branch": "feat/neuraxon-phase2-claim-eval-2026-02-26",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase2-claim-eval-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true
+    },
+    {
+      "id": "neuraxon-phase3-poc-wrapper-2026-02-26",
+      "description": "Build phase-3 mini JSON wrapper POC and docs",
+      "baseRef": "origin/feat/neuraxon-phase2-claim-eval-2026-02-26",
+      "branch": "feat/neuraxon-phase3-poc-wrapper-2026-02-26",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase3-poc-wrapper-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true
+    }
+  ]
+}
