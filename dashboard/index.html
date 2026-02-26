@@ -6,7 +6,7 @@
   <title>Neuraxon Hybrid — Live Status</title>
   <style>
     :root {
-      --bg: #0b1020;
+      --bg: #080d1a;
       --card: #121a33;
       --muted: #96a2c4;
       --text: #eef3ff;
@@ -15,12 +15,13 @@
       --bad: #f87171;
       --accent: #60a5fa;
       --accent2: #a78bfa;
+      --line: rgba(255,255,255,.09);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+      font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at 15% 20%, rgba(96,165,250,.22), transparent 35%),
@@ -30,7 +31,7 @@
     }
 
     .wrap {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: 0 auto;
       padding: 28px 18px 40px;
     }
@@ -40,7 +41,7 @@
       justify-content: space-between;
       align-items: flex-end;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
 
@@ -48,6 +49,7 @@
       margin: 0;
       font-size: clamp(1.4rem, 2.4vw, 2rem);
       line-height: 1.2;
+      letter-spacing: .01em;
     }
 
     .sub {
@@ -69,12 +71,12 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .card {
       background: linear-gradient(170deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      border: 1px solid rgba(255,255,255,.09);
+      border: 1px solid var(--line);
       border-radius: 14px;
       padding: 14px;
       backdrop-filter: blur(2px);
@@ -102,6 +104,54 @@
       color: #dbe7ff;
     }
 
+    .intro p {
+      margin: 0;
+      color: #d9e4ff;
+      line-height: 1.5;
+    }
+
+    .intro-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+    }
+
+    .mini {
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,.015);
+      color: #d9e2ff;
+      font-size: .92rem;
+    }
+
+    .roadmap-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .phase-card {
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(10,16,34,.55);
+    }
+
+    .phase-title {
+      margin: 0 0 6px;
+      font-size: .95rem;
+      color: #e7efff;
+    }
+
+    .phase-meta {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
     ul {
       margin: 0;
       padding-left: 18px;
@@ -109,6 +159,17 @@
     }
 
     li { margin-bottom: 6px; }
+
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 860px) {
+      .cols { grid-template-columns: 1fr 1fr; }
+    }
 
     .mono {
       font-family: "JetBrains Mono", "Fira Code", monospace;
@@ -149,11 +210,21 @@
   <main class="wrap">
     <div class="top">
       <div>
-        <h1>Neuraxon Hybrid — Fase 1 Dashboard</h1>
-        <div class="sub">Live gelezen uit <code>STATUS.md</code> + logs</div>
+        <h1>Neuraxon Hybrid — Project Dashboard</h1>
+        <div class="sub">Live gelezen uit <code>STATUS.md</code>, <code>ROADMAP.md</code> + logs</div>
       </div>
       <div class="pill" id="refreshLabel">auto-refresh: 20s</div>
     </div>
+
+    <section class="card intro" style="margin-bottom: 12px;">
+      <h2 class="section-title">Wat willen we bereiken?</h2>
+      <p id="goalText">We valideren objectief of Neuraxon (v1/v2) genoeg waarde heeft als R&D-engine of als mogelijke bouwsteen richting productie.</p>
+      <div class="intro-grid">
+        <div class="mini"><strong>1. Hardening</strong><br>Stabiel en reproduceerbaar laten draaien.</div>
+        <div class="mini"><strong>2. Benchmark</strong><br>Eerlijk vergelijken met eenvoudige baselines.</div>
+        <div class="mini"><strong>3. Beslissing</strong><br>GO / R&D only / NO-GO op basis van data.</div>
+      </div>
+    </section>
 
     <section class="grid">
       <article class="card">
@@ -175,15 +246,22 @@
     </section>
 
     <section class="card" style="margin-bottom: 12px;">
-      <h2 class="section-title">Nu bezig</h2>
-      <ul id="doing"></ul>
+      <h2 class="section-title">Roadmap</h2>
+      <div class="roadmap-grid" id="roadmapGrid"></div>
     </section>
 
-    <section class="card">
-      <h2 class="section-title">Volgende acties</h2>
-      <ul id="next"></ul>
-      <div class="statusline"><span class="dot"></span><span>Dashboard online</span></div>
-      <div class="mono" id="sourceInfo">Bronnen: STATUS.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json</div>
+    <section class="cols">
+      <section class="card">
+        <h2 class="section-title">Nu bezig</h2>
+        <ul id="doing"></ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Volgende acties</h2>
+        <ul id="next"></ul>
+        <div class="statusline"><span class="dot"></span><span>Dashboard online</span></div>
+        <div class="mono" id="sourceInfo">Bronnen: STATUS.md, ROADMAP.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json</div>
+      </section>
     </section>
   </main>
 
@@ -194,7 +272,7 @@
       return lines
         .map((l) => l.trim())
         .filter(Boolean)
-        .map((l) => l.replace(/^-\s*/, '').replace(/^\d+\.\s*/, ''));
+        .map((l) => l.replace(/^[-*]\s*/, '').replace(/^\d+\.\s*/, '').replace(/^\[.?\]\s*/, ''));
     }
 
     async function readText(path) {
@@ -216,6 +294,44 @@
       return m ? m[1] : '';
     }
 
+    function stripMd(text) {
+      return text
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/\*([^*]+)\*/g, '$1')
+        .trim();
+    }
+
+    function parseGoal(roadmapMd) {
+      const match = roadmapMd.match(/##\s+Doel\n([\s\S]*?)(?=\n##\s+|$)/m);
+      if (!match) return null;
+      return stripMd(match[1].replace(/\n+/g, ' '));
+    }
+
+    function parseRoadmapPhases(roadmapMd) {
+      const phases = [];
+      const phaseRegex = /##\s+(Fase [^\n]+)\n([\s\S]*?)(?=\n##\s+|$)/gm;
+      let m;
+      while ((m = phaseRegex.exec(roadmapMd)) !== null) {
+        const title = stripMd(m[1]);
+        const block = m[2];
+
+        const checklist = [...block.matchAll(/^- \[( |x)\]\s+(.+)$/gm)].map((item) => ({
+          done: item[1].toLowerCase() === 'x',
+          text: stripMd(item[2])
+        }));
+
+        const deliverable = block.match(/\*\*Deliverable:\*\*\s*`?([^`\n]+)`?/m)?.[1] || null;
+
+        phases.push({
+          title,
+          checklist,
+          deliverable: deliverable ? stripMd(deliverable) : null
+        });
+      }
+      return phases;
+    }
+
     function renderList(target, items) {
       target.innerHTML = '';
       if (!items.length) {
@@ -229,10 +345,61 @@
       }
     }
 
+    function renderRoadmap(phases) {
+      const root = el('roadmapGrid');
+      root.innerHTML = '';
+      if (!phases.length) {
+        root.innerHTML = '<div class="mini">Roadmap kon niet geladen worden.</div>';
+        return;
+      }
+
+      for (const phase of phases) {
+        const done = phase.checklist.filter((x) => x.done).length;
+        const total = phase.checklist.length;
+
+        const card = document.createElement('article');
+        card.className = 'phase-card';
+
+        const title = document.createElement('h3');
+        title.className = 'phase-title';
+        title.textContent = phase.title;
+
+        const meta = document.createElement('p');
+        meta.className = 'phase-meta';
+        meta.textContent = total ? `Voortgang: ${done}/${total}` : 'Voortgang: —';
+
+        const list = document.createElement('ul');
+        if (!phase.checklist.length) {
+          list.innerHTML = '<li>Geen checklist-items</li>';
+        } else {
+          for (const item of phase.checklist.slice(0, 3)) {
+            const li = document.createElement('li');
+            li.textContent = `${item.done ? '✅' : '⬜'} ${item.text}`;
+            list.appendChild(li);
+          }
+        }
+
+        card.appendChild(title);
+        card.appendChild(meta);
+        card.appendChild(list);
+
+        if (phase.deliverable) {
+          const d = document.createElement('p');
+          d.className = 'phase-meta';
+          d.style.marginTop = '8px';
+          d.textContent = `Deliverable: ${phase.deliverable}`;
+          card.appendChild(d);
+        }
+
+        root.appendChild(card);
+      }
+    }
+
     async function refresh() {
       try {
-        const [statusMd, smoke, tests] = await Promise.all([
+        const [statusMd, roadmapMd, smoke, tests] = await Promise.all([
           readText('../STATUS.md'),
+          readText('../ROADMAP.md'),
           readJson('../logs/smoke_summary.json'),
           readJson('../logs/upstream_tests_no_pytest.json')
         ]);
@@ -249,8 +416,12 @@
         const passed = Number(tests?.passed || 0);
         const total = Number(tests?.total || 0);
 
+        const goal = parseGoal(roadmapMd);
+        const phases = parseRoadmapPhases(roadmapMd);
+
         el('phase').textContent = phase;
         el('lastUpdate').textContent = lastUpdate;
+        if (goal) el('goalText').textContent = goal;
 
         const smokeText = `${smokeOk}/${smokeTotal} groen`;
         el('smoke').textContent = smokeText;
@@ -262,8 +433,9 @@
 
         renderList(el('doing'), doing);
         renderList(el('next'), next);
+        renderRoadmap(phases);
 
-        el('sourceInfo').textContent = `Bronnen: STATUS.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json — refreshed ${new Date().toLocaleTimeString()}`;
+        el('sourceInfo').textContent = `Bronnen: STATUS.md, ROADMAP.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json — refreshed ${new Date().toLocaleTimeString()}`;
       } catch (err) {
         el('sourceInfo').textContent = `Fout bij laden: ${err.message}`;
       }
