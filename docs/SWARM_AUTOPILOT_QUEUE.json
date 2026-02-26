@@ -10,7 +10,8 @@
       "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase2-benchmark-results-001.prompt.md",
       "model": "gpt-5.3-codex",
       "reasoning": "high",
-      "enabled": true
+      "enabled": false,
+      "completed": true
     },
     {
       "id": "neuraxon-phase4-scorecard-2026-02-26",
