@@ -59,6 +59,14 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 
 **Deliverable:** `GO_NO_GO.md`
 
+## Fase 5 — Frontier vervolg (dag 4-5, bounded)
+- [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
+- [ ] MLflow tracking pilot (parent/child-runs, artifacts, vaste tags voor protocol/commit).
+- [ ] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels).
+- [ ] Externe kalibratie-mini-run op 3 OpenML taken + driftrapport (Evidently/ADWIN).
+
+**Deliverable:** `docs/RESEARCH_FRONTIER_001.md` + eerste pilot-output onder `benchmarks/results/`
+
 ---
 
 ## Beslisregels
