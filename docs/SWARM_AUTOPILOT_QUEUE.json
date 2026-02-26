@@ -1,5 +1,36 @@
 {
   "project": "neuraxon-hybrid",
   "repoPath": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid",
-  "tasks": []
+  "tasks": [
+    {
+      "id": "neuraxon-phase2-benchmark-results-2026-02-26",
+      "description": "Complete phase-2 benchmark reporting with evidence quality notes",
+      "baseRef": "origin/main",
+      "branch": "feat/neuraxon-phase2-benchmark-results-2026-02-26",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase2-benchmark-results-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true
+    },
+    {
+      "id": "neuraxon-phase4-scorecard-2026-02-26",
+      "description": "Create phase-4 decision scorecard",
+      "baseRef": "origin/feat/neuraxon-phase2-benchmark-results-2026-02-26",
+      "branch": "feat/neuraxon-phase4-scorecard-2026-02-26",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase4-scorecard-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true
+    },
+    {
+      "id": "neuraxon-phase4-final-decision-2026-02-26",
+      "description": "Finalize GO/NO-GO decision and next-investment plan",
+      "baseRef": "origin/feat/neuraxon-phase4-scorecard-2026-02-26",
+      "branch": "feat/neuraxon-phase4-final-decision-2026-02-26",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase4-final-decision-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true
+    }
+  ]
 }

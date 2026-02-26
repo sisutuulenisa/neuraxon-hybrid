@@ -35,15 +35,16 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
   - adaptatie: tijd tot herstel na drift
   - kosten: CPU-tijd/geheugen
 - [x] Eerste dry-run matrix tooling uitvoeren en samenvatten (`docs/DRY_RUN_001.md`, `benchmarks/results/summary/claim_summary.csv`)
+- [ ] Definitieve benchmarkresultaten rapporteren met echte (niet-stub) metrics in `BENCHMARK_RESULTS.md`
 
 **Deliverable:** `BENCHMARK_RESULTS.md`
 
 ## Fase 3 — Integratie-POC (dag 3)
-- [ ] Mini-wrapper maken (JSON in/out)
+- [x] Mini-wrapper maken (JSON in/out)
 - [x] Eén simpele workflow koppeling voorzien (proof-of-use)
-- [ ] Failure modes + observability noteren
+- [x] Failure modes + observability noteren
 
-**Deliverable:** `POC_INTEGRATION.md`
+**Deliverable:** `POC_INTEGRATION_001.md`
 
 ## Fase 4 — Besluit (dag 3)
 - [ ] Scorecard invullen (impact, risico, effort)
