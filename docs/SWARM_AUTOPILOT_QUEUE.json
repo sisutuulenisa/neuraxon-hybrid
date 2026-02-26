@@ -34,6 +34,28 @@
       "reasoning": "high",
       "enabled": false,
       "completed": true
+    },
+    {
+      "id": "neuraxon-selfseed-phase2-real-metrics-202602262335",
+      "description": "Self-seed: implement real metric benchmark runner outputs",
+      "baseRef": "origin/main",
+      "branch": "feat/neuraxon-selfseed-phase2-real-metrics-202602262335",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/selfseed-phase2-real-metrics-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true,
+      "source": "self-seed"
+    },
+    {
+      "id": "neuraxon-selfseed-phase2-claim-proof-202602262335",
+      "description": "Self-seed: claim proof evaluation against protocol thresholds",
+      "baseRef": "origin/main",
+      "branch": "feat/neuraxon-selfseed-phase2-claim-proof-202602262335",
+      "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/selfseed-phase2-claim-proof-001.prompt.md",
+      "model": "gpt-5.3-codex",
+      "reasoning": "high",
+      "enabled": true,
+      "source": "self-seed"
     }
   ]
 }
