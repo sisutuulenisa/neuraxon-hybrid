@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neuraxon Hybrid — Live Status</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a33;
+      --muted: #96a2c4;
+      --text: #eef3ff;
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --bad: #f87171;
+      --accent: #60a5fa;
+      --accent2: #a78bfa;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(96,165,250,.22), transparent 35%),
+        radial-gradient(circle at 85% 10%, rgba(167,139,250,.18), transparent 30%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .pill {
+      border: 1px solid rgba(96,165,250,.45);
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: #d5e7ff;
+      background: rgba(96,165,250,.12);
+      font-size: 0.84rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: linear-gradient(170deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 14px;
+      padding: 14px;
+      backdrop-filter: blur(2px);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: .82rem;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 1.18rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+
+    .section-title {
+      margin: 4px 0 8px;
+      font-size: 1rem;
+      color: #dbe7ff;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #d9e2ff;
+    }
+
+    li { margin-bottom: 6px; }
+
+    .mono {
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: .8rem;
+      color: #b7c7ed;
+      opacity: .9;
+      margin-top: 14px;
+      border-top: 1px dashed rgba(255,255,255,.12);
+      padding-top: 10px;
+    }
+
+    .statusline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 0 rgba(52,211,153,.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(52,211,153,.65); }
+      70% { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+      100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <div>
+        <h1>Neuraxon Hybrid — Fase 1 Dashboard</h1>
+        <div class="sub">Live gelezen uit <code>STATUS.md</code> + logs</div>
+      </div>
+      <div class="pill" id="refreshLabel">auto-refresh: 20s</div>
+    </div>
+
+    <section class="grid">
+      <article class="card">
+        <div class="label">Fase</div>
+        <div class="value" id="phase">—</div>
+      </article>
+      <article class="card">
+        <div class="label">Laatste update</div>
+        <div class="value" id="lastUpdate">—</div>
+      </article>
+      <article class="card">
+        <div class="label">Smoke run</div>
+        <div class="value" id="smoke">—</div>
+      </article>
+      <article class="card">
+        <div class="label">Upstream tests</div>
+        <div class="value" id="tests">—</div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-bottom: 12px;">
+      <h2 class="section-title">Nu bezig</h2>
+      <ul id="doing"></ul>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Volgende acties</h2>
+      <ul id="next"></ul>
+      <div class="statusline"><span class="dot"></span><span>Dashboard online</span></div>
+      <div class="mono" id="sourceInfo">Bronnen: STATUS.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json</div>
+    </section>
+  </main>
+
+  <script>
+    const el = (id) => document.getElementById(id);
+
+    function cleanList(lines) {
+      return lines
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .map((l) => l.replace(/^-\s*/, '').replace(/^\d+\.\s*/, ''));
+    }
+
+    async function readText(path) {
+      const r = await fetch(path, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`${path} ${r.status}`);
+      return r.text();
+    }
+
+    async function readJson(path) {
+      const r = await fetch(path, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`${path} ${r.status}`);
+      return r.json();
+    }
+
+    function extractSection(md, title) {
+      const esc = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const rx = new RegExp(`##\\s+${esc}\\n([\\s\\S]*?)(?=\\n##\\s+|$)`, 'm');
+      const m = md.match(rx);
+      return m ? m[1] : '';
+    }
+
+    function renderList(target, items) {
+      target.innerHTML = '';
+      if (!items.length) {
+        target.innerHTML = '<li>—</li>';
+        return;
+      }
+      for (const item of items) {
+        const li = document.createElement('li');
+        li.textContent = item;
+        target.appendChild(li);
+      }
+    }
+
+    async function refresh() {
+      try {
+        const [statusMd, smoke, tests] = await Promise.all([
+          readText('../STATUS.md'),
+          readJson('../logs/smoke_summary.json'),
+          readJson('../logs/upstream_tests_no_pytest.json')
+        ]);
+
+        const phase = (statusMd.match(/\*\*Fase:\*\*\s*(.+)/)?.[1] || 'onbekend').trim();
+        const lastUpdate = (statusMd.match(/\*\*Laatste update:\*\*\s*(.+)/)?.[1] || 'onbekend').trim();
+
+        const doing = cleanList(extractSection(statusMd, 'Nu bezig').split('\n'));
+        const next = cleanList(extractSection(statusMd, 'Next acties').split('\n'));
+
+        const smokeOk = Array.isArray(smoke) ? smoke.filter((x) => x.ok).length : 0;
+        const smokeTotal = Array.isArray(smoke) ? smoke.length : 0;
+
+        const passed = Number(tests?.passed || 0);
+        const total = Number(tests?.total || 0);
+
+        el('phase').textContent = phase;
+        el('lastUpdate').textContent = lastUpdate;
+
+        const smokeText = `${smokeOk}/${smokeTotal} groen`;
+        el('smoke').textContent = smokeText;
+        el('smoke').className = 'value ' + (smokeOk === smokeTotal ? 'ok' : smokeOk > 0 ? 'warn' : 'bad');
+
+        const testText = `${passed}/${total} geslaagd`;
+        el('tests').textContent = testText;
+        el('tests').className = 'value ' + (passed === total ? 'ok' : passed > 0 ? 'warn' : 'bad');
+
+        renderList(el('doing'), doing);
+        renderList(el('next'), next);
+
+        el('sourceInfo').textContent = `Bronnen: STATUS.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json — refreshed ${new Date().toLocaleTimeString()}`;
+      } catch (err) {
+        el('sourceInfo').textContent = `Fout bij laden: ${err.message}`;
+      }
+    }
+
+    refresh();
+    setInterval(refresh, 20000);
+  </script>
+</body>
+</html>

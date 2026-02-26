@@ -16,3 +16,18 @@ Doel: een **overzichtelijke plugin-hybride** evaluatie van Neuraxon opzetten.
 1. **Kerncode vs pluginlaag scheiden**
 2. **Alles reproduceerbaar documenteren**
 3. **Claims pas accepteren na meetbaar bewijs**
+
+## Visuele statuspagina (lokaal/Tailscale)
+
+Dashboard: `dashboard/index.html`
+
+Server starten:
+
+```bash
+cd /home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid
+python3 scripts/serve_dashboard.py --host 0.0.0.0 --port 8787
+```
+
+URL (Tailscale):
+
+- `http://100.76.31.10:8787/dashboard/`

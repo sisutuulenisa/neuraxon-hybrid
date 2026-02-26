@@ -8,6 +8,7 @@
 - v1/v2 script-level smoke runs zijn groen.
 - Packaging mismatch lokaal gefixt (`README.md` toegevoegd naast `readme.md`).
 - Test-workaround actief: `scripts/run_upstream_tests_no_pytest.py` met 7/7 geslaagde tests.
+- Visuele dashboardpagina toegevoegd: `dashboard/index.html` (serve via `scripts/serve_dashboard.py`).
 
 ## Next acties
 1. API-compatibiliteit check v1 vs v2 documenteren.
