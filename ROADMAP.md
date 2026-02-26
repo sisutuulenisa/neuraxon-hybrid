@@ -24,16 +24,17 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 **Deliverable:** `HARDENING_REPORT.md`
 
 ## Fase 2 — Benchmark shootout (dag 1-2)
-- [ ] 2 concrete use-cases vastleggen
+- [x] 2 concrete use-cases vastleggen
   - Use-case A: continue time-series adaptatie
   - Use-case B: dynamisch patroonherkenning met concept drift
-- [ ] Baselines kiezen (eenvoudig en eerlijk)
+- [x] Baselines kiezen (eenvoudig en eerlijk)
   - Baseline 1: klassiek model (bv. logistic/GBM)
   - Baseline 2: klein recurrent model (RNN/GRU)
-- [ ] Meetprotocol + metrics vastzetten
+- [x] Meetprotocol + metrics vastzetten
   - kwaliteit: accuracy/F1 (of taakrelevant)
   - adaptatie: tijd tot herstel na drift
   - kosten: CPU-tijd/geheugen
+- [x] Eerste dry-run matrix tooling uitvoeren en samenvatten (`docs/DRY_RUN_001.md`, `benchmarks/results/summary/claim_summary.csv`)
 
 **Deliverable:** `BENCHMARK_RESULTS.md`
 

@@ -24,10 +24,14 @@
   - `dashboard/index.html` toont claim summary (groepen/runs/tabel)
 - [x] Deterministische timestamp-optie toegevoegd aan runner: `scripts/run_matrix.py --ts-utc ...`
 
+## Nu bezig
+1. `docs/CLAIM_EVAL_001.md` opgeleverd: voorlopige claimstatus = **3x INCONCLUSIVE** (dry-run blijft stubbed, dus nog geen performancebewijs).
+
 ## Open / volgende acties
 1. Stub-executie vervangen door echte runner met metrics (`steps`, `runtime_sec`, `score_main`, etc.).
 2. `BENCHMARK_RESULTS.md` opstellen met echte metricvergelijking per claim.
-3. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
+3. UPOW-meetpad toevoegen (1→4 workers) met throughput/success-rate/reproduceerbaarheid/kost.
+4. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
 
 ## Blokkades
 - Runner heeft pip/install beperkingen; workflow en lokale checks gebruiken daarom bewust geen externe pytest-install.
