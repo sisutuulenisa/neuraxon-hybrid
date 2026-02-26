@@ -16,30 +16,31 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Eerste haalbaarheidsadvies (R&D-ja, productie-niet-zonder-validatie)
 
 ## Fase 1 — Hardening & reproduceerbaarheid (dag 1)
-- [ ] Lokale sandbox opzetten + vaste run-instructies (v1 en v2)
-- [ ] Smoke test script voor v1/v2
-- [ ] Packaging/entrypoint issues documenteren en quick fixes voorstellen
-- [ ] Minimaal testplan opstellen (wat móet altijd groen zijn)
+- [x] Lokale sandbox opzetten + vaste run-instructies (v1 en v2)
+- [x] Smoke test script voor v1/v2
+- [x] Packaging/entrypoint issues documenteren en quick fixes voorstellen
+- [x] Minimaal testplan opstellen (wat móet altijd groen zijn)
 
 **Deliverable:** `HARDENING_REPORT.md`
 
 ## Fase 2 — Benchmark shootout (dag 1-2)
-- [ ] 2 concrete use-cases vastleggen
+- [x] 2 concrete use-cases vastleggen
   - Use-case A: continue time-series adaptatie
   - Use-case B: dynamisch patroonherkenning met concept drift
-- [ ] Baselines kiezen (eenvoudig en eerlijk)
+- [x] Baselines kiezen (eenvoudig en eerlijk)
   - Baseline 1: klassiek model (bv. logistic/GBM)
   - Baseline 2: klein recurrent model (RNN/GRU)
-- [ ] Meetprotocol + metrics vastzetten
+- [x] Meetprotocol + metrics vastzetten
   - kwaliteit: accuracy/F1 (of taakrelevant)
   - adaptatie: tijd tot herstel na drift
   - kosten: CPU-tijd/geheugen
+- [x] Eerste dry-run matrix tooling uitvoeren en samenvatten (`docs/DRY_RUN_001.md`, `benchmarks/results/summary/claim_summary.csv`)
 
 **Deliverable:** `BENCHMARK_RESULTS.md`
 
 ## Fase 3 — Integratie-POC (dag 3)
 - [ ] Mini-wrapper maken (JSON in/out)
-- [ ] Eén simpele workflow koppeling voorzien (proof-of-use)
+- [x] Eén simpele workflow koppeling voorzien (proof-of-use)
 - [ ] Failure modes + observability noteren
 
 **Deliverable:** `POC_INTEGRATION.md`

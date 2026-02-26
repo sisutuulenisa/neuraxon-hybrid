@@ -1,23 +1,41 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-26
-**Fase:** 1 (Hardening)
+**Fase:** 2 (Dry Run 001 uitgevoerd)
+
+## Bootstrap fase 2 — afgerond
+- [x] API-compat document: `docs/API_COMPAT_V1_V2.md`
+- [x] Minimale CI workflow: `.github/workflows/phase2_bootstrap_ci.yml`
+- [x] Run-matrix generator: `scripts/run_matrix.py`
+- [x] Claims samenvatting: `scripts/summarize_claims.py`
+- [x] Smoke + fallback tests lokaal groen
+
+## Dry Run 001 — outputs geproduceerd
+- [x] Manifesten aangemaakt:
+  - `benchmarks/manifests/usecase_a_drift.json`
+  - `benchmarks/manifests/usecase_b_perturbation.json`
+- [x] Raw run-matrix CSV's gegenereerd (elk 25 rijen):
+  - `benchmarks/results/raw/usecase_a_drift.csv`
+  - `benchmarks/results/raw/usecase_b_perturbation.csv`
+- [x] Claims summary gegenereerd:
+  - `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 rijen)
+- [x] Dashboard-zichtbaarheid toegevoegd voor dry-run outputs:
+  - `scripts/export_summary_json.py` (`claim_summary.csv` -> `dashboard/data/claim_summary.json`)
+  - `dashboard/index.html` toont claim summary (groepen/runs/tabel)
+- [x] Deterministische timestamp-optie toegevoegd aan runner: `scripts/run_matrix.py --ts-utc ...`
 
 ## Nu bezig
-- Upstream clone uitgevoerd (`upstream/Neuraxon`).
-- v1/v2 script-level smoke runs zijn groen.
-- Packaging mismatch lokaal gefixt (`README.md` toegevoegd naast `readme.md`).
-- Test-workaround actief: `scripts/run_upstream_tests_no_pytest.py` met 7/7 geslaagde tests.
-- Visuele dashboardpagina toegevoegd: `dashboard/index.html` (serve via `scripts/serve_dashboard.py`).
+1. `docs/CLAIM_EVAL_001.md` opgeleverd: voorlopige claimstatus = **3x INCONCLUSIVE** (dry-run blijft stubbed, dus nog geen performancebewijs).
 
-## Next acties
-1. API-compatibiliteit check v1 vs v2 documenteren.
-2. Minimaal CI-voorstel opstellen (smoke + test-runner workaround).
-3. Daarna fase 2 run-matrix starten volgens `docs/RUN_SHEET_PHASE1_2.md`.
+## Open / volgende acties
+1. Stub-executie vervangen door echte runner met metrics (`steps`, `runtime_sec`, `score_main`, etc.).
+2. `BENCHMARK_RESULTS.md` opstellen met echte metricvergelijking per claim.
+3. UPOW-meetpad toevoegen (1→4 workers) met throughput/success-rate/reproduceerbaarheid/kost.
+4. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
 
 ## Blokkades
-- Pip-install commando’s zijn in deze runner momenteel allowlist-geblokkeerd.
-- Hierdoor is directe `pytest`-install niet beschikbaar (workaround gebruikt).
+- Runner heeft pip/install beperkingen; workflow en lokale checks gebruiken daarom bewust geen externe pytest-install.
+- Huidige matrix-runner markeert runs nog als stub (`status=ok`), dus nog geen prestatiebewijs.
 
 ## Korte statusformat voor updates
 - `[bezig]`

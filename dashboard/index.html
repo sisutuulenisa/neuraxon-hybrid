@@ -152,6 +152,67 @@
       font-size: .82rem;
     }
 
+    .claim-grid {
+      margin: 8px 0 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+    }
+
+    .claim-kpi {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .claim-kpi .kpi-label {
+      color: var(--muted);
+      font-size: .8rem;
+      margin-bottom: 5px;
+    }
+
+    .claim-kpi .kpi-value {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      background: rgba(4,7,16,.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: .88rem;
+    }
+
+    thead th {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: #cdd9f5;
+      background: rgba(255,255,255,.02);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .row-ok td:last-child { color: var(--ok); }
+    .row-warn td:last-child { color: var(--warn); }
+    .row-bad td:last-child { color: var(--bad); }
+
     ul {
       margin: 0;
       padding-left: 18px;
@@ -246,6 +307,42 @@
     </section>
 
     <section class="card" style="margin-bottom: 12px;">
+      <h2 class="section-title">Dry-run claim summary</h2>
+      <div class="sub" id="claimMeta">Bron: dashboard/data/claim_summary.json</div>
+      <div class="claim-grid">
+        <div class="claim-kpi">
+          <div class="kpi-label">Groepen</div>
+          <div class="kpi-value" id="claimGroups">—</div>
+        </div>
+        <div class="claim-kpi">
+          <div class="kpi-label">Runs</div>
+          <div class="kpi-value" id="claimRuns">—</div>
+        </div>
+        <div class="claim-kpi">
+          <div class="kpi-label">OK-rate</div>
+          <div class="kpi-value" id="claimOkRate">—</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Use-case</th>
+              <th>Variant</th>
+              <th>Total</th>
+              <th>OK</th>
+              <th>Error</th>
+              <th>Resultaat</th>
+            </tr>
+          </thead>
+          <tbody id="claimRows">
+            <tr><td colspan="6">Laden...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom: 12px;">
       <h2 class="section-title">Roadmap</h2>
       <div class="roadmap-grid" id="roadmapGrid"></div>
     </section>
@@ -300,6 +397,20 @@
         .replace(/\*\*([^*]+)\*\*/g, '$1')
         .replace(/\*([^*]+)\*/g, '$1')
         .trim();
+    }
+
+    function formatPct(value) {
+      const pct = Number(value);
+      if (!Number.isFinite(pct)) return '0.0%';
+      return `${(pct * 100).toFixed(1)}%`;
+    }
+
+    function extractFirstSection(md, titles) {
+      for (const title of titles) {
+        const section = extractSection(md, title);
+        if (section.trim()) return section;
+      }
+      return '';
     }
 
     function parseGoal(roadmapMd) {
@@ -395,20 +506,67 @@
       }
     }
 
+    function renderClaimSummary(summary) {
+      const totals = summary?.totals || {};
+      const rows = Array.isArray(summary?.rows) ? summary.rows : [];
+
+      el('claimGroups').textContent = String(Number(totals.groups || rows.length || 0));
+      el('claimRuns').textContent = `${Number(totals.runs_ok || 0)}/${Number(totals.runs_total || 0)}`;
+      el('claimOkRate').textContent = formatPct(totals.ok_rate || 0);
+
+      const generatedAt = summary?.generated_at_utc;
+      const sourceCsv = summary?.source_csv || 'onbekend';
+      const generated = generatedAt ? new Date(generatedAt).toLocaleString() : 'onbekend';
+      el('claimMeta').textContent = `Bron: ${sourceCsv} -> dashboard/data/claim_summary.json (${generated})`;
+
+      const tbody = el('claimRows');
+      tbody.innerHTML = '';
+
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="6">Geen claim summary data.</td></tr>';
+        return;
+      }
+
+      for (const row of rows) {
+        const tr = document.createElement('tr');
+        const total = Number(row.total || 0);
+        const ok = Number(row.ok || 0);
+        const error = Number(row.error || 0);
+        const statusText = error === 0 ? 'OK' : ok > 0 ? 'Partial' : 'Error';
+        tr.className = error === 0 ? 'row-ok' : ok > 0 ? 'row-warn' : 'row-bad';
+
+        const cells = [
+          row.use_case || '—',
+          row.variant || '—',
+          String(total),
+          String(ok),
+          String(error),
+          statusText
+        ];
+        for (const value of cells) {
+          const td = document.createElement('td');
+          td.textContent = value;
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+    }
+
     async function refresh() {
       try {
-        const [statusMd, roadmapMd, smoke, tests] = await Promise.all([
+        const [statusMd, roadmapMd, smoke, tests, claimSummary] = await Promise.all([
           readText('../STATUS.md'),
           readText('../ROADMAP.md'),
           readJson('../logs/smoke_summary.json'),
-          readJson('../logs/upstream_tests_no_pytest.json')
+          readJson('../logs/upstream_tests_no_pytest.json'),
+          readJson('./data/claim_summary.json')
         ]);
 
         const phase = (statusMd.match(/\*\*Fase:\*\*\s*(.+)/)?.[1] || 'onbekend').trim();
         const lastUpdate = (statusMd.match(/\*\*Laatste update:\*\*\s*(.+)/)?.[1] || 'onbekend').trim();
 
-        const doing = cleanList(extractSection(statusMd, 'Nu bezig').split('\n'));
-        const next = cleanList(extractSection(statusMd, 'Next acties').split('\n'));
+        const doing = cleanList(extractFirstSection(statusMd, ['Nu bezig']).split('\n'));
+        const next = cleanList(extractFirstSection(statusMd, ['Open / volgende acties', 'Next acties', 'Volgende acties']).split('\n'));
 
         const smokeOk = Array.isArray(smoke) ? smoke.filter((x) => x.ok).length : 0;
         const smokeTotal = Array.isArray(smoke) ? smoke.length : 0;
@@ -434,8 +592,9 @@
         renderList(el('doing'), doing);
         renderList(el('next'), next);
         renderRoadmap(phases);
+        renderClaimSummary(claimSummary);
 
-        el('sourceInfo').textContent = `Bronnen: STATUS.md, ROADMAP.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json — refreshed ${new Date().toLocaleTimeString()}`;
+        el('sourceInfo').textContent = `Bronnen: STATUS.md, ROADMAP.md, logs/smoke_summary.json, logs/upstream_tests_no_pytest.json, dashboard/data/claim_summary.json — refreshed ${new Date().toLocaleTimeString()}`;
       } catch (err) {
         el('sourceInfo').textContent = `Fout bij laden: ${err.message}`;
       }
