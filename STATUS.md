@@ -1,7 +1,7 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-26
-**Fase:** 4 (besluit vastgelegd, vervolgiteratie gepland)
+**Fase:** 4 (besluit vastgelegd, fase-2 metrics uitgebreid)
 
 - [klaar] Fase-4 besluitdocument opgeleverd: `docs/GO_NO_GO.md`
 - [klaar] Beslissing: **R&D only** (geen productiepilot in huidige staat)
@@ -15,16 +15,22 @@
   - `benchmarks/results/raw/usecase_b_perturbation.csv` (25 runs)
 - [x] Samenvattingsoutput aanwezig: `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 runs)
 - [x] Benchmarkresultaten transparant gerapporteerd: `BENCHMARK_RESULTS.md`
+- [x] Runner schrijft nu echte per-run metric-output in raw CSV:
+  - `runtime_sec`
+  - `steps`
+  - `score_main`
+  - `drift_recovery_t90` (waar van toepassing)
+  - `forgetting_delta` (waar van toepassing)
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
-- [ ] Echte modelexecutie per matrix-run (runner is nog stubbed op `status=ok`)
-- [ ] Performance-metrics in raw output (`steps`, `runtime_sec`, `score_main`, `forgetting_delta`, etc.)
 - [ ] Claim PASS/FAIL evaluatie tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
 - [ ] UPOW-schaalmetingen (1->4 workers, throughput/success-rate/reproduceerbaarheid/kost)
+- [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, throughput/kost)
 
 ## Huidige conclusie
 - Pipeline-integriteit voor fase-2 matrix-output is aantoonbaar.
-- Claim-validatie blijft **INCONCLUSIVE** totdat echte metrics worden gemeten en geëvalueerd.
+- De matrixflow bevat nu echte run-level metrics (geen stub-status-only output meer).
+- Claim-validatie blijft **INCONCLUSIVE** totdat alle protocolmetrics en PASS/FAIL-evaluatie aanwezig zijn.
 - Daarom is de formele beslissing nu: **R&D only**.
 
 ## Korte statusformat voor updates
