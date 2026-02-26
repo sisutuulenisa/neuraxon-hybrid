@@ -16,10 +16,10 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Eerste haalbaarheidsadvies (R&D-ja, productie-niet-zonder-validatie)
 
 ## Fase 1 — Hardening & reproduceerbaarheid (dag 1)
-- [ ] Lokale sandbox opzetten + vaste run-instructies (v1 en v2)
-- [ ] Smoke test script voor v1/v2
-- [ ] Packaging/entrypoint issues documenteren en quick fixes voorstellen
-- [ ] Minimaal testplan opstellen (wat móet altijd groen zijn)
+- [x] Lokale sandbox opzetten + vaste run-instructies (v1 en v2)
+- [x] Smoke test script voor v1/v2
+- [x] Packaging/entrypoint issues documenteren en quick fixes voorstellen
+- [x] Minimaal testplan opstellen (wat móet altijd groen zijn)
 
 **Deliverable:** `HARDENING_REPORT.md`
 
@@ -39,7 +39,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 
 ## Fase 3 — Integratie-POC (dag 3)
 - [ ] Mini-wrapper maken (JSON in/out)
-- [ ] Eén simpele workflow koppeling voorzien (proof-of-use)
+- [x] Eén simpele workflow koppeling voorzien (proof-of-use)
 - [ ] Failure modes + observability noteren
 
 **Deliverable:** `POC_INTEGRATION.md`

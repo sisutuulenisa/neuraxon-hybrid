@@ -1,23 +1,22 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-26
-**Fase:** 1 (Hardening)
+**Fase:** 2 (Bootstrap gestart)
 
-## Nu bezig
-- Upstream clone uitgevoerd (`upstream/Neuraxon`).
-- v1/v2 script-level smoke runs zijn groen.
-- Packaging mismatch lokaal gefixt (`README.md` toegevoegd naast `readme.md`).
-- Test-workaround actief: `scripts/run_upstream_tests_no_pytest.py` met 7/7 geslaagde tests.
-- Visuele dashboardpagina toegevoegd: `dashboard/index.html` (serve via `scripts/serve_dashboard.py`).
+## Bootstrap fase 2 — afgerond
+- [x] API-compat document: `docs/API_COMPAT_V1_V2.md`
+- [x] Minimale CI workflow: `.github/workflows/phase2_bootstrap_ci.yml`
+- [x] Run-matrix generator: `scripts/run_matrix.py`
+- [x] Claims samenvatting: `scripts/summarize_claims.py`
+- [x] Smoke + fallback tests lokaal groen
 
-## Next acties
-1. API-compatibiliteit check v1 vs v2 documenteren.
-2. Minimaal CI-voorstel opstellen (smoke + test-runner workaround).
-3. Daarna fase 2 run-matrix starten volgens `docs/RUN_SHEET_PHASE1_2.md`.
+## Open / volgende acties
+1. Manifest invullen voor echte fase-2 runs (use_cases/variants/seeds) en `scripts/run_matrix.py` uitvoeren.
+2. Eerste benchmark-resultaten verzamelen en samenvatten naar `BENCHMARK_RESULTS.md`.
+3. v2-specifieke regressietests toevoegen (upstream tests dekken nu vooral v1).
 
 ## Blokkades
-- Pip-install commando’s zijn in deze runner momenteel allowlist-geblokkeerd.
-- Hierdoor is directe `pytest`-install niet beschikbaar (workaround gebruikt).
+- Runner heeft pip/install beperkingen; workflow en lokale checks gebruiken daarom bewust geen externe pytest-install.
 
 ## Korte statusformat voor updates
 - `[bezig]`
