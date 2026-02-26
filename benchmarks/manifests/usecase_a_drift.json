@@ -1,0 +1,17 @@
+{
+  "name": "usecase_a_drift",
+  "description": "Non-stationary sequence/control met D1->D2->D1 drift",
+  "use_cases": ["usecase_a_drift"],
+  "seeds": [1, 2, 3, 4, 5],
+  "variants": [
+    "neuraxon_full",
+    "neuraxon_wfast_only",
+    "neuraxon_wslow_only",
+    "baseline_classic",
+    "baseline_gru_small"
+  ],
+  "budget": {
+    "max_steps": 20000,
+    "max_runtime_sec": 1800
+  }
+}

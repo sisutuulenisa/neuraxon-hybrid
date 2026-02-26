@@ -78,10 +78,18 @@ def _sanitize_fragment(value: str) -> str:
     return re.sub(r"[^a-zA-Z0-9._-]+", "-", value).strip("-") or "na"
 
 
-def build_rows(use_cases: List[str], variants: List[str], seeds: List[str]) -> List[Dict[str, str]]:
+def _default_ts_utc() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def build_rows(
+    use_cases: List[str],
+    variants: List[str],
+    seeds: List[str],
+    ts_utc: str,
+) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
     for idx, (use_case, variant, seed) in enumerate(product(use_cases, variants, seeds), start=1):
-        ts_utc = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
         run_id = "run-{idx:04d}-{use_case}-{variant}-{seed}".format(
             idx=idx,
             use_case=_sanitize_fragment(use_case),
@@ -116,6 +124,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate run matrix CSV from JSON manifest")
     parser.add_argument("--manifest", required=True, help="Path to manifest JSON")
     parser.add_argument("--out", required=True, help="Path to output CSV")
+    parser.add_argument(
+        "--ts-utc",
+        default=None,
+        help="Optional fixed ISO UTC timestamp for deterministic output (e.g. 2026-02-26T00:00:00Z)",
+    )
     return parser.parse_args()
 
 
@@ -123,10 +136,11 @@ def main() -> int:
     args = parse_args()
     manifest_path = Path(args.manifest)
     out_path = Path(args.out)
+    ts_utc = args.ts_utc if args.ts_utc else _default_ts_utc()
 
     data = json.loads(manifest_path.read_text(encoding="utf-8"))
     normalized = _normalize_manifest(data)
-    rows = build_rows(normalized["use_cases"], normalized["variants"], normalized["seeds"])
+    rows = build_rows(normalized["use_cases"], normalized["variants"], normalized["seeds"], ts_utc=ts_utc)
     write_csv(out_path, rows)
 
     print(f"Wrote {len(rows)} rows to {out_path}")
