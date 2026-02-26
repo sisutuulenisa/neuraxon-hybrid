@@ -50,8 +50,8 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 
 ## Fase 4 — Besluit (dag 3)
 - [x] Scorecard invullen (impact, risico, effort)
-- [ ] Go / No-Go / Keep-for-R&D advies
-- [ ] Volgende investering bepalen
+- [x] Go / No-Go / Keep-for-R&D advies (`docs/GO_NO_GO.md`)
+- [x] Volgende investering bepalen (tijd/budget/scope + stop-criteria in `docs/GO_NO_GO.md`)
 
 **Deliverable:** `GO_NO_GO.md`
 

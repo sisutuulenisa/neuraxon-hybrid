@@ -21,7 +21,8 @@
       "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase4-scorecard-001.prompt.md",
       "model": "gpt-5.3-codex",
       "reasoning": "high",
-      "enabled": true
+      "enabled": false,
+      "completed": true
     },
     {
       "id": "neuraxon-phase4-final-decision-2026-02-26",
@@ -31,7 +32,8 @@
       "promptFile": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/docs/swarm-prompts/phase4-final-decision-001.prompt.md",
       "model": "gpt-5.3-codex",
       "reasoning": "high",
-      "enabled": true
+      "enabled": false,
+      "completed": true
     }
   ]
 }
