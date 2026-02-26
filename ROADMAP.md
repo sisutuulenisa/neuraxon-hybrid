@@ -47,7 +47,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 **Deliverable:** `POC_INTEGRATION_001.md`
 
 ## Fase 4 — Besluit (dag 3)
-- [ ] Scorecard invullen (impact, risico, effort)
+- [x] Scorecard invullen (impact, risico, effort)
 - [ ] Go / No-Go / Keep-for-R&D advies
 - [ ] Volgende investering bepalen
 
