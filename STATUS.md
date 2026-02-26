@@ -19,6 +19,9 @@
   - `benchmarks/results/raw/usecase_b_perturbation.csv`
 - [x] Claims summary gegenereerd:
   - `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 rijen)
+- [x] Dashboard-zichtbaarheid toegevoegd voor dry-run outputs:
+  - `scripts/export_summary_json.py` (`claim_summary.csv` -> `dashboard/data/claim_summary.json`)
+  - `dashboard/index.html` toont claim summary (groepen/runs/tabel)
 - [x] Deterministische timestamp-optie toegevoegd aan runner: `scripts/run_matrix.py --ts-utc ...`
 
 ## Open / volgende acties
