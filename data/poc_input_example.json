@@ -1,0 +1,10 @@
+{
+  "use_case": "classification_baseline",
+  "variant": "v1",
+  "seed": 42,
+  "params": {
+    "max_steps": 5,
+    "temperature": 0.0,
+    "note": "phase3-poc"
+  }
+}

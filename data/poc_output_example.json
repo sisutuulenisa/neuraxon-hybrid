@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "deterministic": true,
+    "request_fingerprint": "e8c0edf510b56f72",
+    "schema_version": "neuraxon.poc-wrapper.v1",
+    "wrapper_version": "0.1.0"
+  },
+  "result": {
+    "mode": "placeholder",
+    "params_echo": {
+      "max_steps": 5,
+      "note": "phase3-poc",
+      "temperature": 0.0
+    },
+    "placeholder_score": 941,
+    "seed": "42",
+    "use_case": "classification_baseline",
+    "variant": "v1"
+  },
+  "status": "ok"
+}

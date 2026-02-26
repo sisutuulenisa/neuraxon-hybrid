@@ -3,6 +3,8 @@
 **Laatste update:** 2026-02-26
 **Fase:** 2 (Dry Run 001 uitgevoerd)
 
+- [klaar] Fase-3 POC wrapper JSON in/out toegevoegd (`scripts/poc_wrapper.py`, `data/poc_input_example.json`, `docs/POC_INTEGRATION_001.md`).
+
 ## Bootstrap fase 2 — afgerond
 - [x] API-compat document: `docs/API_COMPAT_V1_V2.md`
 - [x] Minimale CI workflow: `.github/workflows/phase2_bootstrap_ci.yml`
