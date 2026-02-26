@@ -1,0 +1,42 @@
+{
+  "total": 7,
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "test": "test_input_output",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_network_creation",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_network_simulation",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_neuromodulation",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_neuron_health",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_synapse_computation",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "test": "test_trinary_states",
+      "ok": true,
+      "error": ""
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+# Neuraxon evaluatie-roadmap
+
+## Doel
+Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of zelfs als productiebouwsteen.
+
+## Succescriteria (go/no-go)
+- **Technisch:** reproduceerbaar runbaar, basis-tests groen, geen kritieke stabiliteitsissues.
+- **Performance:** op minstens 1 relevante use-case aantoonbare meerwaarde vs simpele baseline.
+- **Operationeel:** beheersbare complexiteit, heldere onderhoudslast, duidelijke licentiegrenzen.
+
+---
+
+## Fase 0 — Intake & risicokaart (afgerond)
+- [x] Repo-scan (structuur, code-opzet, activiteit)
+- [x] Eerste risicoanalyse (claims vs bewijs, test/CI maturity, packaging)
+- [x] Eerste haalbaarheidsadvies (R&D-ja, productie-niet-zonder-validatie)
+
+## Fase 1 — Hardening & reproduceerbaarheid (dag 1)
+- [ ] Lokale sandbox opzetten + vaste run-instructies (v1 en v2)
+- [ ] Smoke test script voor v1/v2
+- [ ] Packaging/entrypoint issues documenteren en quick fixes voorstellen
+- [ ] Minimaal testplan opstellen (wat móet altijd groen zijn)
+
+**Deliverable:** `HARDENING_REPORT.md`
+
+## Fase 2 — Benchmark shootout (dag 1-2)
+- [ ] 2 concrete use-cases vastleggen
+  - Use-case A: continue time-series adaptatie
+  - Use-case B: dynamisch patroonherkenning met concept drift
+- [ ] Baselines kiezen (eenvoudig en eerlijk)
+  - Baseline 1: klassiek model (bv. logistic/GBM)
+  - Baseline 2: klein recurrent model (RNN/GRU)
+- [ ] Meetprotocol + metrics vastzetten
+  - kwaliteit: accuracy/F1 (of taakrelevant)
+  - adaptatie: tijd tot herstel na drift
+  - kosten: CPU-tijd/geheugen
+
+**Deliverable:** `BENCHMARK_RESULTS.md`
+
+## Fase 3 — Integratie-POC (dag 3)
+- [ ] Mini-wrapper maken (JSON in/out)
+- [ ] Eén simpele workflow koppeling voorzien (proof-of-use)
+- [ ] Failure modes + observability noteren
+
+**Deliverable:** `POC_INTEGRATION.md`
+
+## Fase 4 — Besluit (dag 3)
+- [ ] Scorecard invullen (impact, risico, effort)
+- [ ] Go / No-Go / Keep-for-R&D advies
+- [ ] Volgende investering bepalen
+
+**Deliverable:** `GO_NO_GO.md`
+
+---
+
+## Beslisregels
+- **GO (productiepilot):** stabiele run + duidelijke winst + acceptabele onderhoudslast.
+- **R&D only:** interessante signalen, maar te weinig robuustheid/bewijs.
+- **NO-GO:** geen meetbare meerwaarde of te hoge operationele kost.
+
+## Eigenaarschap
+- Owner: Sisu
+- Reviewer: Seppe

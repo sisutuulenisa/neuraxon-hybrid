@@ -1,0 +1,18 @@
+# Python / local env
+.venv/
+__pycache__/
+*.pyc
+
+# Generated runtime artifacts
+neuraxon_network.json
+neuraxon_v2_network.json
+logs/*.log
+
+# Upstream source clone (use scripts/docs to re-fetch)
+upstream/Neuraxon/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
