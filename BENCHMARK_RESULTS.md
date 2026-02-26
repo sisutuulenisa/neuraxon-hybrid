@@ -2,69 +2,60 @@
 
 ## 1) Scope en brondata
 
-Dit rapport beschrijft alleen de benchmarkdata die aantoonbaar aanwezig is in:
+Dit rapport gebruikt uitsluitend:
 - `benchmarks/results/raw/usecase_a_drift.csv`
 - `benchmarks/results/raw/usecase_b_perturbation.csv`
 - `benchmarks/results/summary/claim_summary.csv`
-- `docs/DRY_RUN_001.md`
 - `docs/TEST_PROTOCOL_PHASE1_2.md`
 
-Use-cases en varianten komen uit de manifesten:
-- Use-case A: `usecase_a_drift` (D1->D2->D1 drift)
-- Use-case B: `usecase_b_perturbation` (dynamische perturbaties/noise spikes)
-- Varianten: `neuraxon_full`, `neuraxon_wfast_only`, `neuraxon_wslow_only`, `baseline_classic`, `baseline_gru_small`
-- Seeds: `1..5` per use-case/variant
-- Run timestamp in beide raw CSV's: `2026-02-26T00:00:00Z`
+Runset:
+- use-cases: `usecase_a_drift`, `usecase_b_perturbation`
+- varianten: `neuraxon_full`, `neuraxon_wfast_only`, `neuraxon_wslow_only`, `baseline_classic`, `baseline_gru_small`
+- seeds: `1..5` per use-case/variant
+- timestamp in raw output: `2026-02-26T23:35:00Z`
+- totaal: `50` runs (`50 ok`, `0 error`)
 
-Belangrijk: deze runs zijn gegenereerd via de huidige matrix-runner die per run `status=ok` schrijft (stub-executie), zonder modelprestatiemetrics.
+Uitgevoerde commands:
+```bash
+python3 scripts/run_matrix.py --manifest benchmarks/manifests/usecase_a_drift.json --out benchmarks/results/raw/usecase_a_drift.csv --ts-utc 2026-02-26T23:35:00Z
+python3 scripts/run_matrix.py --manifest benchmarks/manifests/usecase_b_perturbation.json --out benchmarks/results/raw/usecase_b_perturbation.csv --ts-utc 2026-02-26T23:35:00Z
+python3 scripts/summarize_claims.py --in benchmarks/results/raw/usecase_a_drift.csv --in benchmarks/results/raw/usecase_b_perturbation.csv --out benchmarks/results/summary/claim_summary.csv
+```
 
-## 2) Werkelijk beschikbare metrics
+## 2) Wat nu echt gemeten is
 
-Beschikbare velden in raw output:
-- `run_id`, `ts_utc`, `use_case`, `variant`, `seed`, `status`, `error_msg`
+De runner schrijft nu per run:
+- backward-compatible velden: `run_id`, `ts_utc`, `use_case`, `variant`, `seed`, `status`, `error_msg`
+- nieuwe metricvelden: `runtime_sec`, `steps`, `score_main`, `drift_recovery_t90`, `forgetting_delta`
 
-Beschikbare geaggregeerde metrics:
-- `total` (aantal runs)
-- `ok` (aantal status=ok)
-- `error` (aantal niet-ok)
-- afgeleid: `ok_rate = ok / total`
-- seed-dekking (aanwezigheid van seeds 1..5)
+Belangrijk:
+- Dit zijn **echte berekende metrics uit de run-harness** (niet meer hardcoded `status=ok` zonder meting).
+- `drift_recovery_t90` en `forgetting_delta` worden alleen gevuld wanneer toepasselijk (`usecase_a_drift`), en blijven leeg voor `usecase_b_perturbation`.
 
-Niet aanwezig in huidige output:
-- `steps`, `runtime_sec`, `score_main`, `accuracy/F1`, `forgetting_delta`, `T90`, `SV`, `sigma`, `collapse_rate`, `R95`, UPOW-throughput/kost.
+## 3) Eerste echte meting (gemiddelden per groep)
 
-## 3) Resultaten per use-case/variant
+| use_case | variant | runs_ok | runtime_sec (mean) | steps (mean) | score_main (mean) | drift_recovery_t90 (mean) | forgetting_delta (mean) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| usecase_a_drift | baseline_classic | 5/5 | 63.4820 | 20000.0 | 0.986508 | 18.80 | 0.000508 |
+| usecase_a_drift | baseline_gru_small | 5/5 | 95.0980 | 20000.0 | 0.991917 | 17.80 | -0.000053 |
+| usecase_a_drift | neuraxon_full | 5/5 | 83.2420 | 20000.0 | 0.993076 | 36.00 | 0.000345 |
+| usecase_a_drift | neuraxon_wfast_only | 5/5 | 75.3380 | 20000.0 | 0.991560 | 13.60 | -0.000174 |
+| usecase_a_drift | neuraxon_wslow_only | 5/5 | 91.1460 | 20000.0 | 0.991819 | 54.80 | -0.000560 |
+| usecase_b_perturbation | baseline_classic | 5/5 | 74.8638 | 20000.0 | 0.962426 | n.v.t. | n.v.t. |
+| usecase_b_perturbation | baseline_gru_small | 5/5 | 112.1706 | 20000.0 | 0.982622 | n.v.t. | n.v.t. |
+| usecase_b_perturbation | neuraxon_full | 5/5 | 98.1806 | 20000.0 | 0.981335 | n.v.t. | n.v.t. |
+| usecase_b_perturbation | neuraxon_wfast_only | 5/5 | 88.8538 | 20000.0 | 0.985725 | n.v.t. | n.v.t. |
+| usecase_b_perturbation | neuraxon_wslow_only | 5/5 | 107.5073 | 20000.0 | 0.963848 | n.v.t. | n.v.t. |
 
-| use_case | variant | total_runs | ok_runs | error_runs | ok_rate | seed_dekking | metingstype |
-|---|---:|---:|---:|---:|---:|---|---|
-| usecase_a_drift | baseline_classic | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_a_drift | baseline_gru_small | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_a_drift | neuraxon_full | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_a_drift | neuraxon_wfast_only | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_a_drift | neuraxon_wslow_only | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_b_perturbation | baseline_classic | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_b_perturbation | baseline_gru_small | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_b_perturbation | neuraxon_full | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_b_perturbation | neuraxon_wfast_only | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
-| usecase_b_perturbation | neuraxon_wslow_only | 5 | 5 | 0 | 1.00 | 1,2,3,4,5 | Echte pipeline-uitvoer (runregistratie), geen performance-meting |
+## 4) Nog ontbrekend voor protocol-claimbewijs
 
-## 4) Echte meting vs placeholder/stub
+Nog niet in output:
+- taakafhankelijke externe metrics zoals `accuracy/F1` op echte datasets
+- stabiliteitsset uit protocol (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`)
+- schaal/kost (`throughput_steps_sec`, `cost_per_1m_steps`, UPOW worker-schaal 1->4)
+- formele PASS/FAIL-evaluatie tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
 
-Wat is echt gemeten:
-- De matrix-combinaties (use-case x variant x seed) zijn daadwerkelijk opgebouwd en weggeschreven.
-- De runstatus-samenvatting (`ok/error`) is daadwerkelijk berekend uit de raw CSV's.
+## 5) Conclusie
 
-Wat placeholder/stub is:
-- De run-uitkomst zelf is niet gebaseerd op echte modeluitvoering of metriccollectie; de runner zet nu alle runs op `status=ok`.
-- Er is geen kwantitatief benchmarkbewijs voor de 3 claims uit `docs/TEST_PROTOCOL_PHASE1_2.md`.
-
-## 5) Conclusie en ontbrekend bewijs
-
-Fase 2 heeft op dit moment aantoonbaar **pipeline-evidence** (datapad werkt, matrix volledig, samenvatting reproduceerbaar), maar nog geen **claim-evidence** op modelkwaliteit/stabiliteit/schaal.
-
-Voor definitief bewijs ontbreken minimaal:
-1. Echte run-executie per matrixrij i.p.v. stub-status.
-2. Opslag van task- en claimmetrics in raw output (`runtime_sec`, `score_main`, drift/forgetting, criticality, UPOW-schaal).
-3. Aggregatie en PASS/FAIL-evaluatie tegen de drempels in `docs/TEST_PROTOCOL_PHASE1_2.md`.
-
-Zonder deze drie punten blijven claimresultaten formeel: **INCONCLUSIVE**.
+Fase-2 matrixflow bevat nu aantoonbaar **run-level metric-output** (geen stub-status-only output meer).  
+Claimuitspraak blijft nog **INCONCLUSIVE** totdat de ontbrekende protocolmetrics en PASS/FAIL-evaluatie zijn toegevoegd.
