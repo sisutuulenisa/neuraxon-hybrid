@@ -1,7 +1,7 @@
 # STATUS — Neuraxon evaluatie
 
-**Laatste update:** 2026-02-27
-**Fase:** 5 (Qubic ecosystem-analyse + MLflow minimale smoke-slice opgeleverd)
+**Laatste update:** 2026-02-28
+**Fase:** 5 (Qubic ecosystem-analyse + MLflow smoke-slice + claim-gate POC opgeleverd)
 
 - [klaar] MLflow minimale vertical slice opgeleverd: parent + 3 child runs lokaal in file-store, vaste tags en artifacts per run (`scripts/smoke_mlflow_slice.sh`, `scripts/run_mlflow_smoke.py`)
 - [klaar] Reproduceerbare smoke-output aanwezig onder `benchmarks/results/mlflow/smoke/` (incl. `outputs/latest_smoke_run.json` + run artifacts)
@@ -15,6 +15,8 @@
   - UPOW: **INCONCLUSIVE**
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
+- [klaar] Automatische claim-gate POC toegevoegd (`scripts/claim_gate.py`, `scripts/check_claim_gate.sh`) met machine-readable output op `benchmarks/results/summary/claim_gate.json`.
+- [klaar] Huidige claim-gate resultaat: **FAIL** (phase1 PASS, claim1 FAIL, claim2 FAIL, claim3 FAIL).
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
@@ -24,6 +26,7 @@
   - `benchmarks/results/raw/usecase_b_perturbation.csv` (25 runs)
 - [x] Samenvattingsoutput aanwezig: `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 runs)
 - [x] Benchmarkresultaten transparant gerapporteerd: `BENCHMARK_RESULTS.md`
+- [x] Machine-readable claim-gate artifact aanwezig: `benchmarks/results/summary/claim_gate.json`
 - [x] Runner schrijft nu echte per-run metric-output in raw CSV:
   - `runtime_sec`
   - `steps`
@@ -33,6 +36,7 @@
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
+- [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
 - [ ] MLflow-koppeling opschalen van smoke naar volledige matrix (`scripts/run_matrix.py` => child-run per `(use_case, variant, seed)`)
 - [ ] UPOW probe-runner implementeren met 1->4 worker-schaalmeting (throughput/success-rate/reproduceerbaarheid/kost)
 - [ ] Raw output uitbreiden met UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`)
@@ -44,6 +48,7 @@
   - dual-weight plasticity = **FAIL** (T90-drempel niet gehaald op Use-case A)
   - SOC = **INCONCLUSIVE** (verplichte SOC-metrics ontbreken)
   - UPOW = **INCONCLUSIVE** (distributed schaal-/kostmetrics ontbreken)
+- Machine-readable gate op basis van protocol-check (`benchmarks/results/summary/claim_gate.json`) staat op **FAIL**.
 - Qubic-ecosysteemanalyse verhoogt operationele zekerheid voor UPOW-testimplementatie, maar levert nog geen nieuwe claim-PASS.
 - Daarom blijft de formele beslissing: **R&D only**.
 

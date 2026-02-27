@@ -1,0 +1,282 @@
+{
+  "checks": {
+    "claim1_dual_weight_plasticity": "FAIL",
+    "claim2_soc": "FAIL",
+    "claim3_upow_compute_scale": "FAIL",
+    "phase1_hardening": "PASS"
+  },
+  "fail_reasons": [
+    "claim1_dual_weight_plasticity",
+    "claim2_soc",
+    "claim3_upow_compute_scale"
+  ],
+  "generated_at_utc": "2026-02-27T23:45:19Z",
+  "inputs": {
+    "claim_eval_doc": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/docs/CLAIM_EVAL_002.md",
+    "protocol_doc": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/docs/TEST_PROTOCOL_PHASE1_2.md",
+    "raw_files": [
+      "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/benchmarks/results/raw/usecase_a_drift.csv",
+      "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/benchmarks/results/raw/usecase_b_perturbation.csv"
+    ],
+    "raw_rows": 50
+  },
+  "metadata": {
+    "claim_eval_002": {
+      "claim_table": [
+        {
+          "claim": "Dual-weight plasticity (`w_fast + w_slow`)",
+          "reason": "Use-case A faalt protocoldrempel voor `T90` (en ook `F`), wat volgens protocol direct FAIL triggert.",
+          "status": "**FAIL**"
+        },
+        {
+          "claim": "Self-organized criticality (SOC)",
+          "reason": "Vereiste metrics (`sigma`, collapse-rate, `R95`) ontbreken volledig in de huidige outputs.",
+          "status": "**INCONCLUSIVE**"
+        },
+        {
+          "claim": "Useful Proof of Work (UPOW) compute-schaal",
+          "reason": "Geen 1->4 worker-schaalmeting, geen throughput-efficiency, geen inter-node reproducerbaarheid, geen kost/1M steps.",
+          "status": "**INCONCLUSIVE**"
+        }
+      ],
+      "date": "2026-02-26",
+      "path": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/docs/CLAIM_EVAL_002.md"
+    }
+  },
+  "overall_status": "FAIL",
+  "protocol_thresholds": {
+    "claim1": {
+      "forgetting_factor": 0.85,
+      "stability_factor": 0.9,
+      "t90_factor": 0.8
+    },
+    "claim2": {
+      "collapse_rate_max_pct": 5.0,
+      "r95_max_steps": 500.0,
+      "sigma_max": 1.1,
+      "sigma_min": 0.9
+    },
+    "claim3": {
+      "cost_ratio_max": 1.25,
+      "eff_min": 0.65,
+      "inter_node_deviation_max_pct": 10.0,
+      "success_rate_min_pct": 95.0
+    },
+    "phase1": {
+      "crash_rate_max_pct": 0.0,
+      "nan_rate_max_pct": 0.0,
+      "repro_smoke_success_required": 10,
+      "timeout_rate_max_pct": 5.0
+    },
+    "source": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-claim-gate-poc-2026-02-27/docs/TEST_PROTOCOL_PHASE1_2.md"
+  },
+  "results": {
+    "claim1_dual_weight_plasticity": {
+      "fail_reasons": [
+        "claim1.usecase_a_drift",
+        "claim1.usecase_b_perturbation"
+      ],
+      "per_use_case": {
+        "usecase_a_drift": {
+          "metrics": {
+            "forgetting": {
+              "baseline_means": {
+                "baseline_classic": 0.0005076,
+                "baseline_gru_small": -5.300000000000001e-05
+              },
+              "best_baseline_mean": -5.300000000000001e-05,
+              "factor": 0.85,
+              "full_mean": 0.0003454,
+              "metric_column": "forgetting_delta",
+              "missing_inputs": false,
+              "pass": false,
+              "threshold": -0.00047599999999999997,
+              "wfast_mean": -0.0001744,
+              "wslow_mean": -0.00056
+            },
+            "stability": {
+              "baseline_means": {},
+              "best_baseline_mean": null,
+              "factor": 0.9,
+              "full_mean": null,
+              "metric_column": null,
+              "missing_inputs": true,
+              "pass": false,
+              "threshold": null,
+              "wfast_mean": null,
+              "wslow_mean": null
+            },
+            "t90": {
+              "baseline_means": {
+                "baseline_classic": 18.8,
+                "baseline_gru_small": 17.8
+              },
+              "best_baseline_mean": 17.8,
+              "factor": 0.8,
+              "full_mean": 36.0,
+              "metric_column": "drift_recovery_t90",
+              "missing_inputs": false,
+              "pass": false,
+              "threshold": 10.88,
+              "wfast_mean": 13.6,
+              "wslow_mean": 54.8
+            }
+          },
+          "status": "FAIL"
+        },
+        "usecase_b_perturbation": {
+          "metrics": {
+            "forgetting": {
+              "baseline_means": {},
+              "best_baseline_mean": null,
+              "factor": 0.85,
+              "full_mean": null,
+              "metric_column": "forgetting_delta",
+              "missing_inputs": true,
+              "pass": false,
+              "threshold": null,
+              "wfast_mean": null,
+              "wslow_mean": null
+            },
+            "stability": {
+              "baseline_means": {},
+              "best_baseline_mean": null,
+              "factor": 0.9,
+              "full_mean": null,
+              "metric_column": null,
+              "missing_inputs": true,
+              "pass": false,
+              "threshold": null,
+              "wfast_mean": null,
+              "wslow_mean": null
+            },
+            "t90": {
+              "baseline_means": {},
+              "best_baseline_mean": null,
+              "factor": 0.8,
+              "full_mean": null,
+              "metric_column": "drift_recovery_t90",
+              "missing_inputs": true,
+              "pass": false,
+              "threshold": null,
+              "wfast_mean": null,
+              "wslow_mean": null
+            }
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "FAIL"
+    },
+    "claim2_soc": {
+      "fail_reasons": [
+        "claim2.missing_metrics",
+        "claim2.sigma",
+        "claim2.collapse",
+        "claim2.r95"
+      ],
+      "metrics": {
+        "collapse_rate": {
+          "column": null,
+          "max_pct": 5.0,
+          "pass": false,
+          "value_pct": null
+        },
+        "recovery95": {
+          "column": null,
+          "max_steps": 500.0,
+          "median_steps": null,
+          "pass": false
+        },
+        "sigma": {
+          "band": [
+            0.9,
+            1.1
+          ],
+          "column": null,
+          "median": null,
+          "pass": false
+        }
+      },
+      "missing_metrics": [
+        "collapse_flag",
+        "recovery95_steps",
+        "sigma"
+      ],
+      "status": "FAIL",
+      "use_case": "usecase_b_perturbation"
+    },
+    "claim3_upow_compute_scale": {
+      "fail_reasons": [
+        "claim3.missing_metrics",
+        "claim3.efficiency",
+        "claim3.success_rate",
+        "claim3.inter_node_deviation",
+        "claim3.cost_ratio"
+      ],
+      "metrics": {
+        "cost_ratio": {
+          "max": 1.25,
+          "pass": false,
+          "value": null
+        },
+        "efficiency": {
+          "min_required": 0.65,
+          "pass": false,
+          "value": null
+        },
+        "inter_node_deviation": {
+          "max_pct": 10.0,
+          "pass": false,
+          "value_pct": null
+        },
+        "success_rate": {
+          "min_pct": 95.0,
+          "pass": false,
+          "value_pct": null
+        }
+      },
+      "missing_metrics": [
+        "cost_per_1m_steps",
+        "node_id",
+        "throughput_steps_sec",
+        "worker_count"
+      ],
+      "status": "FAIL"
+    },
+    "phase1": {
+      "checks": {
+        "basic_stability": {
+          "crash_rate_max_pct": 0.0,
+          "crash_rate_pct": 0.0,
+          "nan_rate_max_pct": 0.0,
+          "nan_rate_pct": 0.0,
+          "pass": true,
+          "timeout_rate_max_pct": 5.0,
+          "timeout_rate_pct": 0.0
+        },
+        "logging_auditability": {
+          "completeness_pct": 100.0,
+          "missing_field_cells": 0,
+          "pass": true,
+          "required_fields": [
+            "seed",
+            "model_variant",
+            "steps",
+            "score",
+            "runtime_sec"
+          ]
+        },
+        "reproducibility": {
+          "actual_successes": 50,
+          "pass": true,
+          "required_successes": 10
+        }
+      },
+      "fail_reasons": [],
+      "status": "PASS",
+      "total_runs": 50
+    }
+  },
+  "schema_version": "claim-gate-poc-v1"
+}

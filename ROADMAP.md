@@ -67,7 +67,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
 - [x] MLflow tracking pilot (minimale vertical slice): parent-run + 3 child-runs in lokale file-store, vaste tags (`protocol_version`, `claim_eval_version`, `git_commit`) en artifacts per run (`scripts/smoke_mlflow_slice.sh`, output onder `benchmarks/results/mlflow/smoke/`).
 - [ ] MLflow tracking uitbreiden naar volledige matrix-koppeling (child-run per `(use_case, variant, seed)` vanuit `scripts/run_matrix.py`).
-- [ ] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels).
+- [x] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels) via `scripts/claim_gate.py` + `scripts/check_claim_gate.sh`; huidige gate-resultaat: **FAIL** (`benchmarks/results/summary/claim_gate.json`).
 - [ ] Externe kalibratie-mini-run op 3 OpenML taken + driftrapport (Evidently/ADWIN).
 
 **Deliverable:** `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md` + `docs/RESEARCH_FRONTIER_001.md` + eerste pilot-output onder `benchmarks/results/`
