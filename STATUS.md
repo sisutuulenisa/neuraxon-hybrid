@@ -15,6 +15,7 @@
   - UPOW: **INCONCLUSIVE**
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
+- [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
