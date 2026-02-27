@@ -1,0 +1,9 @@
+run_id,ts_utc,use_case,variant,seed,status,error_msg,runtime_sec,steps,score_main,drift_recovery_t90,forgetting_delta
+run-0001-usecase_a_drift-neuraxon_full-11,2026-02-28T00:00:00Z,usecase_a_drift,neuraxon_full,11,ok,,6.5752,1500,0.984545,37.00,0.000604
+run-0002-usecase_a_drift-neuraxon_full-17,2026-02-28T00:00:00Z,usecase_a_drift,neuraxon_full,17,ok,,6.6508,1500,0.986549,45.00,-0.002575
+run-0003-usecase_a_drift-baseline_classic-11,2026-02-28T00:00:00Z,usecase_a_drift,baseline_classic,11,ok,,5.0692,1500,0.980210,19.00,0.000189
+run-0004-usecase_a_drift-baseline_classic-17,2026-02-28T00:00:00Z,usecase_a_drift,baseline_classic,17,ok,,5.1268,1500,0.979188,19.00,0.003350
+run-0005-usecase_b_perturbation-neuraxon_full-11,2026-02-28T00:00:00Z,usecase_b_perturbation,neuraxon_full,11,ok,,7.7137,1500,0.980761,,
+run-0006-usecase_b_perturbation-neuraxon_full-17,2026-02-28T00:00:00Z,usecase_b_perturbation,neuraxon_full,17,ok,,7.8029,1500,0.981621,,
+run-0007-usecase_b_perturbation-baseline_classic-11,2026-02-28T00:00:00Z,usecase_b_perturbation,baseline_classic,11,ok,,5.9367,1500,0.964306,,
+run-0008-usecase_b_perturbation-baseline_classic-17,2026-02-28T00:00:00Z,usecase_b_perturbation,baseline_classic,17,ok,,6.0046,1500,0.957479,,

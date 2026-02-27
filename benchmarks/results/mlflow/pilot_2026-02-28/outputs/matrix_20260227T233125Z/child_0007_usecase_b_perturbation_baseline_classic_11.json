@@ -1,0 +1,19 @@
+{
+  "ts_utc": "2026-02-27T23:31:25Z",
+  "row_index": 7,
+  "row": {
+    "run_id": "run-0007-usecase_b_perturbation-baseline_classic-11",
+    "ts_utc": "2026-02-28T00:00:00Z",
+    "use_case": "usecase_b_perturbation",
+    "variant": "baseline_classic",
+    "seed": "11",
+    "status": "ok",
+    "error_msg": "",
+    "runtime_sec": "5.9367",
+    "steps": "1500",
+    "score_main": "0.964306",
+    "drift_recovery_t90": "",
+    "forgetting_delta": ""
+  },
+  "note": "matrix child run artifact"
+}

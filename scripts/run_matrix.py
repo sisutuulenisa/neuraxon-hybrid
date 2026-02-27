@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Generate deterministic benchmark run CSV output from a matrix manifest."""
+"""Generate deterministic benchmark run CSV output from a matrix manifest.
+
+Optional: enable local MLflow tracking for the same matrix execution:
+- one parent run per invocation
+- nested child run per (use_case, variant, seed)
+- key metrics + per-row artifacts
+- fixed tags: protocol_version, claim_eval_version, git_commit
+"""
 
 from __future__ import annotations
 
@@ -10,11 +17,12 @@ import json
 import math
 import random
 import re
+import subprocess
 from datetime import datetime, timezone
 from itertools import product
 from pathlib import Path
 from statistics import fmean
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Optional
 
 BASE_FIELDS = [
     "run_id",
@@ -359,14 +367,278 @@ def write_csv(out_path: Path, rows: List[Dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def _import_mlflow():
+    try:
+        import mlflow
+
+        return mlflow
+    except ImportError as exc:  # pragma: no cover - clear operator guidance
+        raise SystemExit(
+            "MLflow tracking requested, but 'mlflow' is not installed. "
+            "Install dependency first (recommended: mlflow-skinny)."
+        ) from exc
+
+
+def _git_commit(repo_root: Path) -> str:
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(repo_root), "rev-parse", "--short", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        commit = proc.stdout.strip()
+        return commit or "unknown"
+    except Exception:
+        return "unknown"
+
+
+def _write_json(path: Path, data: Dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def _to_metric(value: str) -> Optional[float]:
+    if value is None or str(value).strip() == "":
+        return None
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
+
+def _track_matrix_mlflow(
+    rows: List[Dict[str, str]],
+    manifest_path: Path,
+    out_path: Path,
+    args: argparse.Namespace,
+) -> Dict[str, Any]:
+    mlflow = _import_mlflow()
+
+    repo_root = Path(__file__).resolve().parent.parent
+    tracking_dir = Path(args.mlflow_tracking_dir).resolve()
+    output_root = Path(args.mlflow_output_dir).resolve()
+    tracking_dir.mkdir(parents=True, exist_ok=True)
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_output_dir = output_root / f"matrix_{stamp}"
+    run_output_dir.mkdir(parents=True, exist_ok=True)
+
+    git_commit = args.git_commit or _git_commit(repo_root)
+    common_tags = {
+        "protocol_version": args.protocol_version,
+        "claim_eval_version": args.claim_eval_version,
+        "git_commit": git_commit,
+    }
+
+    mlflow.set_tracking_uri(tracking_dir.as_uri())
+    mlflow.set_experiment(args.mlflow_experiment_name)
+
+    child_records: List[Dict[str, Any]] = []
+
+    run_name = args.mlflow_run_name or f"matrix_parent_{manifest_path.stem}_{stamp}"
+
+    with mlflow.start_run(run_name=run_name) as parent_run:
+        mlflow.set_tags(
+            {
+                **common_tags,
+                "run_role": "parent",
+                "manifest": manifest_path.name,
+                "out_csv": out_path.name,
+            }
+        )
+        mlflow.log_params(
+            {
+                "manifest_path": str(manifest_path.resolve()),
+                "out_csv_path": str(out_path.resolve()),
+                "row_count": len(rows),
+                "tracking_dir": str(tracking_dir),
+                "output_dir": str(run_output_dir),
+            }
+        )
+
+        if manifest_path.exists():
+            mlflow.log_artifact(str(manifest_path.resolve()), artifact_path="inputs")
+        if out_path.exists():
+            mlflow.log_artifact(str(out_path.resolve()), artifact_path="outputs")
+
+        for index, row in enumerate(rows, start=1):
+            child_payload = {
+                "ts_utc": _default_ts_utc(),
+                "row_index": index,
+                "row": row,
+                "note": "matrix child run artifact",
+            }
+            child_artifact_name = (
+                f"child_{index:04d}_{_sanitize_fragment(row['use_case'])}_"
+                f"{_sanitize_fragment(row['variant'])}_{_sanitize_fragment(str(row['seed']))}.json"
+            )
+            child_artifact_path = run_output_dir / child_artifact_name
+            _write_json(child_artifact_path, child_payload)
+
+            child_run_name = (
+                f"{_sanitize_fragment(row['use_case'])}__"
+                f"{_sanitize_fragment(row['variant'])}__seed_{_sanitize_fragment(str(row['seed']))}"
+            )
+            with mlflow.start_run(run_name=child_run_name, nested=True) as child_run:
+                mlflow.set_tags(
+                    {
+                        **common_tags,
+                        "run_role": "child",
+                        "use_case": row["use_case"],
+                        "variant": row["variant"],
+                        "status": row["status"],
+                    }
+                )
+                mlflow.log_params(
+                    {
+                        "seed": row["seed"],
+                        "run_id": row["run_id"],
+                        "row_index": index,
+                    }
+                )
+
+                metrics: Dict[str, float] = {}
+                for field in METRIC_FIELDS:
+                    value = _to_metric(row.get(field, ""))
+                    if value is not None:
+                        metrics[field] = value
+                if metrics:
+                    mlflow.log_metrics(metrics)
+
+                if row.get("status") != "ok" and row.get("error_msg"):
+                    mlflow.log_param("error_msg", row["error_msg"])
+
+                mlflow.log_artifact(str(child_artifact_path), artifact_path="row")
+
+                child_records.append(
+                    {
+                        "row_index": index,
+                        "run_id": child_run.info.run_id,
+                        "artifact_uri": child_run.info.artifact_uri,
+                        "use_case": row["use_case"],
+                        "variant": row["variant"],
+                        "seed": row["seed"],
+                        "status": row["status"],
+                        "metrics": metrics,
+                        "source_artifact": str(child_artifact_path),
+                    }
+                )
+
+        ok_rows = [row for row in rows if row.get("status") == "ok"]
+        parent_metrics: Dict[str, float] = {
+            "ok_runs": float(len(ok_rows)),
+            "error_runs": float(len(rows) - len(ok_rows)),
+        }
+        if ok_rows:
+            for field in METRIC_FIELDS:
+                values = [_to_metric(row.get(field, "")) for row in ok_rows]
+                usable = [value for value in values if value is not None]
+                if usable:
+                    parent_metrics[f"avg_{field}"] = fmean(usable)
+
+        mlflow.log_metrics(parent_metrics)
+
+        parent_summary = {
+            "ts_utc": _default_ts_utc(),
+            "experiment_name": args.mlflow_experiment_name,
+            "tracking_dir": str(tracking_dir),
+            "run_output_dir": str(run_output_dir),
+            "parent_run_id": parent_run.info.run_id,
+            "parent_artifact_uri": parent_run.info.artifact_uri,
+            "tags": common_tags,
+            "inputs": {
+                "manifest_path": str(manifest_path.resolve()),
+                "out_csv_path": str(out_path.resolve()),
+                "row_count": len(rows),
+            },
+            "aggregate": {k: round(v, 6) for k, v in parent_metrics.items()},
+            "children": child_records,
+        }
+
+        parent_summary_path = run_output_dir / "parent_summary.json"
+        parent_summary_txt = run_output_dir / "parent_summary.txt"
+        _write_json(parent_summary_path, parent_summary)
+        parent_summary_txt.write_text(
+            "\n".join(
+                [
+                    "Phase 5 MLflow matrix summary",
+                    f"parent_run_id={parent_run.info.run_id}",
+                    f"tracking_dir={tracking_dir}",
+                    f"run_output_dir={run_output_dir}",
+                    f"rows_total={len(rows)}",
+                    f"rows_ok={len(ok_rows)}",
+                    f"rows_error={len(rows) - len(ok_rows)}",
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        mlflow.log_artifact(str(parent_summary_path), artifact_path="summary")
+        mlflow.log_artifact(str(parent_summary_txt), artifact_path="summary")
+
+    latest_payload = {
+        "ts_utc": _default_ts_utc(),
+        "tracking_dir": str(tracking_dir),
+        "output_dir": str(run_output_dir),
+        "parent_summary": str(run_output_dir / "parent_summary.json"),
+    }
+    latest_path = output_root / "latest_matrix_run.json"
+    _write_json(latest_path, latest_payload)
+
+    return {
+        "tracking_dir": str(tracking_dir),
+        "output_dir": str(run_output_dir),
+        "latest": str(latest_path),
+    }
+
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate run matrix CSV from JSON manifest")
+    parser = argparse.ArgumentParser(
+        description="Generate run matrix CSV from JSON manifest",
+        allow_abbrev=False,
+    )
     parser.add_argument("--manifest", required=True, help="Path to manifest JSON")
     parser.add_argument("--out", required=True, help="Path to output CSV")
     parser.add_argument(
         "--ts-utc",
         default=None,
         help="Optional fixed ISO UTC timestamp for deterministic output (e.g. 2026-02-26T00:00:00Z)",
+    )
+    parser.add_argument(
+        "--enable-mlflow",
+        "--mlflow-track",
+        dest="enable_mlflow",
+        action="store_true",
+        help="Enable local MLflow tracking: one parent run + child run per matrix row",
+    )
+    parser.add_argument(
+        "--mlflow-tracking-dir",
+        default="benchmarks/results/mlflow/matrix/mlruns",
+        help="Directory used as MLflow file-store root",
+    )
+    parser.add_argument(
+        "--mlflow-output-dir",
+        default="benchmarks/results/mlflow/matrix/outputs",
+        help="Directory for reproducible MLflow run summaries",
+    )
+    parser.add_argument(
+        "--mlflow-experiment-name",
+        default="phase5_mlflow_matrix",
+        help="MLflow experiment name",
+    )
+    parser.add_argument(
+        "--mlflow-run-name",
+        default=None,
+        help="Optional parent run name override",
+    )
+    parser.add_argument("--protocol-version", default="phase5.frontier.v1")
+    parser.add_argument("--claim-eval-version", default="CLAIM_EVAL_002")
+    parser.add_argument(
+        "--git-commit",
+        default=None,
+        help="Optional override for git_commit tag (default: auto-detect)",
     )
     return parser.parse_args()
 
@@ -390,6 +662,19 @@ def main() -> int:
 
     ok_count = sum(1 for row in rows if row.get("status") == "ok")
     print(f"Wrote {len(rows)} rows to {out_path} ({ok_count} ok, {len(rows) - ok_count} error)")
+
+    if args.enable_mlflow:
+        tracking_info = _track_matrix_mlflow(
+            rows=rows,
+            manifest_path=manifest_path,
+            out_path=out_path,
+            args=args,
+        )
+        print("MLflow matrix tracking complete")
+        print(f"tracking_dir={tracking_info['tracking_dir']}")
+        print(f"output_dir={tracking_info['output_dir']}")
+        print(f"latest={tracking_info['latest']}")
+
     return 0
 
 

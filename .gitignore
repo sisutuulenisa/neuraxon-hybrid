@@ -9,6 +9,9 @@ neuraxon_network.json
 neuraxon_v2_network.json
 logs/*.log
 
+# Local MLflow stores (repro metadata lives in outputs/, not in mlruns/)
+benchmarks/results/mlflow/**/mlruns/
+
 # Upstream source clone (use scripts/docs to re-fetch)
 upstream/Neuraxon/
 

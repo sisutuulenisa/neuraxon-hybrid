@@ -1,0 +1,19 @@
+{
+  "ts_utc": "2026-02-27T23:31:25Z",
+  "row_index": 4,
+  "row": {
+    "run_id": "run-0004-usecase_a_drift-baseline_classic-17",
+    "ts_utc": "2026-02-28T00:00:00Z",
+    "use_case": "usecase_a_drift",
+    "variant": "baseline_classic",
+    "seed": "17",
+    "status": "ok",
+    "error_msg": "",
+    "runtime_sec": "5.1268",
+    "steps": "1500",
+    "score_main": "0.979188",
+    "drift_recovery_t90": "19.00",
+    "forgetting_delta": "0.003350"
+  },
+  "note": "matrix child run artifact"
+}
