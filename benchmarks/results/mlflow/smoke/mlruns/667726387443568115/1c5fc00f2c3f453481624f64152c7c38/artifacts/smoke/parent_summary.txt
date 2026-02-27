@@ -1,0 +1,6 @@
+Phase 5 MLflow smoke summary
+parent_run_id=1c5fc00f2c3f453481624f64152c7c38
+tracking_dir=/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns
+run_output_dir=/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z
+avg_child_score_main=0.830000
+avg_child_runtime_sec=0.700000

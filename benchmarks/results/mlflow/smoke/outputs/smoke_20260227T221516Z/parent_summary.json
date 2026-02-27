@@ -1,0 +1,59 @@
+{
+  "ts_utc": "2026-02-27T22:15:17Z",
+  "experiment_name": "phase5_mlflow_smoke",
+  "tracking_dir": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns",
+  "run_output_dir": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z",
+  "parent_run_id": "1c5fc00f2c3f453481624f64152c7c38",
+  "parent_artifact_uri": "file:///home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns/667726387443568115/1c5fc00f2c3f453481624f64152c7c38/artifacts",
+  "tags": {
+    "protocol_version": "phase5.frontier.v1",
+    "claim_eval_version": "CLAIM_EVAL_002",
+    "git_commit": "b1f12b5"
+  },
+  "children": [
+    {
+      "index": 1,
+      "run_id": "c45c28b1ebe346b9a448053f15093261",
+      "artifact_uri": "file:///home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns/667726387443568115/c45c28b1ebe346b9a448053f15093261/artifacts",
+      "child_key": "slice_a",
+      "metrics": {
+        "runtime_sec": 0.56,
+        "steps": 1600.0,
+        "score_main": 0.75,
+        "drift_recovery_t90": 205.0
+      },
+      "source_artifact": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z/child_1_summary.json"
+    },
+    {
+      "index": 2,
+      "run_id": "bbee55a0ab45432c8bab74ec3e82e97d",
+      "artifact_uri": "file:///home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns/667726387443568115/bbee55a0ab45432c8bab74ec3e82e97d/artifacts",
+      "child_key": "slice_b",
+      "metrics": {
+        "runtime_sec": 0.7,
+        "steps": 2000.0,
+        "score_main": 0.83,
+        "drift_recovery_t90": 230.0
+      },
+      "source_artifact": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z/child_2_summary.json"
+    },
+    {
+      "index": 3,
+      "run_id": "6342b5bb64a04a0eab6d2a8063574a40",
+      "artifact_uri": "file:///home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns/667726387443568115/6342b5bb64a04a0eab6d2a8063574a40/artifacts",
+      "child_key": "slice_c",
+      "metrics": {
+        "runtime_sec": 0.84,
+        "steps": 2400.0,
+        "score_main": 0.91,
+        "drift_recovery_t90": 255.0
+      },
+      "source_artifact": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z/child_3_summary.json"
+    }
+  ],
+  "aggregate": {
+    "avg_child_score_main": 0.83,
+    "avg_child_runtime_sec": 0.7
+  },
+  "matrix_hook_csv": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/raw/usecase_a_drift.csv"
+}

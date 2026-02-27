@@ -1,0 +1,6 @@
+{
+  "ts_utc": "2026-02-27T22:15:17Z",
+  "tracking_dir": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns",
+  "output_dir": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z",
+  "parent_summary": "/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/outputs/smoke_20260227T221516Z/parent_summary.json"
+}

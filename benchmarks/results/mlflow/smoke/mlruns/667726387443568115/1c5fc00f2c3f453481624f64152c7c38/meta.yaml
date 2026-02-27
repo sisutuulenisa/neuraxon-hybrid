@@ -1,0 +1,15 @@
+artifact_uri: file:///home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-minimal-slice-sa-2026-02-27/benchmarks/results/mlflow/smoke/mlruns/667726387443568115/1c5fc00f2c3f453481624f64152c7c38/artifacts
+end_time: 1772230517042
+entry_point_name: ''
+experiment_id: '667726387443568115'
+lifecycle_stage: active
+run_id: 1c5fc00f2c3f453481624f64152c7c38
+run_name: phase5_mlflow_smoke_parent_20260227T221516Z
+run_uuid: 1c5fc00f2c3f453481624f64152c7c38
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772230516997
+status: 3
+tags: []
+user_id: sisu

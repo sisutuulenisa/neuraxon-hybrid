@@ -1,5 +1,6 @@
 # Python / local env
 .venv/
+.venv-mlflow-smoke/
 __pycache__/
 *.pyc
 

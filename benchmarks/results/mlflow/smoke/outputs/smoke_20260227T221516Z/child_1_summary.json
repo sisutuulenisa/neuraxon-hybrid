@@ -1,0 +1,17 @@
+{
+  "ts_utc": "2026-02-27T22:15:17Z",
+  "index": 1,
+  "child": {
+    "child_key": "slice_a",
+    "use_case": "usecase_a_drift",
+    "variant": "neuraxon_full",
+    "seed": "11"
+  },
+  "metrics": {
+    "runtime_sec": 0.56,
+    "steps": 1600.0,
+    "score_main": 0.75,
+    "drift_recovery_t90": 205.0
+  },
+  "note": "minimal deterministic smoke child"
+}
