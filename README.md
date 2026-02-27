@@ -17,6 +17,15 @@ Doel: een **overzichtelijke plugin-hybride** evaluatie van Neuraxon opzetten.
 2. **Alles reproduceerbaar documenteren**
 3. **Claims pas accepteren na meetbaar bewijs**
 
+## Swarm orchestration-notitie
+
+Queue/prompts voor swarm orchestration leven bewust **buiten deze projectrepo**:
+
+- runtime queue/state: `local/runtime/agent-swarm/...`
+- orchestration prompt templates: `local/scripts/agent-swarm/prompts/...`
+
+Zo blijft deze repo clean en projectgericht.
+
 ## Visuele statuspagina (lokaal/Tailscale)
 
 Dashboard: `dashboard/index.html`
