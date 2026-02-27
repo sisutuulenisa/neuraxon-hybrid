@@ -1,8 +1,10 @@
 # STATUS — Neuraxon evaluatie
 
-**Laatste update:** 2026-02-27
-**Fase:** 5 (Qubic ecosystem-analyse + MLflow minimale smoke-slice opgeleverd)
+**Laatste update:** 2026-02-28
+**Fase:** 5 (SA-first uitvoering op open pilots + weekplan actief)
 
+- [klaar] Executorstrategie tijdelijk omgezet naar **SA-first** voor open fase-5 queue-items (OTel/MLflow/claim-gate/OpenML drift) om ACP-stallgedrag te vermijden.
+- [bezig] `neuraxon-phase5-otel-pilot-2026-02-27` draait nu als subagent-task met checkpoint-guardrails.
 - [klaar] MLflow minimale vertical slice opgeleverd: parent + 3 child runs lokaal in file-store, vaste tags en artifacts per run (`scripts/smoke_mlflow_slice.sh`, `scripts/run_mlflow_smoke.py`)
 - [klaar] Reproduceerbare smoke-output aanwezig onder `benchmarks/results/mlflow/smoke/` (incl. `outputs/latest_smoke_run.json` + run artifacts)
 - [klaar] Qubic ecosystem deep-dive + triage opgeleverd: `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`

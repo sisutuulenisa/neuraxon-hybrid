@@ -81,6 +81,37 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - **R&D only:** interessante signalen, maar te weinig robuustheid/bewijs.
 - **NO-GO:** geen meetbare meerwaarde of te hoge operationele kost.
 
+## Weekplan (2026-03-02 t/m 2026-03-08)
+
+**Uitvoeringsmodus:** SA-first (subagents) voor alle open fase-5 taken, met bounded checkpoints.
+
+1. **Maandag**
+   - OTel pilot afronden (trace + correlatie in output)
+   - Claim-gate POC starten (machine-readable PASS/FAIL)
+
+2. **Dinsdag**
+   - Claim-gate afronden + docs update
+   - OpenML drift mini-run (3 taken) opstarten
+
+3. **Woensdag**
+   - OpenML drift mini-run afronden + compacte rapportage
+   - Protocolmapping updaten in benchmark outputs
+
+4. **Donderdag**
+   - Cross-check claimstatus met nieuwe evidence
+   - `BENCHMARK_RESULTS.md` + `docs/CLAIM_EVAL_002.md` refresh
+
+5. **Vrijdag**
+   - Weeksamenvatting + bijgestelde R&D aanbeveling
+   - Backlog grooming voor volgende iteratie
+
+### Week-exit criteria
+- [ ] OTel pilot aantoonbaar af (code + bewijsartefacts)
+- [ ] Claim-gate POC geeft machine-readable PASS/FAIL
+- [ ] OpenML drift mini-run (3 taken) gerapporteerd
+- [ ] Claim-evaluatie en benchmarkrapport geüpdatet met nieuwe evidence
+- [ ] Heldere weeksamenvatting + beslispunten voor Seppe
+
 ## Eigenaarschap
 - Owner: Sisu
 - Reviewer: Seppe
