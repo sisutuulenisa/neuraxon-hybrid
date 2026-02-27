@@ -11,6 +11,7 @@
   - dual-weight plasticity: **FAIL**
   - SOC: **INCONCLUSIVE**
   - UPOW: **INCONCLUSIVE**
+- [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`

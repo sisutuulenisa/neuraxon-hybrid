@@ -216,6 +216,17 @@ Ik splits hier tussen **ecosysteem-evidence** en **onze experimentele claim-evid
 - `docs/CLAIM_EVAL_002.md`
 - `BENCHMARK_RESULTS.md`
 
+### Aanvullende publieke signalen (ingest 2026-02-27)
+- <https://qubic.org/blog-detail/qubic-all-hands-recap-february-19-2026>
+- <https://www.linkedin.com/posts/qubicnetwork_neuraxon-activity-7403826652805455873-_5mc>
+- <https://www.openpr.com/news/4397966/beyond-binary-qubic-s-neuraxon-2-0-introduces-a-trinary>
+- <https://huggingface.co/DavidVivancos/activity/posts>
+
+**Interpretatie van deze extra bronnen:**
+- Ze versterken vooral het publieke narratief en de operationele signalen (recente HF-activiteit/running spaces).
+- Ze leveren geen onafhankelijke benchmarkresultaten of protocolmetriek die onze claimstatus wijzigt.
+- Daarom blijft de formele claim-impact ongewijzigd: dual-weight **FAIL**, SOC **INCONCLUSIVE**, UPOW **INCONCLUSIVE**.
+
 ---
 
 ## Appendix A — Volledige repo-triage (alle 67)
