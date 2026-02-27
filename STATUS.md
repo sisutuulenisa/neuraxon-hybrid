@@ -1,8 +1,9 @@
 # STATUS — Neuraxon evaluatie
 
-**Laatste update:** 2026-02-26
-**Fase:** 4 (besluit vastgelegd, fase-2 claim-evaluatie geüpdatet)
+**Laatste update:** 2026-02-27
+**Fase:** 5 (Qubic ecosystem-analyse toegevoegd; UPOW-implementatiepad aangescherpt)
 
+- [klaar] Qubic ecosystem deep-dive + triage opgeleverd: `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`
 - [klaar] Fase-4 besluitdocument opgeleverd: `docs/GO_NO_GO.md`
 - [klaar] Beslissing: **R&D only** (geen productiepilot in huidige staat)
 - [klaar] Next-step investering + stop-criteria vastgelegd in `docs/GO_NO_GO.md`
@@ -28,7 +29,8 @@
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
-- [ ] UPOW-schaalmetingen (1->4 workers, throughput/success-rate/reproduceerbaarheid/kost)
+- [ ] UPOW probe-runner implementeren met 1->4 worker-schaalmeting (throughput/success-rate/reproduceerbaarheid/kost)
+- [ ] Raw output uitbreiden met UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`)
 - [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, throughput/kost)
 
 ## Huidige conclusie
@@ -37,6 +39,7 @@
   - dual-weight plasticity = **FAIL** (T90-drempel niet gehaald op Use-case A)
   - SOC = **INCONCLUSIVE** (verplichte SOC-metrics ontbreken)
   - UPOW = **INCONCLUSIVE** (distributed schaal-/kostmetrics ontbreken)
+- Qubic-ecosysteemanalyse verhoogt operationele zekerheid voor UPOW-testimplementatie, maar levert nog geen nieuwe claim-PASS.
 - Daarom blijft de formele beslissing: **R&D only**.
 
 ## Korte statusformat voor updates
