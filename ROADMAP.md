@@ -64,7 +64,8 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [ ] UPOW probe-script bouwen voor 1/2/4 worker-schaalmeting (throughput, success-rate, node-variance, kost/1M steps).
 - [ ] Benchmarkschema uitbreiden met verplichte UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`) + validatie in CI.
 - [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
-- [ ] MLflow tracking pilot (parent/child-runs, artifacts, vaste tags voor protocol/commit).
+- [x] MLflow tracking pilot (minimale vertical slice): parent-run + 3 child-runs in lokale file-store, vaste tags (`protocol_version`, `claim_eval_version`, `git_commit`) en artifacts per run (`scripts/smoke_mlflow_slice.sh`, output onder `benchmarks/results/mlflow/smoke/`).
+- [ ] MLflow tracking uitbreiden naar volledige matrix-koppeling (child-run per `(use_case, variant, seed)` vanuit `scripts/run_matrix.py`).
 - [ ] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels).
 - [ ] Externe kalibratie-mini-run op 3 OpenML taken + driftrapport (Evidently/ADWIN).
 

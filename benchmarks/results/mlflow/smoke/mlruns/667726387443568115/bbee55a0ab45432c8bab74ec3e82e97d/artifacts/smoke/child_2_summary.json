@@ -1,0 +1,17 @@
+{
+  "ts_utc": "2026-02-27T22:15:17Z",
+  "index": 2,
+  "child": {
+    "child_key": "slice_b",
+    "use_case": "usecase_a_drift",
+    "variant": "baseline_classic",
+    "seed": "17"
+  },
+  "metrics": {
+    "runtime_sec": 0.7,
+    "steps": 2000.0,
+    "score_main": 0.83,
+    "drift_recovery_t90": 230.0
+  },
+  "note": "minimal deterministic smoke child"
+}
