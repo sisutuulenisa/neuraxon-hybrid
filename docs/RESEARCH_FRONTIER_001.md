@@ -1,8 +1,8 @@
 # RESEARCH_FRONTIER_001 - Externe evaluatie- en integratiekansen (bounded)
 
-**Datum:** 2026-02-26  
+**Datum:** 2026-02-28  
 **Context in deze repo (huidige stand):**
-- `scripts/run_matrix.py` logt nu run-level basisvelden + beperkte metrics (`runtime_sec`, `steps`, `score_main`, `drift_recovery_t90`, `forgetting_delta`).
+- `scripts/run_matrix.py` logt run-level basisvelden + metrics (`runtime_sec`, `steps`, `score_main`, `drift_recovery_t90`, `forgetting_delta`) en ondersteunt nu optionele lokale MLflow-tracking met parent/child runs.
 - `scripts/summarize_claims.py` aggregeert nu alleen `total/ok/error`.
 - `docs/CLAIM_EVAL_002.md` toont dat claim 1 = FAIL en claim 2/3 = INCONCLUSIVE door ontbrekende protocolmetrics.
 
@@ -36,9 +36,11 @@ Doel van deze frontier-notitie: pragmatische kansen die direct de evidence-gap v
 - Extra operationele laag (tracking backend/artifact store), plus discipline nodig in run-taxonomie.
 - Mitigatie: start lokaal (`mlruns`), migreer pas later naar server als de taxonomie stabiel is.
 
-**Voorstel 1-2 volgende experimentele taken**
-1. Maak een parent-run per matrix-executie en child-runs per `(use_case, variant, seed)`; log raw CSV en samenvattingen als artifacts.
-2. Definieer vaste MLflow-tags (`protocol_version`, `claim_eval_version`, `git_commit`) en maak 1 vergelijkingsquery voor "beste baseline vs neuraxon_full".
+**Status 2026-02-28:** **pilot uitgevoerd** (matrix parent/child runs + vaste tags + artifacts lokaal bewezen via `scripts/run_matrix.py`; zie `docs/MLFLOW_MATRIX_PILOT_001.md`).
+
+**Volgende 1-2 experimentele taken**
+1. Voeg een eenvoudige vergelijkingsquery/report toe (beste baseline vs `neuraxon_full`) op basis van de gelogde MLflow-runs.
+2. Veranker MLflow-runvalidatie in CI (check op verplichte tags/artifacts) zodat regressies meteen zichtbaar zijn.
 
 ## 3) Kans: Geautomatiseerde claim-gates met MLflow evaluatie/validatie API
 
