@@ -18,12 +18,23 @@ Lokale helper scripts voor reproduceerbaarheid:
   - Schrijft machine-readable output naar `benchmarks/results/summary/claim_gate.json`.
 - `./scripts/check_claim_gate.sh`
   - Lokale gate-check met strikte non-zero exit bij gate-FAIL.
+- `./scripts/run_upow_probe.py`
+  - UPOW-probe met vaste worker-schaal (`--worker-counts 1,2,4`, default).
+  - Schrijft zowel een gecombineerde probe-CSV als een samenvattings-CSV met `success_rate` + `node_variance`.
 
 Gebruik:
 
 ```bash
 python3 scripts/claim_gate.py --out benchmarks/results/summary/claim_gate.json
 ./scripts/check_claim_gate.sh
+```
+
+Voor UPOW-schaalmeting:
+
+```bash
+python3 scripts/run_upow_probe.py \
+  --manifest benchmarks/manifests/usecase_a_drift.json \
+  --out benchmarks/results/upow/run_upow_probe.csv
 ```
 
 ## Beperkingen

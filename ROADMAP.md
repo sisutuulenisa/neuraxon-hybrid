@@ -64,7 +64,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] AGI-context toegevoegd als kalibratiekader voor bewijsdiscipline (`docs/AGI_CONTEXT_2026-02-27.md`).
 - [x] Shadow sidecar concept vastgelegd (read-only pilot) in `docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`.
 - [x] Sidecar fase-1 observer implementeren (task ingest + scorecard + advisory output, zonder auto-acties) via `sidecar/observer.py` + runbook in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
-- [ ] UPOW probe-script bouwen voor 1/2/4 worker-schaalmeting (throughput, success-rate, node-variance, kost/1M steps).
+- [x] UPOW probe-script gebouwd voor 1/2/4 worker-schaalmeting (`1,2,4`) via `scripts/run_upow_probe.py`.
 - [x] Benchmarkschema uitbreiden met verplichte UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`) + validatie in CI.
 - [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
 - [x] MLflow tracking pilot (minimale vertical slice): parent-run + 3 child-runs in lokale file-store, vaste tags (`protocol_version`, `claim_eval_version`, `git_commit`) en artifacts per run (`scripts/smoke_mlflow_slice.sh`, output onder `benchmarks/results/mlflow/smoke/`).
