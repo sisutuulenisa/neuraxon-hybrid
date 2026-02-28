@@ -53,9 +53,12 @@ Nog niet in output:
 - taakafhankelijke externe metrics zoals `accuracy/F1` op echte datasets
 - stabiliteitsset uit protocol (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`)
 - schaal/kost (`throughput_steps_sec`, `cost_per_1m_steps`, UPOW worker-schaal 1->4)
-- formele PASS/FAIL-evaluatie tegen drempels uit `docs/TEST_PROTOCOL_PHASE1_2.md`
+
+Wel beschikbaar:
+- formele machine-readable PASS/FAIL gate-evaluatie via `scripts/claim_gate.py`
+- artifact: `benchmarks/results/summary/claim_gate.json` (huidige status: **FAIL**)
 
 ## 5) Conclusie
 
 Fase-2 matrixflow bevat nu aantoonbaar **run-level metric-output** (geen stub-status-only output meer).  
-Claimuitspraak blijft nog **INCONCLUSIVE** totdat de ontbrekende protocolmetrics en PASS/FAIL-evaluatie zijn toegevoegd.
+Machine-readable claim-gate evaluatie is toegevoegd, maar de gate blijft **FAIL** door ontbrekende SOC/UPOW-metrics en omdat dual-weight op huidige data de protocoldrempel niet haalt.

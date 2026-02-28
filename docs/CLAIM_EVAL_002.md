@@ -7,6 +7,7 @@
 - `benchmarks/results/raw/usecase_a_drift.csv`
 - `benchmarks/results/raw/usecase_b_perturbation.csv`
 - `benchmarks/results/summary/claim_summary.csv`
+- `benchmarks/results/summary/claim_gate.json` (machine-readable gate artifact, gegenereerd via `./scripts/check_claim_gate.sh`; huidige gate-status: **FAIL**)
 
 ## 1) Resultaat per claim
 

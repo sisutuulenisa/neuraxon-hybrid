@@ -1,7 +1,7 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-28
-**Fase:** 5 (SA-first uitvoering op open pilots, MLflow matrix pilot opgeleverd + weekplan actief)
+**Fase:** 5 (SA-first uitvoering op open pilots + MLflow matrix pilot + claim-gate POC opgeleverd)
 
 - [klaar] Executorstrategie tijdelijk omgezet naar **SA-first** voor open fase-5 queue-items (OTel/MLflow/claim-gate/OpenML drift) om ACP-stallgedrag te vermijden.
 - [bezig] `neuraxon-phase5-otel-pilot-2026-02-27` draait nu als subagent-task met checkpoint-guardrails.
@@ -20,6 +20,8 @@
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
 - [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
+- [klaar] Automatische claim-gate POC toegevoegd (`scripts/claim_gate.py`, `scripts/check_claim_gate.sh`) met machine-readable output op `benchmarks/results/summary/claim_gate.json`.
+- [klaar] Huidige claim-gate resultaat: **FAIL** (phase1 PASS, claim1 FAIL, claim2 FAIL, claim3 FAIL).
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
@@ -29,6 +31,7 @@
   - `benchmarks/results/raw/usecase_b_perturbation.csv` (25 runs)
 - [x] Samenvattingsoutput aanwezig: `benchmarks/results/summary/claim_summary.csv` (10 groepen, 50 runs)
 - [x] Benchmarkresultaten transparant gerapporteerd: `BENCHMARK_RESULTS.md`
+- [x] Machine-readable claim-gate artifact aanwezig: `benchmarks/results/summary/claim_gate.json`
 - [x] Runner schrijft nu echte per-run metric-output in raw CSV:
   - `runtime_sec`
   - `steps`
@@ -38,6 +41,7 @@
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
+- [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
 - [ ] UPOW probe-runner implementeren met 1->4 worker-schaalmeting (throughput/success-rate/reproduceerbaarheid/kost)
 - [ ] Raw output uitbreiden met UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`)
 - [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, throughput/kost)
@@ -48,6 +52,7 @@
   - dual-weight plasticity = **FAIL** (T90-drempel niet gehaald op Use-case A)
   - SOC = **INCONCLUSIVE** (verplichte SOC-metrics ontbreken)
   - UPOW = **INCONCLUSIVE** (distributed schaal-/kostmetrics ontbreken)
+- Machine-readable gate op basis van protocol-check (`benchmarks/results/summary/claim_gate.json`) staat op **FAIL**.
 - Qubic-ecosysteemanalyse verhoogt operationele zekerheid voor UPOW-testimplementatie, maar levert nog geen nieuwe claim-PASS.
 - Daarom blijft de formele beslissing: **R&D only**.
 
