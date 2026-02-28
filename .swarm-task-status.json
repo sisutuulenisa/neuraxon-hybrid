@@ -1,1 +1,1 @@
-{"taskId":"autoseed-roadmap-open-neuraxon-hybrid-202602282117","status":"running","updatedAt":"2026-02-28T21:28:10+01:00","note":"checkpoint: OTel pilot code and docs updated, validating outputs"}
+{"taskId":"autoseed-roadmap-open-neuraxon-hybrid-202602282117","status":"done","updatedAt":"2026-02-28T21:31:22+01:00","note":"OTel pilot for run_matrix and poc_wrapper implemented; trace_id correlation validated; roadmap/status/docs updated; commit 9cc7722 pushed"}
