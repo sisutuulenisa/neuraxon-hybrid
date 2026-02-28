@@ -1,7 +1,7 @@
 # STATUS — Neuraxon evaluatie
 
 **Laatste update:** 2026-02-28
-**Fase:** 5 (SA-first uitvoering op open pilots + MLflow matrix pilot + claim-gate POC opgeleverd)
+**Fase:** 5 (SA-first uitvoering op open pilots + MLflow matrix pilot + claim-gate + OpenML drift mini-run opgeleverd)
 
 - [klaar] Executorstrategie tijdelijk omgezet naar **SA-first** voor open fase-5 queue-items (OTel/MLflow/claim-gate/OpenML drift) om ACP-stallgedrag te vermijden.
 - [bezig] `neuraxon-phase5-otel-pilot-2026-02-27` draait nu als subagent-task met checkpoint-guardrails.
@@ -22,6 +22,7 @@
 - [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
 - [klaar] Automatische claim-gate POC toegevoegd (`scripts/claim_gate.py`, `scripts/check_claim_gate.sh`) met machine-readable output op `benchmarks/results/summary/claim_gate.json`.
 - [klaar] Huidige claim-gate resultaat: **FAIL** (phase1 PASS, claim1 FAIL, claim2 FAIL, claim3 FAIL).
+- [klaar] Bounded OpenML kalibratieronde op 3 CC18-taken afgerond met driftsignalen via River ADWIN; reproducible runner + manifest + outputs + compacte protocolmapping toegevoegd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`

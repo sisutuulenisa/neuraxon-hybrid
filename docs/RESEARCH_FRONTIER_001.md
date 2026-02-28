@@ -71,6 +71,8 @@ Doel van deze frontier-notitie: pragmatische kansen die direct de evidence-gap v
 - Hogere compute- en data-prep-kost; drempelinstellingen voor driftdetectors kunnen foutpositieven geven.
 - Mitigatie: start klein (3 OpenML-taken), fixeer seeds/budgets, en rapporteer detector-parameters expliciet.
 
+**Status 2026-02-28:** **pilot uitgevoerd** als bounded mini-run op 3 CC18-taken met River ADWIN-signalen en protocolproxy-mapping (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
+
 **Voorstel 1-2 volgende experimentele taken**
 1. Voeg `scripts/run_openml_subset.py` toe (3 OpenML-CC18 classificatietaken) met dezelfde varianten en budgetpolitiek als fase 2.
 2. Voeg per taak een drift-rapport toe (`evidently` report + ADWIN events) en map dit naar protocolvelden (`collapse_rate`, `recovery_steps` proxy, stabiliteitssignalen).

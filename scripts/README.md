@@ -30,3 +30,8 @@ python3 scripts/claim_gate.py --out benchmarks/results/summary/claim_gate.json
 - De gate kan alleen claims valideren op metrics die effectief in raw CSV aanwezig zijn.
 - Ontbrekende protocolvelden (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, `worker_count`, `throughput_steps_sec`, `node_id`, `cost_per_1m_steps`) leiden momenteel tot gate-FAIL.
 - Dit is een lokale POC-checkflow; er is nog geen CI-koppeling.
+
+## OpenML drift mini-run (bounded)
+
+- manifest: `benchmarks/manifests/openml_subset_phase5.json`
+- runner: `./scripts/run_openml_subset.py --manifest benchmarks/manifests/openml_subset_phase5.json --out-dir benchmarks/results/openml/pilot_2026-02-28`

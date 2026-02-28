@@ -1,6 +1,7 @@
 # Python / local env
 .venv/
 .venv-mlflow-smoke/
+.venv-openml/
 __pycache__/
 *.pyc
 
