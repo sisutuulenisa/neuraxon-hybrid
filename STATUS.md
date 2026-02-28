@@ -22,6 +22,7 @@
 - [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
 - [klaar] Sidecar fase-1 observer opgeleverd (`sidecar/observer.py`) met read-only task ingest + scorecard + advisory output (`sidecar/out/task-advice-latest.json`), inclusief runbook/evidence in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
 - [klaar] Automatische claim-gate POC toegevoegd (`scripts/claim_gate.py`, `scripts/check_claim_gate.sh`) met machine-readable output op `benchmarks/results/summary/claim_gate.json`.
+- [klaar] UPOW-schema uitgebreid: `run_matrix.py` geeft nu `worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps` uit en `scripts/validate_benchmark_schema.py` checkt kolommen in CI (`.github/workflows/phase2_bootstrap_ci.yml`).
 - [klaar] Huidige claim-gate resultaat: **FAIL** (phase1 PASS, claim1 FAIL, claim2 FAIL, claim3 FAIL).
 - [klaar] Bounded OpenML kalibratieronde op 3 CC18-taken afgerond met driftsignalen via River ADWIN; reproducible runner + manifest + outputs + compacte protocolmapping toegevoegd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
 
@@ -45,8 +46,7 @@
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
 - [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
 - [ ] UPOW probe-runner implementeren met 1->4 worker-schaalmeting (throughput/success-rate/reproduceerbaarheid/kost)
-- [ ] Raw output uitbreiden met UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`)
-- [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`, throughput/kost)
+- [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`)
 
 ## Huidige conclusie
 - Pipeline-integriteit voor fase-2 matrix-output is aantoonbaar.

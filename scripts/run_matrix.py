@@ -40,7 +40,13 @@ METRIC_FIELDS = [
     "drift_recovery_t90",
     "forgetting_delta",
 ]
-FIELDS = BASE_FIELDS + METRIC_FIELDS
+UPOW_FIELDS = [
+    "worker_count",
+    "node_id",
+    "throughput_steps_sec",
+    "cost_per_1m_steps",
+]
+FIELDS = BASE_FIELDS + METRIC_FIELDS + UPOW_FIELDS
 
 DEFAULT_MAX_STEPS = 20_000
 DEFAULT_MAX_RUNTIME_SEC = 1_800.0
@@ -99,6 +105,7 @@ def _normalize_manifest(data: Dict[str, Any]) -> Dict[str, Any]:
     use_cases_raw = data.get("use_cases", data.get("usecases", data.get("cases", [])))
     variants_raw = data.get("variants", [])
     seeds_raw = data.get("seeds", [])
+    worker_counts_raw = data.get("worker_counts", [1])
 
     if not isinstance(use_cases_raw, list):
         raise ValueError("Manifest key 'use_cases' must be a list")
@@ -126,6 +133,14 @@ def _normalize_manifest(data: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("Manifest must contain at least one variant")
     if not seeds:
         raise ValueError("Manifest must contain at least one seed")
+    if not isinstance(worker_counts_raw, list):
+        raise ValueError("Manifest key 'worker_counts' must be a list")
+    if not worker_counts_raw:
+        raise ValueError("Manifest key 'worker_counts' must contain at least one worker count")
+    worker_counts = [
+        str(_coerce_positive_int(item, None, f"worker_counts[{index}]"))
+        for index, item in enumerate(worker_counts_raw)
+    ]
 
     budget_raw = data.get("budget", {})
     if budget_raw is None:
@@ -144,6 +159,7 @@ def _normalize_manifest(data: Dict[str, Any]) -> Dict[str, Any]:
         "use_cases": use_cases,
         "variants": variants,
         "seeds": seeds,
+        "worker_counts": worker_counts,
         "budget": {"max_steps": max_steps, "max_runtime_sec": max_runtime_sec},
     }
 
@@ -282,10 +298,16 @@ def _forgetting_delta(scores: List[float]) -> float:
     return phase_1_ref - phase_3_ref
 
 
-def _build_metrics(use_case: str, variant: str, seed: str, budget: Dict[str, float]) -> Dict[str, str]:
+def _build_metrics(
+    use_case: str,
+    variant: str,
+    seed: str,
+    budget: Dict[str, float],
+    worker_count: int,
+    seed_int: int,
+) -> Dict[str, str]:
     profile = VARIANT_PROFILES.get(variant, DEFAULT_VARIANT_PROFILE)
     flags = USE_CASE_FLAGS.get(use_case, DEFAULT_USE_CASE_FLAGS)
-    seed_int = _seed_to_int(seed)
 
     jitter = 1.0 + (((seed_int % 19) - 9) / 500.0)
     per_step_sec = profile["runtime_per_step_sec"] * flags["runtime_scale"] * jitter
@@ -297,7 +319,13 @@ def _build_metrics(use_case: str, variant: str, seed: str, budget: Dict[str, flo
 
     score_slice_start = max(0, steps // 2)
     score_main = fmean(scores[score_slice_start:]) if scores else 0.0
-    runtime_sec = fixed_overhead_sec + steps * per_step_sec
+    runtime_single_worker_sec = fixed_overhead_sec + steps * per_step_sec
+    scale = 1.0 + 0.35 * max(1, worker_count - 1)
+    runtime_sec = runtime_single_worker_sec / scale
+    throughput_steps_sec = steps / runtime_sec if runtime_sec > 0 else 0.0
+
+    base_cost_per_step = 0.00018
+    cost_per_1m_steps = base_cost_per_step * runtime_sec * worker_count * 1_000_000
 
     drift_recovery_t90 = ""
     forgetting_delta = ""
@@ -306,12 +334,18 @@ def _build_metrics(use_case: str, variant: str, seed: str, budget: Dict[str, flo
     if bool(flags.get("forgetting_delta")):
         forgetting_delta = _fmt_float(_forgetting_delta(scores), digits=6)
 
+    node_bucket = _stable_hash_int((use_case, variant, seed)) % 7
+
     return {
         "runtime_sec": _fmt_float(runtime_sec, digits=4),
         "steps": str(steps),
         "score_main": _fmt_float(score_main, digits=6),
         "drift_recovery_t90": drift_recovery_t90,
         "forgetting_delta": forgetting_delta,
+        "worker_count": str(worker_count),
+        "node_id": f"node_{node_bucket + 1}",
+        "throughput_steps_sec": _fmt_float(throughput_steps_sec, digits=6),
+        "cost_per_1m_steps": _fmt_float(cost_per_1m_steps, digits=6),
     }
 
 
@@ -323,23 +357,35 @@ def build_rows(
     use_cases: List[str],
     variants: List[str],
     seeds: List[str],
+    worker_counts: List[str],
     budget: Dict[str, float],
     ts_utc: str,
 ) -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
-    for idx, (use_case, variant, seed) in enumerate(product(use_cases, variants, seeds), start=1):
-        run_id = "run-{idx:04d}-{use_case}-{variant}-{seed}".format(
+    for idx, (use_case, variant, seed, worker_count) in enumerate(
+        product(use_cases, variants, seeds, worker_counts),
+        start=1,
+    ):
+        run_id = "run-{idx:04d}-{use_case}-{variant}-{seed}-w{worker_count}".format(
             idx=idx,
             use_case=_sanitize_fragment(use_case),
             variant=_sanitize_fragment(variant),
             seed=_sanitize_fragment(seed),
+            worker_count=_sanitize_fragment(worker_count),
         )
 
         status = "ok"
         error_msg = ""
         metrics = _empty_metrics()
         try:
-            metrics = _build_metrics(use_case=use_case, variant=variant, seed=seed, budget=budget)
+            metrics = _build_metrics(
+                use_case=use_case,
+                variant=variant,
+                seed=seed,
+                budget=budget,
+                worker_count=int(worker_count),
+                seed_int=_seed_to_int(seed),
+            )
         except Exception as exc:  # pragma: no cover - defensive path
             status = "error"
             error_msg = f"{type(exc).__name__}: {exc}"
@@ -357,8 +403,6 @@ def build_rows(
             }
         )
     return rows
-
-
 def write_csv(out_path: Path, rows: List[Dict[str, str]]) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", newline="", encoding="utf-8") as handle:
@@ -633,6 +677,11 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional parent run name override",
     )
+    parser.add_argument(
+        "--worker-counts",
+        default=None,
+        help="Optional comma-separated worker counts (override manifest worker_counts)",
+    )
     parser.add_argument("--protocol-version", default="phase5.frontier.v1")
     parser.add_argument("--claim-eval-version", default="CLAIM_EVAL_002")
     parser.add_argument(
@@ -651,10 +700,17 @@ def main() -> int:
 
     data = json.loads(manifest_path.read_text(encoding="utf-8"))
     normalized = _normalize_manifest(data)
+    worker_counts = normalized["worker_counts"]
+    if args.worker_counts:
+        worker_counts = [token.strip() for token in args.worker_counts.split(",") if token.strip()]
+        if not worker_counts:
+            raise ValueError("--worker-counts provided but no valid values parsed")
+
     rows = build_rows(
         normalized["use_cases"],
         normalized["variants"],
         normalized["seeds"],
+        worker_counts=worker_counts,
         budget=normalized["budget"],
         ts_utc=ts_utc,
     )

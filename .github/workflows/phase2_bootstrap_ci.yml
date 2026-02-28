@@ -30,5 +30,9 @@ jobs:
       - name: Smoke v1/v2
         run: python3 scripts/smoke_v1_v2.py
 
+      - name: Validate benchmark CSV schema
+        run: python3 scripts/validate_matrix_schema.py
+
       - name: Run upstream fallback tests (no pytest install required)
         run: python3 scripts/run_upstream_tests_no_pytest.py
+
