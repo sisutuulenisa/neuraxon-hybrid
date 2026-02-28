@@ -20,6 +20,7 @@
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
 - [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
+- [klaar] Sidecar fase-1 observer opgeleverd (`sidecar/observer.py`) met read-only task ingest + scorecard + advisory output (`sidecar/out/task-advice-latest.json`), inclusief runbook/evidence in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
 - [klaar] Automatische claim-gate POC toegevoegd (`scripts/claim_gate.py`, `scripts/check_claim_gate.sh`) met machine-readable output op `benchmarks/results/summary/claim_gate.json`.
 - [klaar] Huidige claim-gate resultaat: **FAIL** (phase1 PASS, claim1 FAIL, claim2 FAIL, claim3 FAIL).
 - [klaar] Bounded OpenML kalibratieronde op 3 CC18-taken afgerond met driftsignalen via River ADWIN; reproducible runner + manifest + outputs + compacte protocolmapping toegevoegd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).

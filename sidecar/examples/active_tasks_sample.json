@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "taskId": "phase5-otel-pilot",
+      "status": "running",
+      "updatedAt": "2026-02-28T17:55:00Z",
+      "retry_count": 0,
+      "artifacts": [
+        "docs/OTEL_PILOT.md"
+      ],
+      "has_test_output": true,
+      "reproducible": true
+    },
+    {
+      "taskId": "phase5-upow-probe",
+      "status": "running",
+      "updatedAt": "2026-02-28T15:10:00Z",
+      "retry_count": 2,
+      "artifacts": [],
+      "has_test_output": false
+    },
+    {
+      "taskId": "phase5-claim-gate-pass",
+      "status": "failed",
+      "updatedAt": "2026-02-28T17:05:00Z",
+      "retry_count": 3,
+      "artifacts": [
+        "benchmarks/results/summary/claim_gate.json"
+      ],
+      "has_test_output": true,
+      "reproducible": false
+    }
+  ]
+}

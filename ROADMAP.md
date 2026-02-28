@@ -63,7 +63,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Qubic ecosystem deep-dive + triage afgerond (`docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`).
 - [x] AGI-context toegevoegd als kalibratiekader voor bewijsdiscipline (`docs/AGI_CONTEXT_2026-02-27.md`).
 - [x] Shadow sidecar concept vastgelegd (read-only pilot) in `docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`.
-- [ ] Sidecar fase-1 observer implementeren (task ingest + scorecard + advisory output, zonder auto-acties).
+- [x] Sidecar fase-1 observer implementeren (task ingest + scorecard + advisory output, zonder auto-acties) via `sidecar/observer.py` + runbook in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
 - [ ] UPOW probe-script bouwen voor 1/2/4 worker-schaalmeting (throughput, success-rate, node-variance, kost/1M steps).
 - [ ] Benchmarkschema uitbreiden met verplichte UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`) + validatie in CI.
 - [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
@@ -73,6 +73,13 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels) via `scripts/claim_gate.py` + `scripts/check_claim_gate.sh`; huidige gate-resultaat: **FAIL** (`benchmarks/results/summary/claim_gate.json`).
 - [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
 - [x] Externe kalibratie-mini-run op 3 OpenML taken + driftrapport (River ADWIN) opgeleverd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
+
+### Beslissingstabel — Sidecar fase-1
+| Keuze | Opties | Beslissing | Waarom |
+|---|---|---|---|
+| Inputcontract | Strikt schema vs best-effort aliasing | **Best-effort aliasing** (`taskId`/`task_id`/`id`, `events`/`history`) | Past op bestaande runtime dumps zonder migratieblokkade. |
+| Scoringmethode | ML-model vs regelgebaseerd | **Regelgebaseerd** | Transparant, reproduceerbaar en reviewbaar voor fase-1 pilot. |
+| Output | Alleen latest vs latest + timestamped | **Latest standaard**, timestamped opt-in (`--write-timestamped`) | Houdt output clean, maar laat audit-trail toe wanneer nodig. |
 
 **Deliverable:** `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md` + `docs/RESEARCH_FRONTIER_001.md` + eerste pilot-output onder `benchmarks/results/`
 
