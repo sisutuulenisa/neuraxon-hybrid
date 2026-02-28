@@ -41,7 +41,8 @@
   - `steps`
   - `score_main`
   - `drift_recovery_t90` (waar van toepassing)
-  - `forgetting_delta` (waar van toepassing)
+  - `forgetting_delta` (waarvan toepassing)
+- [x] OTel pilot op benchmark + wrapper afgerond: `run_matrix.py` en `poc_wrapper.py` voegen nu `trace_id` toe aan respectievelijk matrix-output en wrapper-metadata; afhankelijk van `OTEL_EXPORTER_OTLP_ENDPOINT` activeert optionele export en fallback naar deterministische UUID's bij ontbrekende SDKs.
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)

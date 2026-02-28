@@ -1,5 +1,6 @@
 # Neuraxon evaluatie-roadmap
 
+
 ## Doel
 Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of zelfs als productiebouwsteen.
 
@@ -66,7 +67,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Sidecar fase-1 observer implementeren (task ingest + scorecard + advisory output, zonder auto-acties) via `sidecar/observer.py` + runbook in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
 - [x] UPOW probe-script gebouwd voor 1/2/4 worker-schaalmeting (`1,2,4`) via `scripts/run_upow_probe.py`.
 - [x] Benchmarkschema uitbreiden met verplichte UPOW velden (`worker_count`, `node_id`, `throughput_steps_sec`, `cost_per_1m_steps`) + validatie in CI.
-- [ ] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
+- [x] OTel pilot op benchmark + wrapper (`run_matrix.py`, `poc_wrapper.py`) met trace-id correlatie in output.
 - [x] MLflow tracking pilot (minimale vertical slice): parent-run + 3 child-runs in lokale file-store, vaste tags (`protocol_version`, `claim_eval_version`, `git_commit`) en artifacts per run (`scripts/smoke_mlflow_slice.sh`, output onder `benchmarks/results/mlflow/smoke/`).
 - [x] MLflow tracking uitgebreid naar volledige matrix-koppeling (parent per matrix-executie + child-run per `(use_case, variant, seed)` vanuit `scripts/run_matrix.py`, incl. artifacts + vaste tags).
 - [x] Kleine reproduceerbare matrix-demonstratierun vastgelegd (`benchmarks/results/mlflow/pilot_2026-02-28/manifest_small.json`, output onder `benchmarks/results/mlflow/pilot_2026-02-28/`, verslag in `docs/MLFLOW_MATRIX_PILOT_001.md`).
@@ -115,7 +116,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
    - Backlog grooming voor volgende iteratie
 
 ### Week-exit criteria
-- [ ] OTel pilot aantoonbaar af (code + bewijsartefacts)
+- [x] OTel pilot aantoonbaar af (code + bewijsartefacts)
 - [ ] Claim-gate POC geeft machine-readable PASS/FAIL
 - [ ] OpenML drift mini-run (3 taken) gerapporteerd
 - [ ] Claim-evaluatie en benchmarkrapport geüpdatet met nieuwe evidence

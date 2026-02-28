@@ -6,12 +6,76 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
+import uuid
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, Optional
 
 SCHEMA_VERSION = "neuraxon.poc-wrapper.v1"
 WRAPPER_VERSION = "0.1.0"
+
+
+def _otel_configure() -> tuple[bool, Optional[Any]]:
+    endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "").strip()
+    if not endpoint:
+        return False, None
+
+    try:
+        from opentelemetry import trace  # type: ignore
+        from opentelemetry.sdk.resources import Resource  # type: ignore
+        from opentelemetry.sdk.trace import TracerProvider  # type: ignore
+        from opentelemetry.sdk.trace.export import BatchSpanProcessor  # type: ignore
+    except ImportError as exc:
+        print(
+            f"OTel requested via OTEL_EXPORTER_OTLP_ENDPOINT={endpoint!r}, but dependencies missing: {exc}",
+            file=sys.stderr,
+        )
+        return False, None
+
+    try:
+        from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter  # type: ignore
+        exporter_kwargs = {"endpoint": endpoint}
+    except ImportError:  # pragma: no cover
+        try:
+            from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter  # type: ignore
+            exporter_kwargs = {"endpoint": endpoint}
+        except ImportError as exc:
+            print(f"OTel requested but OTLP exporter not installed: {exc}", file=sys.stderr)
+            return False, None
+
+    service_name = os.getenv("OTEL_SERVICE_NAME", "neuraxon-phase5")
+    provider = TracerProvider(resource=Resource.create({"service.name": service_name}))
+    provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(**exporter_kwargs)))
+    trace.set_tracer_provider(provider)
+    tracer = trace.get_tracer("neuraxon.phase5.poc_wrapper")
+    return True, tracer
+
+
+@contextmanager
+def _otel_trace_scope(name: str, tracer: Optional[Any], attrs: Optional[Dict[str, Any]] = None):
+    if tracer is None:
+        yield None
+        return
+
+    with tracer.start_as_current_span(name) as span:
+        for key, value in (attrs or {}).items():
+            span.set_attribute(key, str(value))
+        yield span
+
+
+def _trace_id_from_span(span: Optional[Any]) -> str:
+    if span is None:
+        return uuid.uuid4().hex
+    try:
+        span_context = span.get_span_context()
+        trace_id = getattr(span_context, "trace_id", 0)
+        if trace_id:
+            return f"{trace_id:032x}"
+    except Exception:
+        pass
+    return uuid.uuid4().hex
 
 
 class POCWrapperError(Exception):
@@ -76,7 +140,7 @@ def normalize_payload(payload: Any) -> dict[str, Any]:
     }
 
 
-def build_success_output(normalized: dict[str, Any]) -> dict[str, Any]:
+def build_success_output(normalized: dict[str, Any], trace_id: str = "") -> dict[str, Any]:
     canonical_input = json.dumps(normalized, ensure_ascii=True, separators=(",", ":"), sort_keys=True)
     digest = hashlib.sha256(canonical_input.encode("utf-8")).hexdigest()
 
@@ -89,6 +153,10 @@ def build_success_output(normalized: dict[str, Any]) -> dict[str, Any]:
             "wrapper_version": WRAPPER_VERSION,
             "request_fingerprint": digest[:16],
             "deterministic": True,
+            "trace_id": trace_id or uuid.uuid4().hex,
+            "telemetry": {
+                "otlp_endpoint": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
+            },
         },
         "result": {
             "mode": "placeholder",
@@ -101,13 +169,17 @@ def build_success_output(normalized: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def build_error_output(code: str, message: str) -> dict[str, Any]:
+def build_error_output(code: str, message: str, trace_id: str = "") -> dict[str, Any]:
     return {
         "status": "error",
         "metadata": {
             "schema_version": SCHEMA_VERSION,
             "wrapper_version": WRAPPER_VERSION,
             "deterministic": True,
+            "trace_id": trace_id or uuid.uuid4().hex,
+            "telemetry": {
+                "otlp_endpoint": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
+            },
         },
         "error": {
             "code": code,
@@ -131,15 +203,36 @@ def main() -> int:
     input_path = Path(args.input_json)
     output_path = Path(args.output_json)
 
+    _, tracer = _otel_configure()
+
     try:
         payload = read_json(input_path)
         normalized = normalize_payload(payload)
-        result = build_success_output(normalized)
+
+        with _otel_trace_scope(
+            "poc_wrapper_run",
+            tracer,
+            {
+                "use_case": normalized["use_case"],
+                "variant": normalized["variant"],
+                "seed": normalized["seed"],
+            },
+        ) as span:
+            trace_id = _trace_id_from_span(span)
+            result = build_success_output(normalized, trace_id=trace_id)
+
         write_json(output_path, result)
         print(f"Wrote POC output to {output_path}")
         return 0
     except POCWrapperError as exc:
-        error_payload = build_error_output(exc.code, str(exc))
+        with _otel_trace_scope(
+            "poc_wrapper_error",
+            tracer,
+            {"error_code": exc.code},
+        ) as span:
+            trace_id = _trace_id_from_span(span)
+            error_payload = build_error_output(exc.code, str(exc), trace_id=trace_id)
+
         try:
             write_json(output_path, error_payload)
         except POCWrapperError:

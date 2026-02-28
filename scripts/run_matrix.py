@@ -15,9 +15,12 @@ import csv
 import hashlib
 import json
 import math
+import os
 import random
 import re
 import subprocess
+import uuid
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from itertools import product
 from pathlib import Path
@@ -27,6 +30,7 @@ from typing import Any, Dict, Iterable, List, Optional
 BASE_FIELDS = [
     "run_id",
     "ts_utc",
+    "trace_id",
     "use_case",
     "variant",
     "seed",
@@ -194,6 +198,66 @@ def _sanitize_fragment(value: str) -> str:
 
 def _default_ts_utc() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+@contextmanager
+def _otel_trace_scope(name: str, attrs: Optional[Dict[str, Any]] = None):
+    if not OTEL_ENABLED:
+        yield None
+        return
+    assert OTEL_TRACER is not None
+    with OTEL_TRACER.start_as_current_span(name) as span:
+        for key, value in (attrs or {}).items():
+            span.set_attribute(str(key), str(value))
+        yield span
+
+
+def _trace_id_from_span(span: Optional[Any]) -> str:
+    if span is None:
+        return uuid.uuid4().hex
+    try:
+        span_context = span.get_span_context()
+        trace_id = getattr(span_context, "trace_id", 0)
+        if trace_id:
+            return f"{trace_id:032x}"
+    except Exception:
+        pass
+    return uuid.uuid4().hex
+
+
+def _otel_configure() -> tuple[bool, Any]:
+    endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "").strip()
+    if not endpoint:
+        return False, None
+    try:
+        from opentelemetry import trace  # type: ignore
+        from opentelemetry.sdk.resources import Resource  # type: ignore
+        from opentelemetry.sdk.trace import TracerProvider  # type: ignore
+        from opentelemetry.sdk.trace.export import BatchSpanProcessor  # type: ignore
+    except ImportError as exc:
+        print(f"OTel requested via OTEL_EXPORTER_OTLP_ENDPOINT={endpoint!r}, but dependencies missing: {exc}")
+        return False, None
+
+    try:
+        from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter  # type: ignore
+        exporter_kwargs = {"endpoint": endpoint}
+    except ImportError:  # pragma: no cover
+        try:
+            from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter  # type: ignore
+            exporter_kwargs = {"endpoint": endpoint}
+        except ImportError as exc:
+            print(f"OTel requested but OTLP exporter not installed: {exc}")
+            return False, None
+
+    service_name = os.getenv("OTEL_SERVICE_NAME", "neuraxon-phase5")
+    provider = TracerProvider(resource=Resource.create({"service.name": service_name}))
+    provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(**exporter_kwargs)))
+    trace.set_tracer_provider(provider)
+    return True, trace.get_tracer("neuraxon.phase5.run_matrix")
+
+
+OTEL_ENABLED = False
+OTEL_TRACER = None
 
 
 def _seed_to_int(seed: str) -> int:
@@ -377,23 +441,41 @@ def build_rows(
         status = "ok"
         error_msg = ""
         metrics = _empty_metrics()
-        try:
-            metrics = _build_metrics(
-                use_case=use_case,
-                variant=variant,
-                seed=seed,
-                budget=budget,
-                worker_count=int(worker_count),
-                seed_int=_seed_to_int(seed),
-            )
-        except Exception as exc:  # pragma: no cover - defensive path
-            status = "error"
-            error_msg = f"{type(exc).__name__}: {exc}"
+        trace_id = ""
+        with _otel_trace_scope(
+            "run_matrix_row",
+            {
+                "run_id": run_id,
+                "use_case": use_case,
+                "variant": variant,
+                "seed": seed,
+                "worker_count": worker_count,
+            },
+        ) as span:
+            trace_id = _trace_id_from_span(span)
+            try:
+                if span is not None:
+                    span.set_attribute("run.status", "ok")
+                metrics = _build_metrics(
+                    use_case=use_case,
+                    variant=variant,
+                    seed=seed,
+                    budget=budget,
+                    worker_count=int(worker_count),
+                    seed_int=_seed_to_int(seed),
+                )
+            except Exception as exc:  # pragma: no cover - defensive path
+                status = "error"
+                error_msg = f"{type(exc).__name__}: {exc}"
+                if span is not None:
+                    span.set_attribute("run.status", "error")
+                    span.record_exception(exc)
 
         rows.append(
             {
                 "run_id": run_id,
                 "ts_utc": ts_utc,
+                "trace_id": trace_id,
                 "use_case": use_case,
                 "variant": variant,
                 "seed": seed,
@@ -499,6 +581,7 @@ def _track_matrix_mlflow(
                 "row_count": len(rows),
                 "tracking_dir": str(tracking_dir),
                 "output_dir": str(run_output_dir),
+                "otel_enabled": OTEL_ENABLED,
             }
         )
 
@@ -539,6 +622,7 @@ def _track_matrix_mlflow(
                     {
                         "seed": row["seed"],
                         "run_id": row["run_id"],
+                        "trace_id": row["trace_id"],
                         "row_index": index,
                     }
                 )
@@ -694,6 +778,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+
+    global OTEL_ENABLED, OTEL_TRACER
+    OTEL_ENABLED, OTEL_TRACER = _otel_configure()
+
     manifest_path = Path(args.manifest)
     out_path = Path(args.out)
     ts_utc = args.ts_utc if args.ts_utc else _default_ts_utc()
