@@ -47,6 +47,7 @@
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)
 - [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
+  - **Blokkerende input:** in-run simulatieproducering levert nog geen `stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`; UPOW-proof mist nog multi-node, distributed 1/4-sweep met herhaalbaarheid.
 - [ ] UPOW probe-runner implementeren met 1->4 worker-schaalmeting (throughput/success-rate/reproduceerbaarheid/kost)
 - [ ] Volledige protocolmetricset in raw output (`stability_var`, `sigma_branching`, `collapse_flag`, `recovery95_steps`)
 

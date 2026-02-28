@@ -7,7 +7,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 ## Succescriteria (go/no-go)
 - **Technisch:** reproduceerbaar runbaar, basis-tests groen, geen kritieke stabiliteitsissues.
 - **Performance:** op minstens 1 relevante use-case aantoonbare meerwaarde vs simpele baseline.
-- **Operationeel:** beheersbare complexiteit, heldere onderhoudslast, duidelijke licentiegrenzen.
+- **Operationeel:** beheersbare complexiteit, duidelijke onderhoudslast, duidelijke licentiegrenzen.
 
 ---
 
@@ -73,6 +73,7 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 - [x] Kleine reproduceerbare matrix-demonstratierun vastgelegd (`benchmarks/results/mlflow/pilot_2026-02-28/manifest_small.json`, output onder `benchmarks/results/mlflow/pilot_2026-02-28/`, verslag in `docs/MLFLOW_MATRIX_PILOT_001.md`).
 - [x] Automatische claim-gate POC (machine-readable PASS/FAIL op protocol-drempels) via `scripts/claim_gate.py` + `scripts/check_claim_gate.sh`; huidige gate-resultaat: **FAIL** (`benchmarks/results/summary/claim_gate.json`).
 - [ ] Claim-gate van FAIL naar PASS brengen door ontbrekende protocolmetrics en UPOW-schaalmetingen toe te voegen
+  - **Beslissing:** voer eerst een *instrumentatie-first* route in (echt metricsveld toevoegen in `run_matrix.py`) in plaats van post-hoc proxy-feningen, om bewijs-integriteit te bewaren.
 - [x] Externe kalibratie-mini-run op 3 OpenML taken + driftrapport (River ADWIN) opgeleverd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
 
 ### Beslissingstabel — Sidecar fase-1
@@ -81,6 +82,13 @@ Objectief bepalen of Neuraxon (v1/v2) voor ons nuttig is als **R&D-engine** of z
 | Inputcontract | Strikt schema vs best-effort aliasing | **Best-effort aliasing** (`taskId`/`task_id`/`id`, `events`/`history`) | Past op bestaande runtime dumps zonder migratieblokkade. |
 | Scoringmethode | ML-model vs regelgebaseerd | **Regelgebaseerd** | Transparant, reproduceerbaar en reviewbaar voor fase-1 pilot. |
 | Output | Alleen latest vs latest + timestamped | **Latest standaard**, timestamped opt-in (`--write-timestamped`) | Houdt output clean, maar laat audit-trail toe wanneer nodig. |
+
+### Beslissingstabel — Claim-gate pass naar pass
+| Vraag | Optie A | Optie B | Keuze |
+|---|---|---|---|
+| SOC-metriek aanvulling | Schat proxies uit bestaande velden | Implementeer echte SOC-metriek in simulator | **B** (echt bewijs voorkomt onbetrouwbare pass) |
+| UPOW schaalbewijs | Alleen 1→4 worker-locaal | Multi-node+worker sweep met herhaalbaarheid | **B** (eis voor reproduceerbaarheid en claimscore) |
+| Scope | Alles in één grote sprint | Gefaseerd: eerst missing fields, dan thresholds | **Gefaseerd** (lagere lock-in, meetbaarder voortgang) |
 
 **Deliverable:** `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md` + `docs/RESEARCH_FRONTIER_001.md` + eerste pilot-output onder `benchmarks/results/`
 
