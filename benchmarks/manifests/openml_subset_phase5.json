@@ -1,0 +1,25 @@
+{
+  "suite": "OpenML-CC18",
+  "task_ids": [11, 37, 43],
+  "variants": ["neuraxon_full_proxy", "baseline_classic"],
+  "seed": 20260227,
+  "budget": {
+    "max_samples_per_task": 2500,
+    "warm_start_samples": 120,
+    "accuracy_window": 128,
+    "recovery_hold_steps": 32
+  },
+  "drift": {
+    "mode": "deterministic_label_permutation_D1_D2_D1",
+    "start_frac": 0.5,
+    "end_frac": 0.75,
+    "collapse_threshold_frac": 0.8
+  },
+  "adwin": {
+    "delta": 0.002,
+    "clock": 32,
+    "max_buckets": 5,
+    "min_window_length": 5,
+    "grace_period": 10
+  }
+}

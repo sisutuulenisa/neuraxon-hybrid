@@ -1,7 +1,7 @@
 # STATUS — Neuraxon evaluatie
 
-**Laatste update:** 2026-02-27
-**Fase:** 5 (Qubic ecosystem-analyse + MLflow minimale smoke-slice opgeleverd)
+**Laatste update:** 2026-02-28
+**Fase:** 5 (Qubic + MLflow smoke-slice + OpenML drift mini-run opgeleverd)
 
 - [klaar] MLflow minimale vertical slice opgeleverd: parent + 3 child runs lokaal in file-store, vaste tags en artifacts per run (`scripts/smoke_mlflow_slice.sh`, `scripts/run_mlflow_smoke.py`)
 - [klaar] Reproduceerbare smoke-output aanwezig onder `benchmarks/results/mlflow/smoke/` (incl. `outputs/latest_smoke_run.json` + run artifacts)
@@ -15,6 +15,7 @@
   - UPOW: **INCONCLUSIVE**
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
+- [klaar] Bounded OpenML kalibratieronde op 3 CC18-taken afgerond met driftsignalen via River ADWIN; reproducible runner + manifest + outputs + compacte protocolmapping toegevoegd (`scripts/run_openml_subset.py`, `benchmarks/manifests/openml_subset_phase5.json`, `benchmarks/results/openml/pilot_2026-02-28/`, `docs/OPENML_DRIFT_MINIRUN_001.md`).
 
 ## Aantoonbaar afgerond
 - [x] Fase-2 testprotocol vastgelegd: `docs/TEST_PROTOCOL_PHASE1_2.md`
