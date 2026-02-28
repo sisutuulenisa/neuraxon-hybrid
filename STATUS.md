@@ -4,7 +4,7 @@
 **Fase:** 5 (SA-first uitvoering op open pilots + MLflow matrix pilot + claim-gate + OpenML drift mini-run opgeleverd)
 
 - [klaar] Executorstrategie tijdelijk omgezet naar **SA-first** voor open fase-5 queue-items (OTel/MLflow/claim-gate/OpenML drift) om ACP-stallgedrag te vermijden.
-- [bezig] `neuraxon-phase5-otel-pilot-2026-02-27` draait nu als subagent-task met checkpoint-guardrails.
+- [klaar] `neuraxon-phase5-otel-pilot-2026-02-27` is afgerond met trace-id correlatie in `run_matrix.py` + `poc_wrapper.py`.
 - [klaar] MLflow minimale vertical slice opgeleverd: parent + 3 child runs lokaal in file-store, vaste tags en artifacts per run (`scripts/smoke_mlflow_slice.sh`, `scripts/run_mlflow_smoke.py`)
 - [klaar] Reproduceerbare smoke-output aanwezig onder `benchmarks/results/mlflow/smoke/` (incl. `outputs/latest_smoke_run.json` + run artifacts)
 - [klaar] `scripts/run_matrix.py` ondersteunt optionele lokale MLflow-tracking voor volledige matrix-runs: parent-run per executie + child-run per `(use_case, variant, seed)` met metrics + artifacts + vaste tags (`protocol_version`, `claim_eval_version`, `git_commit`), inclusief CLI-compatibiliteit voor `--enable-mlflow` en `--mlflow-track`.
@@ -42,7 +42,7 @@
   - `score_main`
   - `drift_recovery_t90` (waar van toepassing)
   - `forgetting_delta` (waarvan toepassing)
-- [x] OTel pilot op benchmark + wrapper afgerond: `run_matrix.py` en `poc_wrapper.py` voegen nu `trace_id` toe aan respectievelijk matrix-output en wrapper-metadata; afhankelijk van `OTEL_EXPORTER_OTLP_ENDPOINT` activeert optionele export en fallback naar deterministische UUID's bij ontbrekende SDKs.
+- [x] OTel pilot op benchmark + wrapper afgerond: `run_matrix.py` en `poc_wrapper.py` voegen nu `trace_id` toe aan respectievelijk matrix-output en wrapper-metadata; afhankelijk van `OTEL_EXPORTER_OTLP_ENDPOINT` activeert optionele export en fallback naar deterministische hashing wanneer SDK/spans niet actief zijn.
 
 ## Expliciet nog niet afgerond (voor volgende iteratie)
 - [ ] Volledige protocoldekking voor alle claims (ontbrekende metrics toevoegen zodat 3/3 claims volledig beslisbaar zijn)

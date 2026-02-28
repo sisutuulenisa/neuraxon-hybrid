@@ -8,10 +8,9 @@ import hashlib
 import json
 import os
 import sys
-import uuid
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Iterable, Optional
 
 SCHEMA_VERSION = "neuraxon.poc-wrapper.v1"
 WRAPPER_VERSION = "0.1.0"
@@ -65,9 +64,15 @@ def _otel_trace_scope(name: str, tracer: Optional[Any], attrs: Optional[Dict[str
         yield span
 
 
-def _trace_id_from_span(span: Optional[Any]) -> str:
+def _trace_id_fallback(parts: Iterable[str]) -> str:
+    return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:32]
+
+
+def _trace_id_from_span(span: Optional[Any], fallback_parts: Optional[Iterable[str]] = None) -> str:
     if span is None:
-        return uuid.uuid4().hex
+        if fallback_parts is None:
+            return uuid.uuid4().hex
+        return _trace_id_fallback(list(fallback_parts))
     try:
         span_context = span.get_span_context()
         trace_id = getattr(span_context, "trace_id", 0)
@@ -75,7 +80,9 @@ def _trace_id_from_span(span: Optional[Any]) -> str:
             return f"{trace_id:032x}"
     except Exception:
         pass
-    return uuid.uuid4().hex
+    if fallback_parts is None:
+        return uuid.uuid4().hex
+    return _trace_id_fallback(list(fallback_parts))
 
 
 class POCWrapperError(Exception):
@@ -132,11 +139,18 @@ def normalize_payload(payload: Any) -> dict[str, Any]:
     if not isinstance(params_raw, dict):
         raise POCWrapperError("contract_validation_error", "Field 'params' must be an object")
 
+    trace_ctx = payload.get("trace", payload.get("trace_context", {}))
+    if not isinstance(trace_ctx, dict):
+        trace_ctx = {}
+
+    parent_trace_id = str(trace_ctx.get("trace_id", "")).strip() if "trace_id" in trace_ctx else ""
+
     return {
         "use_case": use_case,
         "variant": variant,
         "seed": seed,
         "params": params_raw,
+        "parent_trace_id": parent_trace_id,
     }
 
 
@@ -153,10 +167,11 @@ def build_success_output(normalized: dict[str, Any], trace_id: str = "") -> dict
             "wrapper_version": WRAPPER_VERSION,
             "request_fingerprint": digest[:16],
             "deterministic": True,
-            "trace_id": trace_id or uuid.uuid4().hex,
             "telemetry": {
-                "otlp_endpoint": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
+                "enabled": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
             },
+            "trace_id": trace_id,
+            "trace_parent_id": normalized.get("parent_trace_id", ""),
         },
         "result": {
             "mode": "placeholder",
@@ -176,10 +191,10 @@ def build_error_output(code: str, message: str, trace_id: str = "") -> dict[str,
             "schema_version": SCHEMA_VERSION,
             "wrapper_version": WRAPPER_VERSION,
             "deterministic": True,
-            "trace_id": trace_id or uuid.uuid4().hex,
             "telemetry": {
-                "otlp_endpoint": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
+                "enabled": bool(os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")),
             },
+            "trace_id": trace_id,
         },
         "error": {
             "code": code,
@@ -209,6 +224,12 @@ def main() -> int:
         payload = read_json(input_path)
         normalized = normalize_payload(payload)
 
+        trace_parts = (
+            normalized["use_case"],
+            normalized["variant"],
+            normalized["seed"],
+            normalized.get("parent_trace_id", ""),
+        )
         with _otel_trace_scope(
             "poc_wrapper_run",
             tracer,
@@ -218,7 +239,7 @@ def main() -> int:
                 "seed": normalized["seed"],
             },
         ) as span:
-            trace_id = _trace_id_from_span(span)
+            trace_id = _trace_id_from_span(span, fallback_parts=trace_parts)
             result = build_success_output(normalized, trace_id=trace_id)
 
         write_json(output_path, result)
@@ -230,7 +251,10 @@ def main() -> int:
             tracer,
             {"error_code": exc.code},
         ) as span:
-            trace_id = _trace_id_from_span(span)
+            trace_id = _trace_id_from_span(
+                span,
+                fallback_parts=("error", exc.code),
+            )
             error_payload = build_error_output(exc.code, str(exc), trace_id=trace_id)
 
         try:

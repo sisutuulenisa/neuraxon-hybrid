@@ -19,7 +19,6 @@ import os
 import random
 import re
 import subprocess
-import uuid
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from itertools import product
@@ -212,9 +211,14 @@ def _otel_trace_scope(name: str, attrs: Optional[Dict[str, Any]] = None):
         yield span
 
 
-def _trace_id_from_span(span: Optional[Any]) -> str:
+def _trace_id_fallback(parts: Iterable[str]) -> str:
+    seed = "|".join(parts)
+    return hashlib.sha256(seed.encode("utf-8")).hexdigest()[:32]
+
+
+def _trace_id_from_span(span: Optional[Any], fallback_parts: Iterable[str]) -> str:
     if span is None:
-        return uuid.uuid4().hex
+        return _trace_id_fallback(list(fallback_parts))
     try:
         span_context = span.get_span_context()
         trace_id = getattr(span_context, "trace_id", 0)
@@ -222,7 +226,7 @@ def _trace_id_from_span(span: Optional[Any]) -> str:
             return f"{trace_id:032x}"
     except Exception:
         pass
-    return uuid.uuid4().hex
+    return _trace_id_fallback(list(fallback_parts))
 
 
 def _otel_configure() -> tuple[bool, Any]:
@@ -441,7 +445,7 @@ def build_rows(
         status = "ok"
         error_msg = ""
         metrics = _empty_metrics()
-        trace_id = ""
+        trace_parts = (run_id, use_case, variant, seed, worker_count)
         with _otel_trace_scope(
             "run_matrix_row",
             {
@@ -452,7 +456,7 @@ def build_rows(
                 "worker_count": worker_count,
             },
         ) as span:
-            trace_id = _trace_id_from_span(span)
+            trace_id = _trace_id_from_span(span, fallback_parts=trace_parts)
             try:
                 if span is not None:
                     span.set_attribute("run.status", "ok")
@@ -470,6 +474,7 @@ def build_rows(
                 if span is not None:
                     span.set_attribute("run.status", "error")
                     span.record_exception(exc)
+                trace_id = _trace_id_from_span(span, fallback_parts=(f"{trace_parts[0]}-error", *trace_parts[1:]))
 
         rows.append(
             {
