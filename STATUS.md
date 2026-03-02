@@ -18,6 +18,7 @@
   - SOC: **INCONCLUSIVE**
   - UPOW: **INCONCLUSIVE**
 - [klaar] Publieke Neuraxon-signalen (Qubic all-hands/blog, LinkedIn, openPR, HF activity) toegevoegd als contextbron in `docs/QUBIC_ECOSYSTEM_ANALYSIS_001.md`; claimstatus blijft ongewijzigd.
+- [klaar] Qubic March nieuwsbrief (2026-03-02) beoordeeld en samengevat in `docs/QUBIC_NEWSLETTER_2026-03-02.md` (interessant contextsignaal, geen directe claim-statuswijziging).
 - [klaar] AGI-contextsamenvatting toegevoegd in `docs/AGI_CONTEXT_2026-02-27.md` (state-of-the-art vs hype, governance/risico, implicaties voor claim-discipline).
 - [klaar] Shadow sidecar ontwerp toegevoegd als veilige read-only pilot (`docs/SHADOW_ORCHESTRATOR_SIDECAR_001.md` + `sidecar/README.md`).
 - [klaar] Sidecar fase-1 observer opgeleverd (`sidecar/observer.py`) met read-only task ingest + scorecard + advisory output (`sidecar/out/task-advice-latest.json`), inclusief runbook/evidence in `docs/SIDECAR_PHASE1_OBSERVER_001.md`.
