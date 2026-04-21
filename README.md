@@ -9,9 +9,37 @@ Neuraxon Agent wraps the upstream Neuraxon codebase in a clean, testable Python 
 - **Tissue** — structural connective substrate
 - **Perception** — sensory input processing
 - **Action** — motor output and effector control
-- **Modulation** — dynamic parameter adjustment
+- **Modulation** — dynamic parameter adjustment and neuromodulator feedback
 - **Memory** — episodic experience storage
 - **Evolution** — adaptive learning hooks
+
+## Neuromodulator Feedback Loop
+
+Agent outcomes are translated into neuromodulator deltas that shape network
+behaviour over time.
+
+| Outcome | Dopamine | Serotonine | Acetylcholine | Norepinephrine |
+|---------|----------|------------|---------------|----------------|
+| success | +0.30    | +0.10      | +0.10         | +0.05          |
+| failure | -0.10    | -0.20      | +0.20         | +0.30          |
+| partial | +0.10    | -0.05      | +0.15         | +0.15          |
+| timeout | -0.05    | -0.10      | +0.10         | +0.20          |
+
+```python
+from neuraxon_agent import AgentTissue
+
+tissue = AgentTissue()
+tissue.modulate("success")   # increases dopamine
+tissue.modulate("failure")   # decreases serotonin
+
+# Adaptive learning
+metrics = tissue.feedback.convergence_metrics()
+print(metrics["is_stable"])  # True when deltas stabilise
+```
+
+The mapping is fully configurable via `ModulationFeedback`, and an adaptive
+layer tracks running means so the network can learn optimal modulation
+strengths for its environment.
 
 ## Installation
 

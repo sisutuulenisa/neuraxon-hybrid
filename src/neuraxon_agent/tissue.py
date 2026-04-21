@@ -9,6 +9,7 @@ from typing import Any
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork
 from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.action import ActionDecoder, AgentAction
+from neuraxon_agent.modulation import ModulationFeedback
 
 
 @dataclass
@@ -34,6 +35,7 @@ class AgentTissue:
         self.encoder = PerceptionEncoder(self.params.num_input_neurons)
         self.decoder = ActionDecoder(self.params.num_output_neurons)
         self._last_observation: dict[str, Any] | None = None
+        self._feedback = ModulationFeedback()
 
     def observe(self, observation: dict[str, Any]) -> None:
         """Encode an observation and feed it to the network input neurons."""
@@ -48,17 +50,20 @@ class AgentTissue:
         output_states = self.network.get_output_states()
         return self.decoder.decode(output_states)
 
-    def modulate(self, outcome: str) -> None:
-        """Apply neuromodulator feedback based on outcome."""
-        if outcome == "success":
-            reward = {"dopamine": 1.0, "serotonin": 0.5}
-        elif outcome == "failure":
-            reward = {"dopamine": -1.0, "serotonin": -0.5}
-        elif outcome == "partial":
-            reward = {"dopamine": 0.3, "serotonin": 0.0}
-        else:
-            reward = {}
-        self.network.modulate(reward)
+    def modulate(self, outcome: str) -> dict[str, float]:
+        """Apply neuromodulator feedback based on outcome.
+
+        Uses :class:`ModulationFeedback` to translate *outcome* into
+        neuromodulator deltas and applies them to the underlying network.
+
+        Returns the deltas that were applied.
+        """
+        return self._feedback.apply(self.network, outcome)
+
+    @property
+    def feedback(self) -> ModulationFeedback:
+        """Return the :class:`ModulationFeedback` instance used by this tissue."""
+        return self._feedback
 
     def save(self, path: str) -> None:
         """Serialize network state to JSON."""
@@ -88,9 +93,14 @@ class AgentTissue:
     def state(self) -> TissueState:
         """Return current observable tissue state."""
         nm = self.network.neuromodulators
+        all_states_dict = self.network.get_all_states()
+        flat_states: list[int] = []
+        for group in all_states_dict.values():
+            flat_states.extend(group)
+        activity = sum(abs(s) for s in flat_states) / max(len(flat_states), 1)
         return TissueState(
             energy=self.network.get_energy(),
-            activity=sum(abs(s) for s in self.network.get_all_states()) / max(len(self.network.all_neurons), 1),
+            activity=activity,
             step_count=self.network.step_count,
             dopamine=nm.get("dopamine", 0.0),
             serotonin=nm.get("serotonin", 0.0),

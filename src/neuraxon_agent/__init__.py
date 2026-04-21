@@ -3,7 +3,7 @@
 from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.action import ActionDecoder, AgentAction
 from neuraxon_agent.tissue import AgentTissue, TissueState
-from neuraxon_agent.modulation import Modulation
+from neuraxon_agent.modulation import Modulation, ModulationFeedback
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.evolution import Evolution
 
@@ -14,6 +14,7 @@ __all__ = [
     "AgentTissue",
     "TissueState",
     "Modulation",
+    "ModulationFeedback",
     "Memory",
     "Evolution",
 ]

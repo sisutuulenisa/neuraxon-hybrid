@@ -26,24 +26,27 @@ def test_tissue_think() -> None:
     tissue = AgentTissue(params)
     tissue.observe({"type": "prompt", "content": "hello"})
     action = tissue.think(steps=5)
-    assert action.actie_type in ("idle", "execute", "query", "respond", "explore", "retry")
+    defined_actions = {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
+    assert action.actie_type in defined_actions
     assert 0.0 <= action.confidence <= 1.0
 
 
 def test_tissue_modulate_success() -> None:
     tissue = AgentTissue()
     pre = tissue.state.dopamine
-    tissue.modulate("success")
+    deltas = tissue.modulate("success")
     post = tissue.state.dopamine
     assert post > pre
+    assert "dopamine" in deltas
 
 
 def test_tissue_modulate_failure() -> None:
     tissue = AgentTissue()
-    pre = tissue.state.dopamine
-    tissue.modulate("failure")
-    post = tissue.state.dopamine
+    pre = tissue.state.serotonin
+    deltas = tissue.modulate("failure")
+    post = tissue.state.serotonin
     assert post < pre
+    assert "dopamine" in deltas
 
 
 def test_tissue_save_load() -> None:
@@ -65,3 +68,10 @@ def test_tissue_state_returns_tissue_state() -> None:
     assert isinstance(state, TissueState)
     assert hasattr(state, "energy")
     assert hasattr(state, "dopamine")
+
+
+def test_tissue_feedback_property() -> None:
+    tissue = AgentTissue()
+    fb = tissue.feedback
+    assert fb is not None
+    assert fb.get_deltas("success")["dopamine"] == 0.30
