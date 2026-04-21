@@ -1,7 +1,0 @@
-Phase 5 MLflow matrix summary
-parent_run_id=bf2dbafbd4b94c85b1d1fb2a443e7642
-tracking_dir=/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-tracking-2026-02-27/benchmarks/results/mlflow/pilot_2026-02-28/mlruns
-run_output_dir=/home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid/.worktrees/neuraxon-phase5-mlflow-tracking-2026-02-27/benchmarks/results/mlflow/pilot_2026-02-28/outputs/matrix_20260227T233125Z
-rows_total=8
-rows_ok=8
-rows_error=0
