@@ -73,14 +73,42 @@ neuraxon-hybrid/
 │   ├── action.py
 │   ├── modulation.py
 │   ├── memory.py
-│   └── evolution.py
+│   ├── evolution.py
+│   └── vendor/             # Upstream dependency shim
+│       ├── __init__.py
+│       └── neuraxon2.py    # Fallback vendor copy
 ├── tests/                  # Test suite
 ├── examples/               # Usage examples
-├── upstream/Neuraxon/      # Upstream source (submodule)
+├── upstream/Neuraxon/      # Upstream source (git submodule)
 ├── scripts/                # Utility scripts
 ├── pyproject.toml
 └── README.md
 ```
+
+## Updating the upstream dependency
+
+Neuraxon is tracked as a git submodule under `upstream/Neuraxon`.
+
+**Fetch latest upstream version:**
+
+```bash
+# Pull latest upstream changes
+cd upstream/Neuraxon
+git pull origin main
+cd ../..
+
+# Update the bundled fallback copy
+cp upstream/Neuraxon/neuraxon2.py src/neuraxon_agent/vendor/neuraxon2.py
+
+# Commit the submodule pointer + fallback copy
+git add upstream/Neuraxon src/neuraxon_agent/vendor/neuraxon2.py
+git commit -m "vendor: update Neuraxon to latest upstream"
+```
+
+**Without submodule (fallback):**
+If the submodule is not initialized, the vendor shim automatically falls back
+to `src/neuraxon_agent/vendor/neuraxon2.py`. You can also replace that file
+manually if needed.
 
 ## License
 

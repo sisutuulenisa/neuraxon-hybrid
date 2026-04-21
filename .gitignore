@@ -34,8 +34,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Upstream source clone (use scripts/docs to re-fetch)
-upstream/Neuraxon/
+# Upstream source clone is now managed as a git submodule
+# (see upstream/Neuraxon — do not ignore the submodule path itself)
 
 # Local artifacts
 *.log
