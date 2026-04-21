@@ -1,42 +1,65 @@
-# Neuraxon Hybrid Workspace
+# neuraxon-agent
 
-Doel: een **overzichtelijke plugin-hybride** evaluatie van Neuraxon opzetten.
+Intelligence Tissue for CLI AI Agents, powered by [Neuraxon](https://github.com/DavidVivancos/Neuraxon) v2.0.
 
-## Structuur
+## Wat is dit?
 
-- `docs/` — roadmap, claim-matrix, paper-notes, beslissingen
-- `upstream/` — referenties naar upstream code (Neuraxon repo)
-- `plugins/` — onze pluginlaag (interfaces + adapters)
-- `benchmarks/` — benchmark scenario's, scripts en resultaten
-- `data/` — kleine testdata/manifests (geen zware datasets committen)
-- `scripts/` — lokale helper scripts voor reproduceerbare runs
+`neuraxon-agent` is een agent-integratielaag rond Neuraxon v2.0 — een bio-geinspireerd neuraal netwerk met trinaire toestanden, continue tijd, en 4 neuromodulatoren. Dit project maakt het mogelijk om Neuraxon als "intelligentie weefsel" te gebruiken voor CLI AI agents zoals Hermes.
 
-## Principes
+## Architectuur
 
-1. **Kerncode vs pluginlaag scheiden**
-2. **Alles reproduceerbaar documenteren**
-3. **Claims pas accepteren na meetbaar bewijs**
-
-## Swarm orchestration-notitie
-
-Queue/prompts voor swarm orchestration leven bewust **buiten deze projectrepo**:
-
-- runtime queue/state: `local/runtime/agent-swarm/...`
-- orchestration prompt templates: `local/scripts/agent-swarm/prompts/...`
-
-Zo blijft deze repo clean en projectgericht.
-
-## Visuele statuspagina (lokaal/Tailscale)
-
-Dashboard: `dashboard/index.html`
-
-Server starten:
-
-```bash
-cd /home/sisu/.openclaw/workspace/local/projects/neuraxon-hybrid
-python3 scripts/serve_dashboard.py --host 0.0.0.0 --port 8787
+```
+AgentTissue (wrapper)
+  ├── PerceptionEncoder    → zet observaties om naar trinaire input
+  ├── NeuraxonNetwork      → het bio-neurale netwerk
+  ├── ActionDecoder        → zet output om naar agent acties
+  ├── ModulationFeedback   → dopamine/serotonine feedback loop
+  ├── TissueMemory         → pattern storage en recall
+  ├── AgentEvolution       → Aigarth evolutionaire training
+  └── StreamingLoop        → real-time simulatie loop
 ```
 
-URL (Tailscale):
+## Snel starten
 
-- `http://100.76.31.10:8787/dashboard/`
+```bash
+# Installeren
+pip install -e ".[dev]"
+
+# CLI gebruiken
+neuraxon-agent think -i observation.json -o action.json
+neuraxon-agent modulate -i outcome.json -o result.json
+neuraxon-agent evolve -g 5 -o summary.json
+
+# Python API
+from neuraxon_agent import AgentTissue
+
+tissue = AgentTissue()
+tissue.observe({"type": "prompt", "content": "hello"})
+action = tissue.think(steps=10)
+print(action.actie_type, action.confidence)
+tissue.modulate("success")
+```
+
+## Projectstructuur
+
+| Module | Functie |
+|--------|---------|
+| `perception.py` | Observaties → trinaire input encoding |
+| `action.py` | Trinaire output → agent acties |
+| `tissue.py` | NeuraxonNetwork wrapper |
+| `modulation.py` | Neuromodulator feedback loop |
+| `memory.py` | Pattern storage en recall |
+| `evolution.py` | Aigarth evolutionaire training |
+| `streaming.py` | Real-time simulatie loop |
+| `cli.py` | JSON CLI interface |
+| `vendor/` | Neuraxon v2.0 upstream code |
+
+## Tests
+
+```bash
+PYTHONPATH=src python -m pytest tests/ -v
+```
+
+## Status
+
+Dit project is in actieve ontwikkeling. Zie de [GitHub issues](https://github.com/sisutuulenisa/neuraxon-hybrid/issues) voor de roadmap.

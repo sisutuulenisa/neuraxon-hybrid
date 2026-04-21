@@ -1,23 +1,45 @@
-# Python / local env
-.venv/
-.venv-mlflow-smoke/
-.venv-openml/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Generated runtime artifacts
-neuraxon_network.json
-neuraxon_v2_network.json
-logs/*.log
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
 
-# Local MLflow stores (repro metadata lives in outputs/, not in mlruns/)
-benchmarks/results/mlflow/**/mlruns/
-
-# Upstream source clone (use scripts/docs to re-fetch)
-upstream/Neuraxon/
-
-# OS/editor noise
+# IDEs / OS
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
+.vscode/
+.idea/
+
+# Upstream source clone is now managed as a git submodule
+# (see upstream/Neuraxon — do not ignore the submodule path itself)
+
+# Local artifacts
+*.log
+logs/
+
+# Worktrees
+.worktrees/
