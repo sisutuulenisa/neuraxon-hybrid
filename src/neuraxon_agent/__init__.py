@@ -2,7 +2,7 @@
 
 __version__ = "0.1.0"
 
-from .action import Action
+from .action import Action, ActionDecoder, AgentAction
 from .evolution import Evolution
 from .memory import Memory
 from .modulation import Modulation
@@ -14,6 +14,8 @@ __all__ = [
     "Perception",
     "PerceptionEncoder",
     "Action",
+    "ActionDecoder",
+    "AgentAction",
     "Modulation",
     "Memory",
     "Evolution",
