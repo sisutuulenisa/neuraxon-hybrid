@@ -1,21 +1,18 @@
-"""Neuraxon Agent — Agent integration layer for the Neuraxon upstream library."""
+"""Neuraxon Agent — Intelligence Tissue for CLI AI Agents."""
 
-__version__ = "0.1.0"
-
-from .action import Action, ActionDecoder, AgentAction
-from .evolution import Evolution
-from .memory import Memory
-from .modulation import Modulation
-from .perception import Perception, PerceptionEncoder
-from .tissue import Tissue
+from neuraxon_agent.perception import PerceptionEncoder
+from neuraxon_agent.action import ActionDecoder, AgentAction
+from neuraxon_agent.tissue import AgentTissue, TissueState
+from neuraxon_agent.modulation import Modulation
+from neuraxon_agent.memory import Memory
+from neuraxon_agent.evolution import Evolution
 
 __all__ = [
-    "Tissue",
-    "Perception",
     "PerceptionEncoder",
-    "Action",
     "ActionDecoder",
     "AgentAction",
+    "AgentTissue",
+    "TissueState",
     "Modulation",
     "Memory",
     "Evolution",
