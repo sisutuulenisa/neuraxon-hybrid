@@ -1,143 +1,65 @@
-# Neuraxon Agent
+# neuraxon-agent
 
-Agent integration layer for the Neuraxon upstream library. This package provides a modular substrate for building adaptive agents around the core Neuraxon tissue model.
+Intelligence Tissue for CLI AI Agents, powered by [Neuraxon](https://github.com/DavidVivancos/Neuraxon) v2.0.
 
-## Project goal
+## Wat is dit?
 
-Neuraxon Agent wraps the upstream Neuraxon codebase in a clean, testable Python package focused on:
+`neuraxon-agent` is een agent-integratielaag rond Neuraxon v2.0 — een bio-geinspireerd neuraal netwerk met trinaire toestanden, continue tijd, en 4 neuromodulatoren. Dit project maakt het mogelijk om Neuraxon als "intelligentie weefsel" te gebruiken voor CLI AI agents zoals Hermes.
 
-- **Tissue** — structural connective substrate
-- **Perception** — sensory input processing
-- **Action** — motor output and effector control
-- **Modulation** — dynamic parameter adjustment and neuromodulator feedback
-- **Memory** — episodic experience storage
-- **Evolution** — adaptive learning hooks
+## Architectuur
 
-## Neuromodulator Feedback Loop
+```
+AgentTissue (wrapper)
+  ├── PerceptionEncoder    → zet observaties om naar trinaire input
+  ├── NeuraxonNetwork      → het bio-neurale netwerk
+  ├── ActionDecoder        → zet output om naar agent acties
+  ├── ModulationFeedback   → dopamine/serotonine feedback loop
+  ├── TissueMemory         → pattern storage en recall
+  ├── AgentEvolution       → Aigarth evolutionaire training
+  └── StreamingLoop        → real-time simulatie loop
+```
 
-Agent outcomes are translated into neuromodulator deltas that shape network
-behaviour over time.
+## Snel starten
 
-| Outcome | Dopamine | Serotonine | Acetylcholine | Norepinephrine |
-|---------|----------|------------|---------------|----------------|
-| success | +0.30    | +0.10      | +0.10         | +0.05          |
-| failure | -0.10    | -0.20      | +0.20         | +0.30          |
-| partial | +0.10    | -0.05      | +0.15         | +0.15          |
-| timeout | -0.05    | -0.10      | +0.10         | +0.20          |
+```bash
+# Installeren
+pip install -e ".[dev]"
 
-```python
+# CLI gebruiken
+neuraxon-agent think -i observation.json -o action.json
+neuraxon-agent modulate -i outcome.json -o result.json
+neuraxon-agent evolve -g 5 -o summary.json
+
+# Python API
 from neuraxon_agent import AgentTissue
 
 tissue = AgentTissue()
-tissue.modulate("success")   # increases dopamine
-tissue.modulate("failure")   # decreases serotonin
-
-# Adaptive learning
-metrics = tissue.feedback.convergence_metrics()
-print(metrics["is_stable"])  # True when deltas stabilise
+tissue.observe({"type": "prompt", "content": "hello"})
+action = tissue.think(steps=10)
+print(action.actie_type, action.confidence)
+tissue.modulate("success")
 ```
 
-The mapping is fully configurable via `ModulationFeedback`, and an adaptive
-layer tracks running means so the network can learn optimal modulation
-strengths for its environment.
+## Projectstructuur
 
-## Installation
+| Module | Functie |
+|--------|---------|
+| `perception.py` | Observaties → trinaire input encoding |
+| `action.py` | Trinaire output → agent acties |
+| `tissue.py` | NeuraxonNetwork wrapper |
+| `modulation.py` | Neuromodulator feedback loop |
+| `memory.py` | Pattern storage en recall |
+| `evolution.py` | Aigarth evolutionaire training |
+| `streaming.py` | Real-time simulatie loop |
+| `cli.py` | JSON CLI interface |
+| `vendor/` | Neuraxon v2.0 upstream code |
+
+## Tests
 
 ```bash
-# Clone with upstream submodule
-git clone --recurse-submodules https://github.com/sisutuulenisa/neuraxon-hybrid.git
-cd neuraxon-hybrid
-
-# Install in editable mode
-pip install -e ".[dev]"
+PYTHONPATH=src python -m pytest tests/ -v
 ```
 
-If you already cloned without submodules:
+## Status
 
-```bash
-git submodule update --init --recursive
-```
-
-## Quick start
-
-```python
-from neuraxon_agent import Tissue, Perception, Action, Memory
-
-tissue = Tissue()
-perception = Perception()
-action = Action()
-memory = Memory(capacity=100)
-
-obs = perception.observe({"input": 42})
-result = action.act({"type": "respond", "params": obs})
-memory.store({"observation": obs, "action": result})
-print(memory.recall(1))
-```
-
-See `examples/basic_agent_loop.py` for a full loop demonstration.
-
-## Development
-
-```bash
-# Lint + format
-ruff check src tests examples
-ruff format --check src tests examples
-
-# Type check
-mypy src
-
-# Run tests
-pytest
-```
-
-## Project structure
-
-```
-neuraxon-hybrid/
-├── src/neuraxon_agent/     # Main package
-│   ├── __init__.py
-│   ├── tissue.py
-│   ├── perception.py
-│   ├── action.py
-│   ├── modulation.py
-│   ├── memory.py
-│   ├── evolution.py
-│   └── vendor/             # Upstream dependency shim
-│       ├── __init__.py
-│       └── neuraxon2.py    # Fallback vendor copy
-├── tests/                  # Test suite
-├── examples/               # Usage examples
-├── upstream/Neuraxon/      # Upstream source (git submodule)
-├── scripts/                # Utility scripts
-├── pyproject.toml
-└── README.md
-```
-
-## Updating the upstream dependency
-
-Neuraxon is tracked as a git submodule under `upstream/Neuraxon`.
-
-**Fetch latest upstream version:**
-
-```bash
-# Pull latest upstream changes
-cd upstream/Neuraxon
-git pull origin main
-cd ../..
-
-# Update the bundled fallback copy
-cp upstream/Neuraxon/neuraxon2.py src/neuraxon_agent/vendor/neuraxon2.py
-
-# Commit the submodule pointer + fallback copy
-git add upstream/Neuraxon src/neuraxon_agent/vendor/neuraxon2.py
-git commit -m "vendor: update Neuraxon to latest upstream"
-```
-
-**Without submodule (fallback):**
-If the submodule is not initialized, the vendor shim automatically falls back
-to `src/neuraxon_agent/vendor/neuraxon2.py`. You can also replace that file
-manually if needed.
-
-## License
-
-MIT
+Dit project is in actieve ontwikkeling. Zie de [GitHub issues](https://github.com/sisutuulenisa/neuraxon-hybrid/issues) voor de roadmap.
