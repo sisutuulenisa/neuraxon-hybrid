@@ -1,0 +1,42 @@
+{
+  "jobId": "agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430170403::run::1",
+  "iteration": 1,
+  "ownerProfile": "main",
+  "ownerAgentId": "main",
+  "sourceType": "github_issue",
+  "sourceRef": {
+    "owner": "sisutuulenisa",
+    "repo": "neuraxon-hybrid",
+    "issueNumber": 52
+  },
+  "executionMode": "implement",
+  "repoContext": {
+    "repoPath": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502",
+    "worktreePath": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502"
+  },
+  "identityContext": {
+    "basecampIdentityRequired": false,
+    "githubIdentityRequired": true
+  },
+  "artifactsContext": {
+    "progressFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/progress.txt",
+    "iterationLogFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/.ralph-state/main/jobs/agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430170403::run::1/iteration-1.log",
+    "resultFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/.ralph-state/main/jobs/agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430170403::run::1/iteration-1.result.json"
+  },
+  "priorContext": {
+    "relevantLearnings": [
+      "GitHub related commit 74ac53e4d604: test: add holdout generalization benchmark (#49) * test: add holdout generalization benchmark Generate deterministic noisy scenario variants for the semantic tissue policy, report the holdout smoke score, and keep the existing critical caveat that this is a semantic bridge rather than proof of raw Neuraxon learning. Closes #48 * test: flag semantic policy oracle coverage (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/74ac53e4d604760356448e7323d190d4c7b051b8)",
+      "GitHub related commit abbe0114b02f: feat: add semantic tissue policy (#47) (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/abbe0114b02fbf72365c32db8028431a8d99ab34)",
+      "GitHub related commit 26fb69e75d17: fix: align benchmark action contract (#45) Closes #44 Normalize ActionDecoder labels into the mock benchmark action vocabulary before scoring. Re-run tissue benchmarks and diagnostics: Neuraxon tissue now reaches 110/700 successes (15.71%), equal to random and still below always-execute. (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/26fb69e75d1775c65dc031dd156c7e1c4f9e0dc3)"
+    ]
+  },
+  "executionGoal": "Work on GitHub issue #52 in sisutuulenisa/neuraxon-hybrid (live) If scope appears broad or ambiguous, decompose it into bounded phases and keep implementing from highest confidence to lowest confidence. Before coding, fetch the live GitHub issue body/comments and treat acceptance criteria/checklists as mandatory. Only return ambiguous_requirement after documenting why no safe minimal phase can be executed.",
+  "successCriteria": [
+    "Live GitHub issue body and comments reviewed before implementation.",
+    "Acceptance criteria/checklist items translated into an explicit implementation checklist.",
+    "Implementation and verification evidence address all checklist items."
+  ],
+  "stopConditions": [
+    "If decomposition still yields no safe bounded phase, stop with a concrete blocker explanation and next-step plan."
+  ]
+}

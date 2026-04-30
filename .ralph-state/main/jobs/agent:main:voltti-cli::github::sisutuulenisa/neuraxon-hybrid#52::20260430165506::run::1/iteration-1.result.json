@@ -1,0 +1,8 @@
+{
+  "jobId": "agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430165506::run::1",
+  "iteration": 1,
+  "status": "failed",
+  "failureType": "tool_failure",
+  "retryable": false,
+  "summary": "Hermes runner did not produce a readable result file at /home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/.ralph-state/main/jobs/agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430165506::run::1/iteration-1.result.json. Initial CLI output: session_id: 20260430_185512_0b79b5 \u001b[32m✓ Worktree created:\u001b[0m /home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/.worktrees/hermes-3cf0b241 Branch: hermes/hermes-3cf0b241 ┊ review diff a//home/seppe/Projects/neuraxon-hybrid/.w…. Repair attempt output: session_id: 20260430_190244_fb2ca8 \u001b[32m✓ Worktree created:\u001b[0m /home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502/.worktrees/hermes-469a9e8d Branch: hermes/hermes-469a9e8d ⚠️ Reached maximum iterations (8). Requesting summary..…"
+}

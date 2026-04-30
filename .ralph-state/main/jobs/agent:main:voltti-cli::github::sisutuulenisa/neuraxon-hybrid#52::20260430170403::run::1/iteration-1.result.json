@@ -1,0 +1,64 @@
+{
+  "jobId": "agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#52::20260430170403::run::1",
+  "iteration": 1,
+  "status": "success",
+  "retryable": false,
+  "summary": "Implemented issue #52 policy-ablation benchmark support, verified tests and focused lint/type checks, committed and opened PR #57.",
+  "details": {
+    "issueReviewed": {
+      "url": "https://github.com/sisutuulenisa/neuraxon-hybrid/issues/52",
+      "title": "Add policy-ablation benchmark to isolate raw Neuraxon dynamics",
+      "commentsReviewed": 0,
+      "acceptanceChecklist": [
+        "Tests can instantiate a tissue with no semantic policy and verify the raw decoder path is used.",
+        "Benchmark artifacts include per-mode results.",
+        "The report states raw-network performance separately from semantic-bridge performance.",
+        "No claim of Neuraxon generalization is made from policy-covered observations."
+      ]
+    },
+    "implementation": [
+      "Added semantic_policy_enabled support to AgentTissue and tracked last_action_source plus raw decoder actions.",
+      "Extended tissue benchmark results with policy_mode, action_source, normalized_benchmark_action, and raw_decoder_output metadata.",
+      "Added run_policy_ablation_benchmark with semantic_bridge, raw_network, and semantic_coverage_audit modes.",
+      "Updated diagnostics and report artifacts to distinguish semantic bridge wins from raw network decoder output.",
+      "Generated benchmarks/results/policy_ablation.json and refreshed related benchmark/diagnostic artifacts."
+    ],
+    "ablationEvidence": {
+      "raw_network": {
+        "successes": 138,
+        "runs": 700
+      },
+      "semantic_bridge": {
+        "successes": 700,
+        "runs": 700
+      },
+      "semantic_coverage_audit": {
+        "successes": 700,
+        "runs": 700
+      }
+    },
+    "verification": [
+      {
+        "command": "uv run pytest -q",
+        "status": "passed",
+        "outputSummary": "181 passed, 3 warnings from pre-existing scripts/smoke_test.py tests returning bool."
+      },
+      {
+        "command": "uv run ruff check src/neuraxon_agent/tissue.py src/neuraxon_agent/tissue_benchmark.py src/neuraxon_agent/benchmark_diagnostics.py tests/test_tissue.py tests/test_tissue_benchmark.py tests/test_benchmark_diagnostics.py tests/test_benchmark_report.py",
+        "status": "passed",
+        "outputSummary": "All checks passed."
+      },
+      {
+        "command": "uv run mypy src/neuraxon_agent/tissue.py src/neuraxon_agent/tissue_benchmark.py src/neuraxon_agent/benchmark_diagnostics.py tests/test_tissue.py tests/test_tissue_benchmark.py tests/test_benchmark_diagnostics.py tests/test_benchmark_report.py",
+        "status": "passed",
+        "outputSummary": "Success: no issues found in 7 source files."
+      }
+    ],
+    "git": {
+      "branch": "feature/voltti-task-sisutuulenisa-neuraxon-hybrid-issue-52-20260430185502",
+      "commit": "34bc319",
+      "pushed": true,
+      "pullRequest": "https://github.com/sisutuulenisa/neuraxon-hybrid/pull/57"
+    }
+  }
+}
