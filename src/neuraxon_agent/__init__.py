@@ -21,6 +21,13 @@ from neuraxon_agent.persistence import load_state, save_state
 from neuraxon_agent.scenarios import MOCK_AGENT_ACTIONS, load_mock_agent_scenarios
 from neuraxon_agent.streaming import StreamEvent, StreamingLoop
 from neuraxon_agent.tissue import AgentTissue, TissueState
+from neuraxon_agent.tissue_benchmark import (
+    DEFAULT_BENCHMARK_SEEDS,
+    DEFAULT_TISSUE_BENCHMARK_PATH,
+    TissueBenchmarkReport,
+    TissueBenchmarkResult,
+    run_neuraxon_tissue_benchmark,
+)
 
 __all__ = [
     "PerceptionEncoder",
@@ -44,6 +51,11 @@ __all__ = [
     "BaselineAgentState",
     "RandomAgent",
     "run_baseline_benchmarks",
+    "DEFAULT_BENCHMARK_SEEDS",
+    "DEFAULT_TISSUE_BENCHMARK_PATH",
+    "TissueBenchmarkReport",
+    "TissueBenchmarkResult",
+    "run_neuraxon_tissue_benchmark",
     "MOCK_AGENT_ACTIONS",
     "load_mock_agent_scenarios",
 ]
