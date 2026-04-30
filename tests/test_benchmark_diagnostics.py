@@ -16,7 +16,14 @@ def _diagnostic_scenarios() -> list[BenchmarkScenario]:
         BenchmarkScenario(
             name="ready-tool",
             scenario_type="simple_tool_call",
-            observation_sequence=[{"tool_result": "success", "previous_outcome": "success"}],
+            observation_sequence=[
+                {
+                    "scenario_type": "simple_tool_call",
+                    "intent": "call_tool",
+                    "parameters": {"target": "resource", "mode": "read"},
+                    "missing_parameters": [],
+                }
+            ],
             expected_optimal_action="execute",
             expected_actions=("execute",),
             difficulty=1.0,
@@ -24,7 +31,14 @@ def _diagnostic_scenarios() -> list[BenchmarkScenario]:
         BenchmarkScenario(
             name="missing-parameter",
             scenario_type="missing_params_tool_call",
-            observation_sequence=[{"tool_result": "fail", "error_type": "auth"}],
+            observation_sequence=[
+                {
+                    "scenario_type": "missing_params_tool_call",
+                    "intent": "call_tool",
+                    "parameters": {"target": None, "mode": "write"},
+                    "missing_parameters": ["target"],
+                }
+            ],
             expected_optimal_action="query",
             expected_actions=("query",),
             difficulty=2.0,
@@ -32,7 +46,15 @@ def _diagnostic_scenarios() -> list[BenchmarkScenario]:
         BenchmarkScenario(
             name="failed-tool",
             scenario_type="failed_tool_call",
-            observation_sequence=[{"tool_result": "fail", "error_type": "runtime"}],
+            observation_sequence=[
+                {
+                    "scenario_type": "failed_tool_call",
+                    "status": "failure",
+                    "retryable": True,
+                    "attempt": 1,
+                    "error": "transient_timeout",
+                }
+            ],
             expected_optimal_action="retry",
             expected_actions=("retry",),
             difficulty=2.0,
@@ -50,7 +72,14 @@ def test_diagnostics_use_normalized_benchmark_action_contract(tmp_path: Path) ->
 
     assert diagnostics.run_count == 6
     assert diagnostics.expected_actions == {"execute", "query", "retry"}
-    assert diagnostics.decoder_actions == {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
+    assert diagnostics.decoder_actions == {
+        "PROCEED",
+        "PAUSE",
+        "RETRY",
+        "ESCALATE",
+        "EXPLORE",
+        "CAUTIOUS",
+    }
     assert diagnostics.normalized_decoder_actions >= {"execute", "query", "retry"}
     assert diagnostics.missing_decoder_actions == set()
     assert diagnostics.root_cause != "action_vocabulary_mismatch"
@@ -72,10 +101,12 @@ def test_diagnostics_export_trace_json_confusion_csv_and_report(tmp_path: Path) 
     first_trace = trace_payload["traces"][0]
     assert first_trace["scenario_name"] == "ready-tool"
     assert first_trace["observation_trace"][0]["observation"] == {
-        "tool_result": "success",
-        "previous_outcome": "success",
+        "scenario_type": "simple_tool_call",
+        "intent": "call_tool",
+        "parameters": {"target": "resource", "mode": "read"},
+        "missing_parameters": [],
     }
-    assert first_trace["observation_trace"][0]["encoded_input"] == [1, 1, 0, 0, 1]
+    assert first_trace["observation_trace"][0]["encoded_input"] == [0, 1, 0, 0, 0]
     assert set(first_trace) >= {
         "seed",
         "scenario_name",
@@ -104,9 +135,6 @@ def test_default_diagnostics_explain_remaining_post_contract_gap(tmp_path: Path)
 
     assert diagnostics.run_count == 700
     assert diagnostics.expected_actions == MOCK_AGENT_ACTIONS
-    assert diagnostics.missing_decoder_actions == {"cautious"}
-    assert diagnostics.root_cause in {
-        "network_never_reaches_expected_actions",
-        "partially_working",
-    }
+    assert diagnostics.missing_decoder_actions == set()
+    assert diagnostics.root_cause == "semantic_policy_working"
     assert diagnostics.output_paths.report_md.exists()

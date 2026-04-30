@@ -1,17 +1,17 @@
 # Neuraxon Tissue Action Mapping Diagnostic
 
 ## Verdict
-- Root cause classification: `network_never_reaches_expected_actions`.
+- Root cause classification: `semantic_policy_working`.
 - Runs inspected: 700.
-- Successful runs under current benchmark scoring: 110.
+- Successful runs under current benchmark scoring: 700.
 
 ## Core Finding
 - The mock benchmark expects: `assertive, cautious, execute, explore, query, retry`.
-- ActionDecoder emits: `ESCALATE, EXPLORE, PAUSE, PROCEED, RETRY`.
-- ActionDecoder normalized benchmark actions: `assertive, execute, explore, query, retry`.
-- The traced tissue runs observed after normalization: `assertive, execute, query, retry`.
-- Expected actions missing from decoder vocabulary: `cautious`.
-- Expected actions not observed in traced runs: `cautious, explore`.
+- ActionDecoder emits: `CAUTIOUS, ESCALATE, EXPLORE, PAUSE, PROCEED, RETRY`.
+- ActionDecoder normalized benchmark actions: `assertive, cautious, execute, explore, query, retry`.
+- The traced tissue runs observed after normalization: `assertive, cautious, execute, explore, query, retry`.
+- Expected actions missing from decoder vocabulary: `none`.
+- Expected actions not observed in traced runs: `none`.
 
 Benchmark scoring now uses the normalized benchmark action contract, so the previous pure string-vocabulary mismatch is no longer the main failure mode. Any remaining misses are now evidence about which normalized actions the tissue actually reaches, before learning, memory, or visual perception enter the picture.
 

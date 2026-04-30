@@ -9,7 +9,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
 
-
 #: Valid trinary states in a Neuraxon network.
 TRINARY_STATES = (-1, 0, 1)
 
@@ -80,6 +79,7 @@ class ActionDecoder:
     RETRY = "RETRY"
     ESCALATE = "ESCALATE"
     EXPLORE = "EXPLORE"
+    CAUTIOUS = "CAUTIOUS"
 
     # Basis mapping for a single neuron -----------------------------------------
     _BASIS_MAP: dict[int, str] = {
@@ -93,6 +93,7 @@ class ActionDecoder:
     _MULTI_MAP: dict[tuple[int, ...], str] = {
         (1, 1): ESCALATE,
         (0, 1): EXPLORE,
+        (-1, -1): CAUTIOUS,
     }
 
     # Fallback heuristic for unmatched multi-neuron patterns --------------------
@@ -128,9 +129,7 @@ class ActionDecoder:
             raise ValueError("output_states must not be empty")
         for s in output_states:
             if s not in TRINARY_STATES:
-                raise ValueError(
-                    f"Invalid trinary state {s!r}; expected one of {TRINARY_STATES}"
-                )
+                raise ValueError(f"Invalid trinary state {s!r}; expected one of {TRINARY_STATES}")
 
     def _decode_basis(self, output_states: list[int]) -> AgentAction:
         """Decode a single output neuron (basis decoder)."""
@@ -208,9 +207,7 @@ class ActionDecoder:
 
         # Normalise length
         if len(output_states) < self.num_output_neurons:
-            output_states = output_states + [0] * (
-                self.num_output_neurons - len(output_states)
-            )
+            output_states = output_states + [0] * (self.num_output_neurons - len(output_states))
         elif len(output_states) > self.num_output_neurons:
             output_states = output_states[: self.num_output_neurons]
 
@@ -244,4 +241,11 @@ class ActionDecoder:
     @classmethod
     def get_all_defined_actions(cls) -> list[str]:
         """Return the list of all defined action types."""
-        return [cls.PROCEED, cls.PAUSE, cls.RETRY, cls.ESCALATE, cls.EXPLORE]
+        return [
+            cls.PROCEED,
+            cls.PAUSE,
+            cls.RETRY,
+            cls.ESCALATE,
+            cls.EXPLORE,
+            cls.CAUTIOUS,
+        ]

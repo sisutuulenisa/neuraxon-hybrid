@@ -48,6 +48,7 @@ def test_action_contract_maps_decoder_outputs_to_benchmark_vocabulary() -> None:
         "RETRY": "retry",
         "ESCALATE": "assertive",
         "EXPLORE": "explore",
+        "CAUTIOUS": "cautious",
     }
 
     for decoder_action, benchmark_action in ACTION_DECODER_TO_BENCHMARK_ACTION.items():
@@ -68,8 +69,9 @@ def test_action_contract_covers_every_defined_decoder_action() -> None:
         "retry",
         "explore",
         "assertive",
+        "cautious",
     }
-    assert coverage.unreachable_benchmark_actions == {"cautious"}
+    assert coverage.unreachable_benchmark_actions == set()
 
 
 def test_benchmark_harness_scores_normalized_decoder_actions() -> None:
