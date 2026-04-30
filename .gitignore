@@ -43,3 +43,6 @@ logs/
 
 # Worktrees
 .worktrees/
+
+# Ralph / Voltti local runtime state
+.ralph-state/
