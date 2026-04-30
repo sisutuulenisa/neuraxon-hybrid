@@ -36,6 +36,19 @@ def test_benchmark_report_publishes_required_sections_and_assets() -> None:
         assert plot_link in report
 
 
+def test_benchmark_report_contains_concise_proven_not_proven_summary() -> None:
+    report = REPORT_PATH.read_text(encoding="utf-8")
+
+    assert "### Proven / not proven summary" in report
+    assert "Proven:" in report
+    assert "Not proven:" in report
+    assert "raw Neuraxon network generalization" in report
+    assert "semantic bridge performance" in report
+    assert "explicit temporal context adapter performance" in report
+    assert "simple baseline performance" in report
+    assert "criticality/dynamics instrumentation evidence" in report
+
+
 def test_benchmark_report_states_go_and_baseline_comparison() -> None:
     report = REPORT_PATH.read_text(encoding="utf-8")
 
