@@ -1,15 +1,14 @@
 """Evolutionary training for agent behaviour using Aigarth hybrid algorithm."""
 from __future__ import annotations
 
-import copy
 import json
 import random
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 from neuraxon_agent.vendor.MultiNeuraxon2 import NeuraxonAigarthHybrid
+from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 
 
 @dataclass
@@ -21,12 +20,27 @@ class EvolutionConfig:
     task_scenarios: list[dict[str, Any]] | None = None
 
 
+def _normalize_config(config: EvolutionConfig | dict[str, Any] | None) -> EvolutionConfig:
+    """Return an ``EvolutionConfig`` for public API inputs."""
+    if config is None:
+        return EvolutionConfig()
+    if isinstance(config, EvolutionConfig):
+        return config
+    return EvolutionConfig(**config)
+
+
 class AgentEvolution:
     """Wraps NeuraxonAigarthHybrid to evolve agent networks on task scenarios."""
 
-    def __init__(self, params: NetworkParameters | None = None, config: EvolutionConfig | None = None) -> None:
+    def __init__(
+        self,
+        params: NetworkParameters | None = None,
+        config: EvolutionConfig | dict[str, Any] | None = None,
+    ) -> None:
         self.params = params or NetworkParameters()
-        self.config = config or EvolutionConfig()
+        self.config = _normalize_config(config)
+        if self.config.seed is not None:
+            random.seed(self.config.seed)
         self.hybrid = NeuraxonAigarthHybrid(self.params)
         self._history: list[dict[str, Any]] = []
 
@@ -52,7 +66,11 @@ class AgentEvolution:
             random.seed(self.config.seed)
         dataset = self._build_dataset()
         initial_best = self.evaluate_fitness()
-        self.hybrid.evolve(dataset, seasons=self.config.seasons, episodes=self.config.episodes_per_season)
+        self.hybrid.evolve(
+            dataset,
+            seasons=self.config.seasons,
+            episodes=self.config.episodes_per_season,
+        )
         final_best = self.evaluate_fitness()
         summary = {
             "initial_fitness": initial_best,
