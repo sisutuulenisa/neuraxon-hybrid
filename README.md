@@ -63,3 +63,28 @@ PYTHONPATH=src python -m pytest tests/ -v
 ## Status
 
 Dit project is in actieve ontwikkeling. Zie de [GitHub issues](https://github.com/sisutuulenisa/neuraxon-hybrid/issues) voor de roadmap.
+
+## Roadmap gate
+
+Current phase: benchmark the decision layer before expanding input/state complexity.
+The current benchmark report shows useful semantic routing and an explicit
+`temporal_context_bridge`, but raw Neuraxon dynamics have not yet demonstrated a
+learned policy that generalizes meaningfully above baselines. The near-term
+blockers and prerequisite evidence are tracked in:
+
+- #51 — expanded temporal benchmark beyond the original smoke probe.
+- #52 — policy-ablation separating semantic-bridge behavior from raw-network behavior.
+- #53 — temporal state carry-over into action decisions.
+- #54 — criticality and neuromodulator dynamics instrumentation.
+- #55 — this roadmap gate and documentation/linking pass.
+
+Minimum evidence before deferred work resumes:
+
+- Memory persistence remains deferred until temporal benchmark performance is
+  meaningfully above baselines and the useful behavior survives raw/adapter
+  separation, so persisted state would preserve real decision value rather than
+  semantic routing artifacts.
+- Visual perception remains deferred until the base decision layer generalizes
+  beyond hand-authored semantic routing. Additional screenshots, DOM grids, or
+  multi-sphere visual inputs should not be added before the core policy can make
+  useful non-visual decisions under temporal/stateful evaluation.
