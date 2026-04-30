@@ -138,3 +138,19 @@ def test_default_diagnostics_explain_remaining_post_contract_gap(tmp_path: Path)
     assert diagnostics.missing_decoder_actions == set()
     assert diagnostics.root_cause == "semantic_policy_working"
     assert diagnostics.output_paths.report_md.exists()
+
+
+def test_diagnostics_report_policy_bridge_versus_raw_network_source(tmp_path: Path) -> None:
+    diagnostics = diagnose_tissue_action_mapping(
+        scenarios=_diagnostic_scenarios(),
+        seeds=(0,),
+        steps_per_observation=1,
+        output_dir=tmp_path,
+    )
+
+    assert {trace.action_source for trace in diagnostics.traces} == {"semantic_bridge"}
+    trace_payload = json.loads(diagnostics.output_paths.trace_json.read_text())
+    assert {trace["action_source"] for trace in trace_payload["traces"]} == {"semantic_bridge"}
+    report = diagnostics.output_paths.report_md.read_text()
+    assert "semantic bridge" in report.lower()
+    assert "raw network" in report.lower()

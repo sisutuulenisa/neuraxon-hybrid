@@ -37,12 +37,16 @@ class AgentTissue:
         self,
         params: NetworkParameters | None = None,
         semantic_policy: SemanticTissuePolicy | None = None,
+        semantic_policy_enabled: bool = True,
     ) -> None:
         self.params = params or NetworkParameters()
         self.network = NeuraxonNetwork(self.params)
         self.encoder = PerceptionEncoder(self.params.num_input_neurons)
         self.decoder = ActionDecoder(self.params.num_output_neurons)
+        self.semantic_policy_enabled = semantic_policy_enabled
         self.semantic_policy = semantic_policy or SemanticTissuePolicy()
+        self.last_action_source: str | None = None
+        self.last_raw_decoder_action: AgentAction | None = None
         self._last_observation: dict[str, Any] | None = None
         self._feedback = ModulationFeedback()
         self.memory = TissueMemory(self.params)
@@ -57,12 +61,16 @@ class AgentTissue:
         """Run the network for N steps and decode the output into an action."""
         for _ in range(steps):
             self.network.simulate_step()
-        if self._last_observation is not None:
+        output_states = self.network.get_output_states()
+        raw_action = self.decoder.decode(output_states)
+        self.last_raw_decoder_action = raw_action
+        if self.semantic_policy_enabled and self._last_observation is not None:
             semantic_action = self.semantic_policy.decide(self._last_observation)
             if semantic_action is not None:
+                self.last_action_source = "semantic_bridge"
                 return semantic_action
-        output_states = self.network.get_output_states()
-        return self.decoder.decode(output_states)
+        self.last_action_source = "raw_network"
+        return raw_action
 
     def modulate(self, outcome: str) -> dict[str, float]:
         """Apply neuromodulator feedback based on outcome.

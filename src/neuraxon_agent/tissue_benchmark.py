@@ -36,6 +36,10 @@ class TissueBenchmarkResult:
     state: dict[str, float | int]
     neuromodulator_levels: dict[str, float]
     decoded_action: str | None = None
+    normalized_benchmark_action: str | None = None
+    raw_decoder_output: list[int] | None = None
+    action_source: str = "semantic_bridge"
+    policy_mode: str = "semantic_bridge"
 
 
 @dataclass(frozen=True)
@@ -49,6 +53,7 @@ class TissueBenchmarkReport:
     success_count: int
     total_elapsed_seconds: float
     results: list[TissueBenchmarkResult]
+    policy_mode: str = "semantic_bridge"
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serializable report dictionary."""
@@ -66,6 +71,28 @@ class TissueBenchmarkReport:
         return output_path
 
 
+@dataclass(frozen=True)
+class PolicyAblationBenchmarkReport:
+    """Benchmark bundle separating semantic-bridge and raw-network modes."""
+
+    reports: dict[str, TissueBenchmarkReport]
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serializable report dictionary."""
+        return {"reports": {mode: report.to_dict() for mode, report in self.reports.items()}}
+
+    def to_json(self, *, indent: int | None = 2) -> str:
+        """Return this report as JSON."""
+        return json.dumps(self.to_dict(), indent=indent, sort_keys=True)
+
+    def write_json(self, path: str | Path) -> Path:
+        """Write ablation benchmark data to *path* and return the path."""
+        output_path = Path(path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(self.to_json() + "\n")
+        return output_path
+
+
 def run_neuraxon_tissue_benchmark(
     scenarios: list[BenchmarkScenario] | None = None,
     *,
@@ -73,6 +100,7 @@ def run_neuraxon_tissue_benchmark(
     steps_per_observation: int = 10,
     params: NetworkParameters | None = None,
     output_path: str | Path | None = None,
+    policy_mode: str = "semantic_bridge",
 ) -> TissueBenchmarkReport:
     """Run Neuraxon ``AgentTissue`` over scenarios for multiple seeds.
 
@@ -83,6 +111,10 @@ def run_neuraxon_tissue_benchmark(
     """
     if steps_per_observation < 1:
         raise ValueError("steps_per_observation must be >= 1")
+    if policy_mode not in {"semantic_bridge", "raw_network", "semantic_coverage_audit"}:
+        raise ValueError(
+            "policy_mode must be one of: semantic_bridge, raw_network, semantic_coverage_audit"
+        )
 
     scenario_list = scenarios if scenarios is not None else load_mock_agent_scenarios()
     seed_list = list(seeds)
@@ -97,6 +129,7 @@ def run_neuraxon_tissue_benchmark(
             scenario_index=scenario_index,
             steps_per_observation=steps_per_observation,
             params=params,
+            policy_mode=policy_mode,
         )
         for seed in seed_list
         for scenario_index, scenario in enumerate(scenario_list)
@@ -111,7 +144,34 @@ def run_neuraxon_tissue_benchmark(
         success_count=sum(1 for result in results if result.outcome == "success"),
         total_elapsed_seconds=total_elapsed,
         results=results,
+        policy_mode=policy_mode,
     )
+    if output_path is not None:
+        report.write_json(output_path)
+    return report
+
+
+def run_policy_ablation_benchmark(
+    scenarios: list[BenchmarkScenario] | None = None,
+    *,
+    seeds: Iterable[int] = DEFAULT_BENCHMARK_SEEDS,
+    steps_per_observation: int = 10,
+    params: NetworkParameters | None = None,
+    output_path: str | Path | None = None,
+) -> PolicyAblationBenchmarkReport:
+    """Run benchmark slices for semantic bridge, raw network, and coverage audit modes."""
+    seed_list = list(seeds)
+    reports = {
+        mode: run_neuraxon_tissue_benchmark(
+            scenarios=scenarios,
+            seeds=seed_list,
+            steps_per_observation=steps_per_observation,
+            params=params,
+            policy_mode=mode,
+        )
+        for mode in ("semantic_bridge", "raw_network", "semantic_coverage_audit")
+    }
+    report = PolicyAblationBenchmarkReport(reports=reports)
     if output_path is not None:
         report.write_json(output_path)
     return report
@@ -124,12 +184,13 @@ def _run_one_seeded_scenario(
     scenario_index: int,
     steps_per_observation: int,
     params: NetworkParameters | None,
+    policy_mode: str,
 ) -> TissueBenchmarkResult:
     """Run one scenario while isolating global RNG state."""
     rng_state = random.getstate()
     try:
         random.seed(_scenario_seed(seed, scenario_index))
-        tissue = AgentTissue(params)
+        tissue = AgentTissue(params, semantic_policy_enabled=policy_mode != "raw_network")
         start = perf_counter()
         action = None
         for observation in scenario.observation_sequence:
@@ -146,6 +207,7 @@ def _run_one_seeded_scenario(
         random.setstate(rng_state)
 
     state = tissue.state
+    raw_decoder_action = tissue.last_raw_decoder_action
     return TissueBenchmarkResult(
         seed=seed,
         scenario_name=scenario.name,
@@ -171,6 +233,12 @@ def _run_one_seeded_scenario(
             "norepinephrine": state.norepinephrine,
         },
         decoded_action=action.actie_type,
+        normalized_benchmark_action=benchmark_action,
+        raw_decoder_output=(
+            list(raw_decoder_action.raw_output) if raw_decoder_action is not None else None
+        ),
+        action_source=tissue.last_action_source or "raw_network",
+        policy_mode=policy_mode,
     )
 
 

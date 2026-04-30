@@ -12,6 +12,8 @@
 - The traced tissue runs observed after normalization: `assertive, cautious, execute, explore, query, retry`.
 - Expected actions missing from decoder vocabulary: `none`.
 - Expected actions not observed in traced runs: `none`.
+- Action source split: `semantic_bridge=700`.
+- Diagnostics distinguish semantic bridge wins from raw network decoder output.
 
 Benchmark scoring now uses the normalized benchmark action contract, so the previous pure string-vocabulary mismatch is no longer the main failure mode. Any remaining misses are now evidence about which normalized actions the tissue actually reaches, before learning, memory, or visual perception enter the picture.
 
