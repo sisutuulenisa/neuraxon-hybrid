@@ -1,13 +1,19 @@
 """Neuraxon Agent — Intelligence Tissue for CLI AI Agents."""
 
-from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.action import ActionDecoder, AgentAction
-from neuraxon_agent.tissue import AgentTissue, TissueState
-from neuraxon_agent.modulation import Modulation
-from neuraxon_agent.memory import Memory
+from neuraxon_agent.benchmark import (
+    BenchmarkHarness,
+    BenchmarkReport,
+    BenchmarkResult,
+    BenchmarkScenario,
+)
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
-from neuraxon_agent.streaming import StreamingLoop, StreamEvent
-from neuraxon_agent.persistence import save_state, load_state
+from neuraxon_agent.memory import Memory
+from neuraxon_agent.modulation import Modulation
+from neuraxon_agent.perception import PerceptionEncoder
+from neuraxon_agent.persistence import load_state, save_state
+from neuraxon_agent.streaming import StreamEvent, StreamingLoop
+from neuraxon_agent.tissue import AgentTissue, TissueState
 
 __all__ = [
     "PerceptionEncoder",
@@ -23,4 +29,8 @@ __all__ = [
     "StreamEvent",
     "save_state",
     "load_state",
+    "BenchmarkHarness",
+    "BenchmarkReport",
+    "BenchmarkResult",
+    "BenchmarkScenario",
 ]
