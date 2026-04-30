@@ -1,0 +1,4019 @@
+{
+  "version": 1,
+  "description": "Mock agent benchmark scenarios for Neuraxon tissue evaluation.",
+  "action_set": [
+    "execute",
+    "query",
+    "retry",
+    "explore",
+    "cautious",
+    "assertive"
+  ],
+  "difficulty_distribution": {
+    "easy": 0.4,
+    "medium": 0.4,
+    "hard": 0.2
+  },
+  "scenarios": [
+    {
+      "name": "simple_tool_call-01",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "calendar",
+          "request_id": "sim-01",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": "resource-0",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run calendar safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-02",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "mail",
+          "request_id": "sim-02",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "mail",
+          "parameters": {
+            "target": "resource-1",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run mail safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-03",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "filesystem",
+          "request_id": "sim-03",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": "resource-2",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run filesystem safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-04",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "browser",
+          "request_id": "sim-04",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "browser",
+          "parameters": {
+            "target": "resource-3",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run browser safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-05",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "shell",
+          "request_id": "sim-05",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "shell",
+          "parameters": {
+            "target": "resource-4",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run shell safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-06",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "search",
+          "request_id": "sim-06",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "search",
+          "parameters": {
+            "target": "resource-5",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run search safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-07",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "notes",
+          "request_id": "sim-07",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "notes",
+          "parameters": {
+            "target": "resource-6",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run notes safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-08",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "ticketing",
+          "request_id": "sim-08",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": "resource-7",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run ticketing safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-09",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "deploy",
+          "request_id": "sim-09",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": "resource-8",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run deploy safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-10",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "database",
+          "request_id": "sim-10",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "database",
+          "parameters": {
+            "target": "resource-9",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run database safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-11",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "calendar",
+          "request_id": "sim-11",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": "resource-10",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run calendar safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-12",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "mail",
+          "request_id": "sim-12",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "mail",
+          "parameters": {
+            "target": "resource-11",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run mail safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-13",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "filesystem",
+          "request_id": "sim-13",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": "resource-12",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run filesystem safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-14",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "browser",
+          "request_id": "sim-14",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "browser",
+          "parameters": {
+            "target": "resource-13",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run browser safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-15",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "shell",
+          "request_id": "sim-15",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "shell",
+          "parameters": {
+            "target": "resource-14",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run shell safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-16",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "search",
+          "request_id": "sim-16",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "search",
+          "parameters": {
+            "target": "resource-15",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run search safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-17",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "notes",
+          "request_id": "sim-17",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "notes",
+          "parameters": {
+            "target": "resource-16",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run notes safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 4,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-18",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "ticketing",
+          "request_id": "sim-18",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": "resource-17",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run ticketing safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 4,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-19",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "deploy",
+          "request_id": "sim-19",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": "resource-18",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run deploy safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 5,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "simple_tool_call-20",
+      "scenario_type": "simple_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "simple_tool_call",
+          "tool": "database",
+          "request_id": "sim-20",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "database",
+          "parameters": {
+            "target": "resource-19",
+            "mode": "read"
+          },
+          "missing_parameters": [],
+          "context": "User gave enough information to run database safely."
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 5,
+      "rationale": "Run the requested tool with complete parameters"
+    },
+    {
+      "name": "missing_params_tool_call-01",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "mail",
+          "request_id": "mis-01",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "mail",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 1,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-02",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "filesystem",
+          "request_id": "mis-02",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 1,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-03",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "browser",
+          "request_id": "mis-03",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "browser",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 2,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-04",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "shell",
+          "request_id": "mis-04",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "shell",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 2,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-05",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "search",
+          "request_id": "mis-05",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "search",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 2,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-06",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "notes",
+          "request_id": "mis-06",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "notes",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 1,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-07",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "ticketing",
+          "request_id": "mis-07",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 2,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-08",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "deploy",
+          "request_id": "mis-08",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 1,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-09",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "database",
+          "request_id": "mis-09",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "database",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-10",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "calendar",
+          "request_id": "mis-10",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-11",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "mail",
+          "request_id": "mis-11",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "mail",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-12",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "filesystem",
+          "request_id": "mis-12",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-13",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "browser",
+          "request_id": "mis-13",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "browser",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-14",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "shell",
+          "request_id": "mis-14",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "shell",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-15",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "search",
+          "request_id": "mis-15",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "search",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-16",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "notes",
+          "request_id": "mis-16",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "notes",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 3,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-17",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "ticketing",
+          "request_id": "mis-17",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 4,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-18",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "deploy",
+          "request_id": "mis-18",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 4,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-19",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "database",
+          "request_id": "mis-19",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "database",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 5,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "missing_params_tool_call-20",
+      "scenario_type": "missing_params_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "missing_params_tool_call",
+          "tool": "calendar",
+          "request_id": "mis-20",
+          "type": "tool_request",
+          "intent": "call_tool",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": null,
+            "mode": "write"
+          },
+          "missing_parameters": [
+            "target"
+          ],
+          "context": "The user asked for an action but omitted a required target."
+        }
+      ],
+      "expected_actions": [
+        "query"
+      ],
+      "difficulty": 5,
+      "rationale": "Ask for the missing required parameter before running the tool"
+    },
+    {
+      "name": "failed_tool_call-01",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "filesystem",
+          "request_id": "fai-01",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 1,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-02",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "browser",
+          "request_id": "fai-02",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 1,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-03",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "shell",
+          "request_id": "fai-03",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 2,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-04",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "search",
+          "request_id": "fai-04",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 2,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-05",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "notes",
+          "request_id": "fai-05",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 2,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-06",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "ticketing",
+          "request_id": "fai-06",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 1,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-07",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "deploy",
+          "request_id": "fai-07",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 2,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-08",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "database",
+          "request_id": "fai-08",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 1,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-09",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "calendar",
+          "request_id": "fai-09",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-10",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "mail",
+          "request_id": "fai-10",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-11",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "filesystem",
+          "request_id": "fai-11",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-12",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "browser",
+          "request_id": "fai-12",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-13",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "shell",
+          "request_id": "fai-13",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-14",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "search",
+          "request_id": "fai-14",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-15",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "notes",
+          "request_id": "fai-15",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-16",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "ticketing",
+          "request_id": "fai-16",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 3,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-17",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "deploy",
+          "request_id": "fai-17",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 4,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-18",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "database",
+          "request_id": "fai-18",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 4,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-19",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "calendar",
+          "request_id": "fai-19",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 5,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "failed_tool_call-20",
+      "scenario_type": "failed_tool_call",
+      "input_sequence": [
+        {
+          "scenario_type": "failed_tool_call",
+          "tool": "mail",
+          "request_id": "fai-20",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "failure",
+          "error": "transient_timeout",
+          "attempt": 1,
+          "retryable": true
+        }
+      ],
+      "expected_actions": [
+        "retry"
+      ],
+      "difficulty": 5,
+      "rationale": "Retry after a transient tool failure"
+    },
+    {
+      "name": "ambiguous_prompt-01",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "browser",
+          "request_id": "amb-01",
+          "type": "prompt",
+          "content": "Can you handle the browser thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 1,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-02",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "shell",
+          "request_id": "amb-02",
+          "type": "prompt",
+          "content": "Can you handle the shell thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 1,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-03",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "search",
+          "request_id": "amb-03",
+          "type": "prompt",
+          "content": "Can you handle the search thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 2,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-04",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "notes",
+          "request_id": "amb-04",
+          "type": "prompt",
+          "content": "Can you handle the notes thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 2,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-05",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "ticketing",
+          "request_id": "amb-05",
+          "type": "prompt",
+          "content": "Can you handle the ticketing thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 2,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-06",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "deploy",
+          "request_id": "amb-06",
+          "type": "prompt",
+          "content": "Can you handle the deploy thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 1,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-07",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "database",
+          "request_id": "amb-07",
+          "type": "prompt",
+          "content": "Can you handle the database thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 2,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-08",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "calendar",
+          "request_id": "amb-08",
+          "type": "prompt",
+          "content": "Can you handle the calendar thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 1,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-09",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "mail",
+          "request_id": "amb-09",
+          "type": "prompt",
+          "content": "Can you handle the mail thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-10",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "filesystem",
+          "request_id": "amb-10",
+          "type": "prompt",
+          "content": "Can you handle the filesystem thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-11",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "browser",
+          "request_id": "amb-11",
+          "type": "prompt",
+          "content": "Can you handle the browser thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-12",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "shell",
+          "request_id": "amb-12",
+          "type": "prompt",
+          "content": "Can you handle the shell thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-13",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "search",
+          "request_id": "amb-13",
+          "type": "prompt",
+          "content": "Can you handle the search thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-14",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "notes",
+          "request_id": "amb-14",
+          "type": "prompt",
+          "content": "Can you handle the notes thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-15",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "ticketing",
+          "request_id": "amb-15",
+          "type": "prompt",
+          "content": "Can you handle the ticketing thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-16",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "deploy",
+          "request_id": "amb-16",
+          "type": "prompt",
+          "content": "Can you handle the deploy thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 3,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-17",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "database",
+          "request_id": "amb-17",
+          "type": "prompt",
+          "content": "Can you handle the database thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 4,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-18",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "calendar",
+          "request_id": "amb-18",
+          "type": "prompt",
+          "content": "Can you handle the calendar thing from yesterday?",
+          "ambiguity_score": 0.8999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 4,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-19",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "mail",
+          "request_id": "amb-19",
+          "type": "prompt",
+          "content": "Can you handle the mail thing from yesterday?",
+          "ambiguity_score": 0.7,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 5,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "ambiguous_prompt-20",
+      "scenario_type": "ambiguous_prompt",
+      "input_sequence": [
+        {
+          "scenario_type": "ambiguous_prompt",
+          "tool": "filesystem",
+          "request_id": "amb-20",
+          "type": "prompt",
+          "content": "Can you handle the filesystem thing from yesterday?",
+          "ambiguity_score": 0.7999999999999999,
+          "known_options": [
+            "summarize",
+            "edit",
+            "send"
+          ]
+        }
+      ],
+      "expected_actions": [
+        "explore"
+      ],
+      "difficulty": 5,
+      "rationale": "Explore plausible interpretations before acting"
+    },
+    {
+      "name": "complex_multi_step-01",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-01",
+          "type": "prompt",
+          "content": "Plan and execute a shell workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-01",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-01",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "shell",
+          "parameters": {
+            "target": "workflow-0",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-02",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-02",
+          "type": "prompt",
+          "content": "Plan and execute a search workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-02",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-02",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "search",
+          "parameters": {
+            "target": "workflow-1",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-03",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-03",
+          "type": "prompt",
+          "content": "Plan and execute a notes workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 5
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-03",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-03",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "notes",
+          "parameters": {
+            "target": "workflow-2",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-04",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-04",
+          "type": "prompt",
+          "content": "Plan and execute a ticketing workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 6
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-04",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-04",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": "workflow-3",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-05",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-05",
+          "type": "prompt",
+          "content": "Plan and execute a deploy workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-05",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-05",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": "workflow-4",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-06",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-06",
+          "type": "prompt",
+          "content": "Plan and execute a database workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-06",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-06",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "database",
+          "parameters": {
+            "target": "workflow-5",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-07",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-07",
+          "type": "prompt",
+          "content": "Plan and execute a calendar workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 5
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-07",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-07",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": "workflow-6",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 2,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-08",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-08",
+          "type": "prompt",
+          "content": "Plan and execute a mail workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 6
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-08",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-08",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "mail",
+          "parameters": {
+            "target": "workflow-7",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 1,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-09",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-09",
+          "type": "prompt",
+          "content": "Plan and execute a filesystem workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-09",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-09",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": "workflow-8",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-10",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-10",
+          "type": "prompt",
+          "content": "Plan and execute a browser workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-10",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-10",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "browser",
+          "parameters": {
+            "target": "workflow-9",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-11",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-11",
+          "type": "prompt",
+          "content": "Plan and execute a shell workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 5
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-11",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "shell",
+          "request_id": "com-11",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "shell",
+          "parameters": {
+            "target": "workflow-10",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-12",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-12",
+          "type": "prompt",
+          "content": "Plan and execute a search workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 6
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-12",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "search",
+          "request_id": "com-12",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "search",
+          "parameters": {
+            "target": "workflow-11",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-13",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-13",
+          "type": "prompt",
+          "content": "Plan and execute a notes workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-13",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "notes",
+          "request_id": "com-13",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "notes",
+          "parameters": {
+            "target": "workflow-12",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-14",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-14",
+          "type": "prompt",
+          "content": "Plan and execute a ticketing workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-14",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "ticketing",
+          "request_id": "com-14",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "ticketing",
+          "parameters": {
+            "target": "workflow-13",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-15",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-15",
+          "type": "prompt",
+          "content": "Plan and execute a deploy workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 5
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-15",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "deploy",
+          "request_id": "com-15",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "deploy",
+          "parameters": {
+            "target": "workflow-14",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-16",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-16",
+          "type": "prompt",
+          "content": "Plan and execute a database workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 6
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-16",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "database",
+          "request_id": "com-16",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "database",
+          "parameters": {
+            "target": "workflow-15",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 3,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-17",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-17",
+          "type": "prompt",
+          "content": "Plan and execute a calendar workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-17",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "calendar",
+          "request_id": "com-17",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "calendar",
+          "parameters": {
+            "target": "workflow-16",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 4,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-18",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-18",
+          "type": "prompt",
+          "content": "Plan and execute a mail workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-18",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 4
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "mail",
+          "request_id": "com-18",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "mail",
+          "parameters": {
+            "target": "workflow-17",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 4,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-19",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-19",
+          "type": "prompt",
+          "content": "Plan and execute a filesystem workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 5
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-19",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 2
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "filesystem",
+          "request_id": "com-19",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "filesystem",
+          "parameters": {
+            "target": "workflow-18",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 5,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "complex_multi_step-20",
+      "scenario_type": "complex_multi_step",
+      "input_sequence": [
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-20",
+          "type": "prompt",
+          "content": "Plan and execute a browser workflow with verification.",
+          "step": "plan",
+          "remaining_steps": 6
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-20",
+          "type": "tool_result",
+          "status": "success",
+          "step": "setup_complete",
+          "remaining_steps": 3
+        },
+        {
+          "scenario_type": "complex_multi_step",
+          "tool": "browser",
+          "request_id": "com-20",
+          "type": "tool_request",
+          "intent": "next_step",
+          "tool_name": "browser",
+          "parameters": {
+            "target": "workflow-19",
+            "mode": "execute"
+          }
+        }
+      ],
+      "expected_actions": [
+        "execute"
+      ],
+      "difficulty": 5,
+      "rationale": "Execute the next concrete step in a multi-step plan"
+    },
+    {
+      "name": "error_recovery-01",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "search",
+          "request_id": "err-01",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "search",
+          "request_id": "err-01",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 1,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-02",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "notes",
+          "request_id": "err-02",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "notes",
+          "request_id": "err-02",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 1,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-03",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "ticketing",
+          "request_id": "err-03",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "ticketing",
+          "request_id": "err-03",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 2,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-04",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "deploy",
+          "request_id": "err-04",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "deploy",
+          "request_id": "err-04",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 2,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-05",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "database",
+          "request_id": "err-05",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "database",
+          "request_id": "err-05",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 2,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-06",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "calendar",
+          "request_id": "err-06",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "calendar",
+          "request_id": "err-06",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 1,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-07",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "mail",
+          "request_id": "err-07",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "mail",
+          "request_id": "err-07",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 2,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-08",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "filesystem",
+          "request_id": "err-08",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "filesystem",
+          "request_id": "err-08",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 1,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-09",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "browser",
+          "request_id": "err-09",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "browser",
+          "request_id": "err-09",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-10",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "shell",
+          "request_id": "err-10",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "shell",
+          "request_id": "err-10",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-11",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "search",
+          "request_id": "err-11",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "search",
+          "request_id": "err-11",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-12",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "notes",
+          "request_id": "err-12",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "notes",
+          "request_id": "err-12",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-13",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "ticketing",
+          "request_id": "err-13",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "ticketing",
+          "request_id": "err-13",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-14",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "deploy",
+          "request_id": "err-14",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "deploy",
+          "request_id": "err-14",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-15",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "database",
+          "request_id": "err-15",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "database",
+          "request_id": "err-15",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-16",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "calendar",
+          "request_id": "err-16",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "calendar",
+          "request_id": "err-16",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "medium",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 3,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-17",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "mail",
+          "request_id": "err-17",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "mail",
+          "request_id": "err-17",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "high",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 4,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-18",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "filesystem",
+          "request_id": "err-18",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "filesystem",
+          "request_id": "err-18",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "high",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 4,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-19",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "browser",
+          "request_id": "err-19",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "failure",
+          "error": "validation_error",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "browser",
+          "request_id": "err-19",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "high",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 5,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "error_recovery-20",
+      "scenario_type": "error_recovery",
+      "input_sequence": [
+        {
+          "scenario_type": "error_recovery",
+          "tool": "shell",
+          "request_id": "err-20",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "failure",
+          "error": "permission_denied",
+          "attempt": 2,
+          "retryable": false
+        },
+        {
+          "scenario_type": "error_recovery",
+          "tool": "shell",
+          "request_id": "err-20",
+          "type": "feedback",
+          "outcome": "failure",
+          "risk": "high",
+          "instruction": "avoid destructive follow-up without more evidence"
+        }
+      ],
+      "expected_actions": [
+        "cautious"
+      ],
+      "difficulty": 5,
+      "rationale": "Slow down after failure and choose a safer recovery action"
+    },
+    {
+      "name": "success_streak-01",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "notes",
+          "request_id": "suc-01",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "success",
+          "streak": 2,
+          "confidence_signal": 0.75
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "notes",
+          "request_id": "suc-01",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 3,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 1,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-02",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "ticketing",
+          "request_id": "suc-02",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "success",
+          "streak": 3,
+          "confidence_signal": 0.8
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "ticketing",
+          "request_id": "suc-02",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 4,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 1,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-03",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "deploy",
+          "request_id": "suc-03",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "success",
+          "streak": 4,
+          "confidence_signal": 0.85
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "deploy",
+          "request_id": "suc-03",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 5,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 2,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-04",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "database",
+          "request_id": "suc-04",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "success",
+          "streak": 5,
+          "confidence_signal": 0.9
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "database",
+          "request_id": "suc-04",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 6,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 2,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-05",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "calendar",
+          "request_id": "suc-05",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "success",
+          "streak": 6,
+          "confidence_signal": 0.75
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "calendar",
+          "request_id": "suc-05",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 7,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 2,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-06",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "mail",
+          "request_id": "suc-06",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "success",
+          "streak": 2,
+          "confidence_signal": 0.8
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "mail",
+          "request_id": "suc-06",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 8,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 1,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-07",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "filesystem",
+          "request_id": "suc-07",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "success",
+          "streak": 3,
+          "confidence_signal": 0.85
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "filesystem",
+          "request_id": "suc-07",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 3,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 2,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-08",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "browser",
+          "request_id": "suc-08",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "success",
+          "streak": 4,
+          "confidence_signal": 0.9
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "browser",
+          "request_id": "suc-08",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 4,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 1,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-09",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "shell",
+          "request_id": "suc-09",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "success",
+          "streak": 5,
+          "confidence_signal": 0.75
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "shell",
+          "request_id": "suc-09",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 5,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-10",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "search",
+          "request_id": "suc-10",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "success",
+          "streak": 6,
+          "confidence_signal": 0.8
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "search",
+          "request_id": "suc-10",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 6,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-11",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "notes",
+          "request_id": "suc-11",
+          "type": "tool_result",
+          "tool_name": "notes",
+          "status": "success",
+          "streak": 2,
+          "confidence_signal": 0.85
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "notes",
+          "request_id": "suc-11",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 7,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-12",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "ticketing",
+          "request_id": "suc-12",
+          "type": "tool_result",
+          "tool_name": "ticketing",
+          "status": "success",
+          "streak": 3,
+          "confidence_signal": 0.9
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "ticketing",
+          "request_id": "suc-12",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 8,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-13",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "deploy",
+          "request_id": "suc-13",
+          "type": "tool_result",
+          "tool_name": "deploy",
+          "status": "success",
+          "streak": 4,
+          "confidence_signal": 0.75
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "deploy",
+          "request_id": "suc-13",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 3,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-14",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "database",
+          "request_id": "suc-14",
+          "type": "tool_result",
+          "tool_name": "database",
+          "status": "success",
+          "streak": 5,
+          "confidence_signal": 0.8
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "database",
+          "request_id": "suc-14",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 4,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-15",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "calendar",
+          "request_id": "suc-15",
+          "type": "tool_result",
+          "tool_name": "calendar",
+          "status": "success",
+          "streak": 6,
+          "confidence_signal": 0.85
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "calendar",
+          "request_id": "suc-15",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 5,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-16",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "mail",
+          "request_id": "suc-16",
+          "type": "tool_result",
+          "tool_name": "mail",
+          "status": "success",
+          "streak": 2,
+          "confidence_signal": 0.9
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "mail",
+          "request_id": "suc-16",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 6,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 3,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-17",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "filesystem",
+          "request_id": "suc-17",
+          "type": "tool_result",
+          "tool_name": "filesystem",
+          "status": "success",
+          "streak": 3,
+          "confidence_signal": 0.75
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "filesystem",
+          "request_id": "suc-17",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 7,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 4,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-18",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "browser",
+          "request_id": "suc-18",
+          "type": "tool_result",
+          "tool_name": "browser",
+          "status": "success",
+          "streak": 4,
+          "confidence_signal": 0.8
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "browser",
+          "request_id": "suc-18",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 8,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 4,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-19",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "shell",
+          "request_id": "suc-19",
+          "type": "tool_result",
+          "tool_name": "shell",
+          "status": "success",
+          "streak": 5,
+          "confidence_signal": 0.85
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "shell",
+          "request_id": "suc-19",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 3,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 5,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    },
+    {
+      "name": "success_streak-20",
+      "scenario_type": "success_streak",
+      "input_sequence": [
+        {
+          "scenario_type": "success_streak",
+          "tool": "search",
+          "request_id": "suc-20",
+          "type": "tool_result",
+          "tool_name": "search",
+          "status": "success",
+          "streak": 6,
+          "confidence_signal": 0.9
+        },
+        {
+          "scenario_type": "success_streak",
+          "tool": "search",
+          "request_id": "suc-20",
+          "type": "feedback",
+          "outcome": "success",
+          "recent_successes": 4,
+          "recent_failures": 0
+        }
+      ],
+      "expected_actions": [
+        "assertive"
+      ],
+      "difficulty": 5,
+      "rationale": "Act more assertively after repeated successful outcomes"
+    }
+  ]
+}
