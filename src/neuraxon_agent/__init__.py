@@ -1,6 +1,12 @@
 """Neuraxon Agent — Intelligence Tissue for CLI AI Agents."""
 
 from neuraxon_agent.action import ActionDecoder, AgentAction
+from neuraxon_agent.baselines import (
+    AlwaysExecuteAgent,
+    BaselineAgentState,
+    RandomAgent,
+    run_baseline_benchmarks,
+)
 from neuraxon_agent.benchmark import (
     BenchmarkHarness,
     BenchmarkReport,
@@ -34,6 +40,10 @@ __all__ = [
     "BenchmarkReport",
     "BenchmarkResult",
     "BenchmarkScenario",
+    "AlwaysExecuteAgent",
+    "BaselineAgentState",
+    "RandomAgent",
+    "run_baseline_benchmarks",
     "MOCK_AGENT_ACTIONS",
     "load_mock_agent_scenarios",
 ]
