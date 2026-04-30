@@ -29,6 +29,9 @@ dev = [
     "ruff>=0.4.0",
     "mypy>=1.8",
 ]
+visual = [
+    "Pillow>=10.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/sisutuulenisa/neuraxon-hybrid"

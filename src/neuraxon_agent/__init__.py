@@ -64,6 +64,7 @@ from neuraxon_agent.tissue_benchmark import (
     TissueBenchmarkResult,
     run_neuraxon_tissue_benchmark,
 )
+from neuraxon_agent.visual import DOMElement, DOMSpatialEncoder, ScreenshotInput, TrinaryGridEncoder
 
 __all__ = [
     "PerceptionEncoder",
@@ -123,4 +124,8 @@ __all__ = [
     "MOCK_AGENT_ACTIONS",
     "load_mock_agent_scenarios",
     "SemanticTissuePolicy",
+    "ScreenshotInput",
+    "TrinaryGridEncoder",
+    "DOMElement",
+    "DOMSpatialEncoder",
 ]
