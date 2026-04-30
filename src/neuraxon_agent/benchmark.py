@@ -36,6 +36,8 @@ class BenchmarkScenario:
     observation_sequence: list[dict[str, Any]]
     expected_optimal_action: str
     difficulty: float
+    scenario_type: str = "custom"
+    expected_actions: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
