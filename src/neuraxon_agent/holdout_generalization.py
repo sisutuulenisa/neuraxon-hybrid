@@ -1,4 +1,4 @@
-"""Holdout/noisy generalization benchmark utilities."""
+"""Holdout/noisy and temporal generalization benchmark utilities."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from typing import Any, Iterable
 from neuraxon_agent.baselines import run_baseline_benchmarks
 from neuraxon_agent.benchmark import BenchmarkReport, BenchmarkScenario
 from neuraxon_agent.scenarios import load_mock_agent_scenarios
+from neuraxon_agent.semantic_policy import SemanticTissuePolicy
 from neuraxon_agent.tissue_benchmark import TissueBenchmarkReport, run_neuraxon_tissue_benchmark
 
 DEFAULT_HOLDOUT_GENERALIZATION_PATH = Path(
@@ -19,7 +20,7 @@ DEFAULT_HOLDOUT_GENERALIZATION_PATH = Path(
 
 @dataclass(frozen=True)
 class AgentGeneralizationScore:
-    """Compact score for one agent on the holdout/noisy benchmark."""
+    """Compact score for one agent on a generalization benchmark."""
 
     success_count: int
     run_count: int
@@ -35,6 +36,27 @@ class AgentGeneralizationScore:
 
 
 @dataclass(frozen=True)
+class SemanticPolicyCoverage:
+    """How many final observations are directly solved by SemanticTissuePolicy."""
+
+    scenario_count: int
+    covered_count: int
+    coverage_rate: float
+    warning: str
+
+
+@dataclass(frozen=True)
+class TemporalDynamicsBenchmark:
+    """Benchmark slice that hides the final action oracle in a temporal probe."""
+
+    scenario_count: int
+    seed_count: int
+    neuraxon_tissue: AgentGeneralizationScore
+    baselines: dict[str, AgentGeneralizationScore]
+    interpretation: str
+
+
+@dataclass(frozen=True)
 class HoldoutGeneralizationReport:
     """Summary report for holdout/noisy semantic policy generalization."""
 
@@ -42,6 +64,8 @@ class HoldoutGeneralizationReport:
     seed_count: int
     neuraxon_tissue: AgentGeneralizationScore
     baselines: dict[str, AgentGeneralizationScore]
+    semantic_policy_coverage: SemanticPolicyCoverage
+    temporal_dynamics: TemporalDynamicsBenchmark
     decision: str
     interpretation: str
 
@@ -70,12 +94,124 @@ def generate_holdout_noisy_scenarios(
     first mock benchmark used. They preserve action semantics through more
     general fields such as missing parameters, retryability, ambiguity, risk and
     success streaks, while adding irrelevant noise fields.
+
+    This is still not a true Neuraxon/Aigarth-style generalization test: the
+    final observation remains directly decidable by the explicit semantic policy
+    bridge. ``measure_semantic_policy_coverage`` makes that limitation visible.
     """
     scenarios = base_scenarios if base_scenarios is not None else load_mock_agent_scenarios()
     return [
         _holdout_variant(scenario=scenario, index=index)
         for index, scenario in enumerate(scenarios)
     ]
+
+
+def generate_temporal_dynamics_scenarios() -> list[BenchmarkScenario]:
+    """Return NIA-inspired temporal scenarios with no final action oracle.
+
+    Qubic's NIA volumes emphasise continuous-time state, trinary neutral buffers,
+    neuromodulatory context and plasticity gates. A benchmark that is solved from
+    one explicit final observation does not test those claims. These scenarios
+    therefore put the evidence in prior observations and end with an identical
+    ``temporal_decision_probe`` shape. A stateless semantic rule bridge should no
+    longer get 100%; any success must come from carried tissue/network state.
+    """
+    definitions: list[tuple[str, str, list[dict[str, Any]]]] = [
+        (
+            "stable_complete_workflow",
+            "execute",
+            [
+                {"signal": "task_context", "stability": 0.8, "novelty": 0.1},
+                {"signal": "parameters_complete", "missing_count": 0, "risk": "low"},
+            ],
+        ),
+        (
+            "subthreshold_information_gap",
+            "query",
+            [
+                {"signal": "task_context", "stability": 0.4, "novelty": 0.3},
+                {"signal": "parameters_partial", "missing_count": 2, "risk": "low"},
+            ],
+        ),
+        (
+            "recoverable_transient_failure",
+            "retry",
+            [
+                {"signal": "tool_outcome", "failure_count": 1, "transient": True},
+                {"signal": "modulatory_context", "norepinephrine": 0.7, "risk": "low"},
+            ],
+        ),
+        (
+            "novel_ambiguous_environment",
+            "explore",
+            [
+                {"signal": "task_context", "stability": 0.2, "novelty": 0.9},
+                {"signal": "choice_space", "option_count": 4, "ambiguity": 0.8},
+            ],
+        ),
+        (
+            "high_risk_repeated_failure",
+            "cautious",
+            [
+                {"signal": "tool_outcome", "failure_count": 3, "transient": False},
+                {"signal": "modulatory_context", "serotonin": 0.8, "risk": "high"},
+            ],
+        ),
+        (
+            "stable_success_attractor",
+            "assertive",
+            [
+                {"signal": "task_context", "stability": 0.9, "novelty": 0.1},
+                {"signal": "outcome_history", "success_count": 4, "failure_count": 0},
+            ],
+        ),
+    ]
+    return [
+        BenchmarkScenario(
+            name=f"temporal_dynamics_{name}",
+            observation_sequence=[
+                *prefix,
+                {
+                    "intent": "temporal_decision_probe",
+                    "probe": "choose_action_from_prior_dynamics",
+                    "elapsed_ticks": 1_000 + index,
+                },
+            ],
+            expected_optimal_action=expected_action,
+            difficulty=0.9,
+            scenario_type="temporal_dynamics_probe",
+            expected_actions=(expected_action,),
+        )
+        for index, (name, expected_action, prefix) in enumerate(definitions)
+    ]
+
+
+def measure_semantic_policy_coverage(
+    scenarios: list[BenchmarkScenario],
+    policy: SemanticTissuePolicy | None = None,
+) -> SemanticPolicyCoverage:
+    """Measure whether final observations are directly covered by the policy bridge."""
+    semantic_policy = policy or SemanticTissuePolicy()
+    covered_count = sum(
+        1
+        for scenario in scenarios
+        if semantic_policy.decide(scenario.observation_sequence[-1]) is not None
+    )
+    scenario_count = len(scenarios)
+    coverage_rate = covered_count / scenario_count if scenario_count else 0.0
+    warning = (
+        "semantic_policy_oracle_coverage_high: final observations are directly "
+        "decidable by the explicit policy bridge, so perfect accuracy is not "
+        "evidence of continuous-time Neuraxon dynamics."
+        if coverage_rate >= 0.95
+        else "semantic_policy_oracle_coverage_low"
+    )
+    return SemanticPolicyCoverage(
+        scenario_count=scenario_count,
+        covered_count=covered_count,
+        coverage_rate=coverage_rate,
+        warning=warning,
+    )
 
 
 def run_holdout_generalization_benchmark(
@@ -85,7 +221,7 @@ def run_holdout_generalization_benchmark(
     steps_per_observation: int = 1,
     output_path: str | Path | None = None,
 ) -> HoldoutGeneralizationReport:
-    """Run Neuraxon tissue and baselines on holdout/noisy scenarios."""
+    """Run Neuraxon tissue and baselines on holdout/noisy + temporal scenarios."""
     holdout_scenarios = scenarios if scenarios is not None else generate_holdout_noisy_scenarios()
     seed_list = list(seeds)
     tissue_report = run_neuraxon_tissue_benchmark(
@@ -94,11 +230,25 @@ def run_holdout_generalization_benchmark(
         steps_per_observation=steps_per_observation,
     )
     baseline_reports = run_baseline_benchmarks(holdout_scenarios)
+    temporal_scenarios = generate_temporal_dynamics_scenarios()
+    temporal_report = run_neuraxon_tissue_benchmark(
+        temporal_scenarios,
+        seeds=seed_list,
+        steps_per_observation=steps_per_observation,
+    )
+    temporal_baselines = run_baseline_benchmarks(temporal_scenarios)
     report = _summarize_generalization(
         tissue_report=tissue_report,
         baseline_reports=baseline_reports,
         scenario_count=len(holdout_scenarios),
         seed_count=len(seed_list),
+        semantic_policy_coverage=measure_semantic_policy_coverage(holdout_scenarios),
+        temporal_dynamics=_summarize_temporal_dynamics(
+            temporal_report=temporal_report,
+            baseline_reports=temporal_baselines,
+            scenario_count=len(temporal_scenarios),
+            seed_count=len(seed_list),
+        ),
     )
     if output_path is not None:
         report.write_json(output_path)
@@ -135,12 +285,40 @@ def _noisy_confidence(observation: dict[str, Any], index: int) -> float:
     return round(0.35 + ((index % 7) * 0.07), 2)
 
 
+def _summarize_temporal_dynamics(
+    *,
+    temporal_report: TissueBenchmarkReport,
+    baseline_reports: dict[str, BenchmarkReport],
+    scenario_count: int,
+    seed_count: int,
+) -> TemporalDynamicsBenchmark:
+    return TemporalDynamicsBenchmark(
+        scenario_count=scenario_count,
+        seed_count=seed_count,
+        neuraxon_tissue=AgentGeneralizationScore.from_counts(
+            temporal_report.success_count,
+            temporal_report.run_count,
+        ),
+        baselines={
+            name: AgentGeneralizationScore.from_counts(report.success_count, report.run_count)
+            for name, report in baseline_reports.items()
+        },
+        interpretation=(
+            "Temporal probe inspired by NIA Vol. 1/2/3/5/7: final observations "
+            "hide explicit action cues, so success must come from continuous time, "
+            "state carry-over, trinary buffering and modulation-like dynamics."
+        ),
+    )
+
+
 def _summarize_generalization(
     *,
     tissue_report: TissueBenchmarkReport,
     baseline_reports: dict[str, BenchmarkReport],
     scenario_count: int,
     seed_count: int,
+    semantic_policy_coverage: SemanticPolicyCoverage,
+    temporal_dynamics: TemporalDynamicsBenchmark,
 ) -> HoldoutGeneralizationReport:
     tissue_score = AgentGeneralizationScore.from_counts(
         tissue_report.success_count,
@@ -151,20 +329,27 @@ def _summarize_generalization(
         for name, report in baseline_reports.items()
     }
     always_execute_score = baseline_scores["always_execute"]
-    decision = (
-        "pass_holdout_noisy_generalization"
-        if tissue_score.success_rate > always_execute_score.success_rate
-        else "fail_holdout_noisy_generalization"
-    )
+    if semantic_policy_coverage.coverage_rate >= 0.95 or tissue_score.success_rate >= 0.999:
+        decision = "needs_temporal_dynamics_evidence"
+    else:
+        decision = (
+            "pass_holdout_noisy_generalization"
+            if tissue_score.success_rate > always_execute_score.success_rate
+            else "fail_holdout_noisy_generalization"
+        )
     return HoldoutGeneralizationReport(
         scenario_count=scenario_count,
         seed_count=seed_count,
         neuraxon_tissue=tissue_score,
         baselines=baseline_scores,
+        semantic_policy_coverage=semantic_policy_coverage,
+        temporal_dynamics=temporal_dynamics,
         decision=decision,
         interpretation=(
-            "This tests the semantic policy bridge against deterministic "
-            "holdout/noisy variants, not autonomous learning by the raw "
-            "Neuraxon network dynamics."
+            "The 100% holdout/noisy score is a semantic policy bridge result, not "
+            "evidence of the continuous time, stateful, neuromodulated and "
+            "edge-of-chaos dynamics described in Qubic's NIA articles. Treat it "
+            "as an oracle-coverage warning and require temporal dynamics evidence "
+            "before claiming Neuraxon generalization."
         ),
     )

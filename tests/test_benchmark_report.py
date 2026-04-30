@@ -38,8 +38,10 @@ def test_benchmark_report_publishes_required_sections_and_assets() -> None:
 def test_benchmark_report_states_go_and_baseline_comparison() -> None:
     report = REPORT_PATH.read_text(encoding="utf-8")
 
-    assert "GO voor de volgende onderzoeksfase" in report
-    assert "niet voor productie" in report
+    assert "GO voor de semantische adapter" in report
+    assert "NO-GO voor Neuraxon-generalisatieclaims" in report
+    assert "needs_temporal_dynamics_evidence" in report
+    assert "semantic_policy_coverage=100%" in report
     assert "100.00%" in report
     assert "15.71%" in report
     assert "28.57%" in report

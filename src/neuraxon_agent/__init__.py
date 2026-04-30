@@ -41,7 +41,11 @@ from neuraxon_agent.holdout_generalization import (
     DEFAULT_HOLDOUT_GENERALIZATION_PATH,
     AgentGeneralizationScore,
     HoldoutGeneralizationReport,
+    SemanticPolicyCoverage,
+    TemporalDynamicsBenchmark,
     generate_holdout_noisy_scenarios,
+    generate_temporal_dynamics_scenarios,
+    measure_semantic_policy_coverage,
     run_holdout_generalization_benchmark,
 )
 from neuraxon_agent.memory import Memory
@@ -77,7 +81,11 @@ __all__ = [
     "AgentGeneralizationScore",
     "DEFAULT_HOLDOUT_GENERALIZATION_PATH",
     "HoldoutGeneralizationReport",
+    "SemanticPolicyCoverage",
+    "TemporalDynamicsBenchmark",
     "generate_holdout_noisy_scenarios",
+    "generate_temporal_dynamics_scenarios",
+    "measure_semantic_policy_coverage",
     "run_holdout_generalization_benchmark",
     "StreamingLoop",
     "StreamEvent",

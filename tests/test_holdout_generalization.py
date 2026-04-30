@@ -5,6 +5,8 @@ from __future__ import annotations
 from neuraxon_agent.baselines import run_baseline_benchmarks
 from neuraxon_agent.holdout_generalization import (
     generate_holdout_noisy_scenarios,
+    generate_temporal_dynamics_scenarios,
+    measure_semantic_policy_coverage,
     run_holdout_generalization_benchmark,
 )
 from neuraxon_agent.scenarios import load_mock_agent_scenarios
@@ -44,6 +46,42 @@ def test_holdout_noisy_scenarios_do_not_rely_on_original_scenario_type_labels() 
     assert "error_recovery" not in observed_types
 
 
+def test_holdout_noisy_scenarios_are_semantic_policy_covered_not_true_generalization() -> None:
+    scenarios = generate_holdout_noisy_scenarios(load_mock_agent_scenarios())
+
+    coverage = measure_semantic_policy_coverage(scenarios)
+
+    assert coverage.scenario_count == 140
+    assert coverage.covered_count == 140
+    assert coverage.coverage_rate == 1.0
+    assert "semantic_policy_oracle" in coverage.warning
+
+
+def test_temporal_dynamics_scenarios_hide_action_oracles_in_final_probe() -> None:
+    scenarios = generate_temporal_dynamics_scenarios()
+
+    final_observations = [scenario.observation_sequence[-1] for scenario in scenarios]
+
+    assert {scenario.expected_optimal_action for scenario in scenarios} == {
+        "execute",
+        "query",
+        "retry",
+        "explore",
+        "cautious",
+        "assertive",
+    }
+    assert all(len(scenario.observation_sequence) >= 3 for scenario in scenarios)
+    assert all(
+        observation.get("intent") == "temporal_decision_probe"
+        for observation in final_observations
+    )
+    assert all("scenario_type" not in observation for observation in final_observations)
+    assert all("missing_parameters" not in observation for observation in final_observations)
+    assert all("retryable" not in observation for observation in final_observations)
+    assert all("known_options" not in observation for observation in final_observations)
+    assert all("confidence_signal" not in observation for observation in final_observations)
+
+
 def test_semantic_tissue_beats_always_execute_on_holdout_noisy_benchmark() -> None:
     scenarios = generate_holdout_noisy_scenarios(load_mock_agent_scenarios())
 
@@ -54,6 +92,15 @@ def test_semantic_tissue_beats_always_execute_on_holdout_noisy_benchmark() -> No
     assert tissue_report.success_count == tissue_report.run_count
 
 
+def test_temporal_dynamics_benchmark_exposes_single_probe_limitation() -> None:
+    scenarios = generate_temporal_dynamics_scenarios()
+
+    tissue_report = run_neuraxon_tissue_benchmark(scenarios, seeds=(0,), steps_per_observation=1)
+
+    assert tissue_report.run_count == len(scenarios)
+    assert tissue_report.success_count < tissue_report.run_count
+
+
 def test_holdout_generalization_summary_is_serializable_and_critical() -> None:
     report = run_holdout_generalization_benchmark(seeds=(0,), steps_per_observation=1)
 
@@ -61,9 +108,12 @@ def test_holdout_generalization_summary_is_serializable_and_critical() -> None:
 
     assert payload["scenario_count"] == 140
     assert payload["neuraxon_tissue"]["success_rate"] == 1.0
+    assert payload["semantic_policy_coverage"]["coverage_rate"] == 1.0
+    assert payload["temporal_dynamics"]["scenario_count"] >= 6
+    assert payload["temporal_dynamics"]["neuraxon_tissue"]["success_rate"] < 1.0
     assert (
         payload["baselines"]["always_execute"]["success_rate"]
         < payload["neuraxon_tissue"]["success_rate"]
     )
-    assert payload["decision"] == "pass_holdout_noisy_generalization"
-    assert "semantic policy bridge" in payload["interpretation"]
+    assert payload["decision"] == "needs_temporal_dynamics_evidence"
+    assert "continuous time" in payload["interpretation"]

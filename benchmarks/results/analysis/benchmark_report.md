@@ -6,7 +6,9 @@ Na de semantic tissue policy is de mock benchmark volledig opgelost voor de best
 
 Resultaat: `neuraxon_tissue` haalt nu 700/700 correcte runs = 100.00% accuracy. Dat is significant beter dan zowel random (15.71%) als always-execute (28.57%).
 
-Een extra holdout/noisy generalization smoke benchmark haalt 140/140 correcte runs = 100.00% op deterministisch verstoorde scenario-varianten zonder de originele `simple_tool_call`, `complex_multi_step` of `error_recovery` labels. Ook daar blijft de tissue boven always-execute (28.57%).
+Een extra holdout/noisy generalization smoke benchmark haalt nog altijd 140/140 correcte runs = 100.00%, maar dat resultaat is nu expliciet gedegradeerd van “pass” naar `needs_temporal_dynamics_evidence`: alle 140 finale observaties zijn direct oplosbaar door de expliciete semantic policy bridge (`semantic_policy_coverage=100%`). Dat bevestigt je vermoeden: 100% is hier vooral oracle-/feature-coverage, niet bewijs voor emergente Neuraxon-dynamiek.
+
+Daarom is er nu een NIA-geïnspireerde temporal dynamics probe toegevoegd. Die verbergt de finale actie-oracle in een generieke `temporal_decision_probe`; de relevante signalen zitten alleen in eerdere observaties. Op die strengere probe haalt `neuraxon_tissue` 1/6 = 16.67%, gelijk aan always-execute en onder random (33.33% op deze kleine set). Dit is het juiste kritische signaal: de huidige slice bewijst een nuttige semantische adapter, maar nog geen continue-tijd/stateful/neuromodulated generalisatie.
 
 Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
@@ -19,7 +21,8 @@ Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit be
 - Tissue runs: 140 × 5 = 700
 - Baselines: random en always-execute, elk 140 runs
 - Metrics: accuracy, confidence, per-scenario breakdown, learning curve, simple two-proportion z-tests
-- Holdout/noisy smoke benchmark: 140 deterministische varianten, 1 seed, originele scenario-type labels vervangen door `holdout_<expected_action>`
+- Holdout/noisy smoke benchmark: 140 deterministische varianten, 1 seed, originele scenario-type labels vervangen door `holdout_<expected_action>`; 100% semantic-policy coverage, dus niet als echte generalisatieclaim behandelen
+- Temporal dynamics probe: 6 NIA-geïnspireerde scenario's, 1 seed, finale observatie bevat geen actie-oracle; meet of eerdere observaties/state carry-over de beslissing dragen
 
 ## 3. Resultaten
 
@@ -51,9 +54,31 @@ Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit be
 | Random baseline | 140 | 25 | 17.86% |
 | Always-execute baseline | 140 | 40 | 28.57% |
 
-De holdout/noisy set is geen volledig bewijs van generalisatie, maar wel een betere smoke test dan de exacte mock benchmark. De varianten verwijderen enkele originele scenario-type labels en voegen irrelevante/noisy velden toe. De policy moet daardoor op algemene observatievelden zoals ontbrekende parameters, retryability, ambiguity, risk en success streaks leunen.
+De holdout/noisy set is geen volledig bewijs van generalisatie. De varianten verwijderen enkele originele scenario-type labels en voegen irrelevante/noisy velden toe, maar de finale observaties blijven allemaal direct oplosbaar via algemene observatievelden zoals ontbrekende parameters, retryability, ambiguity, risk en success streaks.
 
-Beslissing: `pass_holdout_noisy_generalization`. De semantic policy bridge blijft boven always-execute op deze deterministische holdout/noisy set.
+Semantic-policy coverage audit:
+
+| Maat | Waarde |
+|---|---:|
+| Finale observaties | 140 |
+| Direct oplosbaar door semantic policy | 140 |
+| Coverage | 100.00% |
+
+Beslissing: `needs_temporal_dynamics_evidence`. De semantic policy bridge blijft boven always-execute op deze deterministische holdout/noisy set, maar 100% coverage betekent dat deze score vooral bewijst dat de handgemaakte observatiefeatures goed afgedekt zijn.
+
+### NIA temporal dynamics probe
+
+Qubic's NIA-artikelen leggen de lat anders: Vol. 1 benadrukt continue tijd en state carry-over, Vol. 2 trinary neutral/subthreshold buffering, Vol. 3 neuromodulatie en plasticity windows, Vol. 5 astrocytic/eligibility-gated plasticity, en Vol. 7 emergentie rond edge-of-chaos-dynamiek. Een one-shot finale observatie met expliciete semantische velden test dat niet.
+
+Daarom is er nu een kleine temporal dynamics probe toegevoegd. De finale observatie is overal dezelfde generieke `temporal_decision_probe`; de relevante signalen zitten alleen in de voorafgaande observaties. Resultaat:
+
+| Agent | Runs | Correct | Accuracy |
+|---|---:|---:|---:|
+| Neuraxon tissue | 6 | 1 | 16.67% |
+| Random baseline | 6 | 2 | 33.33% |
+| Always-execute baseline | 6 | 1 | 16.67% |
+
+Interpretatie: de huidige runtime draagt nog onvoldoende taakrelevante temporele dynamiek door tot een finale probe zonder expliciete action oracle. Dat is geen regressie; het is een eerlijkere onderzoeksmeting die voorkomt dat de semantic bridge als Neuraxon-generalisatie wordt verkocht.
 
 ### Beslislaag interpretatie
 
@@ -97,9 +122,9 @@ Niet bewezen:
 
 ## 8. Verdict
 
-Status: GO voor de volgende onderzoeksfase, niet voor productie.
+Status: GO voor de semantische adapter, NO-GO voor Neuraxon-generalisatieclaims.
 
-De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De volgende logische stap is niet memory persistence of visual perception, maar generalisatie testen: holdout scenario's, noisy/partial observations, en daarna pas leren/adaptatie meten.
+De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De nieuwe blocker is scherper: perfecte scores op exact/holdout-noisy zijn verdacht wanneer 100% van de finale observaties direct door een handgeschreven policy oplosbaar is. De volgende logische stap is daarom niet memory persistence of visual perception, maar een grotere temporal/criticality benchmark waarin beslissingen afhangen van state carry-over, neuromodulatorniveaus, eligibility/plasticity gates en perturbaties rond de edge of chaos.
 
 ## 9. Artefacten
 
