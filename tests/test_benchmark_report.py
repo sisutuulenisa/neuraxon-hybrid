@@ -30,6 +30,7 @@ def test_benchmark_report_publishes_required_sections_and_assets() -> None:
         "plots/confidence_distribution.png",
         "plots/neuromodulator_trends.png",
         "plots/learning_curve.png",
+        "plots/activity_energy_trends.png",
     ]
     for plot_link in required_plot_links:
         assert plot_link in report
@@ -86,3 +87,15 @@ def test_benchmark_report_states_expanded_temporal_dataset_and_separation() -> N
     assert "temporal_context_bridge" in report
     assert "expliciete temporal context adapter" in report.lower()
     assert "raw neuraxon network dynamics" in report.lower()
+
+
+def test_benchmark_report_interprets_criticality_and_dynamics_metrics() -> None:
+    report = REPORT_PATH.read_text(encoding="utf-8")
+
+    assert "criticality" in report.lower()
+    assert "dynamics_metrics.csv" in report
+    assert "criticality_summary.csv" in report
+    assert "dead/saturated/random-like" in report.lower()
+    assert "near useful dynamic regime" in report.lower()
+    assert "neutral-state occupancy" in report.lower()
+    assert "transition entropy" in report.lower()

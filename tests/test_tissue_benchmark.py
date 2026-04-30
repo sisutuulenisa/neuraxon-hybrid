@@ -75,6 +75,54 @@ def test_neuraxon_tissue_benchmark_collects_complete_raw_metrics() -> None:
         "num_neurons",
         "num_synapses",
     }
+    assert len(result.dynamics_samples) == result.observation_count
+    sample = result.dynamics_samples[0]
+    assert sample["observation_index"] == 0
+    assert sample["step_index"] == 0
+    assert set(sample["trinary_distribution"]) == {"negative", "neutral", "positive"}
+    assert sum(sample["trinary_distribution"].values()) == result.state["num_neurons"]
+    assert set(result.criticality_metrics) == {
+        "activity_variance",
+        "transition_entropy",
+        "neutral_state_occupancy",
+        "branching_ratio",
+        "energy_mean",
+    }
+    assert 0.0 <= result.criticality_metrics["neutral_state_occupancy"] <= 1.0
+    assert result.modulation_effect["dopamine_delta"] != 0.0
+    assert result.modulation_effect["action_changed"] in {0.0, 1.0}
+
+
+def test_neuraxon_tissue_benchmark_dynamics_metrics_are_deterministic_for_fixed_seed() -> None:
+    scenarios = load_mock_agent_scenarios()[:2]
+    params = NetworkParameters(
+        num_input_neurons=3,
+        num_hidden_neurons=5,
+        num_output_neurons=2,
+    )
+
+    first = run_neuraxon_tissue_benchmark(
+        scenarios=scenarios,
+        seeds=[7],
+        steps_per_observation=2,
+        params=params,
+    )
+    second = run_neuraxon_tissue_benchmark(
+        scenarios=scenarios,
+        seeds=[7],
+        steps_per_observation=2,
+        params=params,
+    )
+
+    assert [result.dynamics_samples for result in first.results] == [
+        result.dynamics_samples for result in second.results
+    ]
+    assert [result.criticality_metrics for result in first.results] == [
+        result.criticality_metrics for result in second.results
+    ]
+    assert [result.modulation_effect for result in first.results] == [
+        result.modulation_effect for result in second.results
+    ]
 
 
 def test_neuraxon_tissue_benchmark_default_run_has_at_least_500_runs() -> None:
