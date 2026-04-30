@@ -111,6 +111,20 @@ Voor #45 encodeerden alle mock-observaties effectief naar hetzelfde inputpatroon
 - non-retryable/repeated recovery risk -> `cautious`
 - success streak/high confidence -> `assertive`
 
+### Criticality en neuromodulator dynamics
+
+Issue #54 voegt per-step dynamics instrumentation toe aan de tissue benchmark zonder vendored upstream Neuraxon-code te wijzigen. Elk raw benchmarkresultaat bevat nu `dynamics_samples` met activity, energy, trinary state distribution, neutral-state occupancy en neuromodulator levels per gesimuleerde stap. Daarnaast bevat elk resultaat `criticality_metrics` met activity variance, transition entropy, neutral-state occupancy, branching/activity propagation ratio en gemiddelde energy.
+
+De analyse schrijft twee nieuwe artefacten onder `benchmarks/results/analysis/`: `dynamics_metrics.csv` voor per-step inspectie en `criticality_summary.csv` voor run-level interpretatie. De summary classificeert de dynamiek expliciet als `dead`, `saturated`, `random_like` of `near_useful_dynamic_regime`, zodat het rapport kan antwoorden of een run dead/saturated/random-like is of near useful dynamic regime lijkt. Modulation wordt apart vastgelegd via neuromodulator deltas en `modulation_action_change_rate`: in deze slice verandert modulatie vooral observable state; een behavioral effect is pas aangetoond wanneer latere decisions na feedback veranderen.
+
+| Metric | Interpretatie |
+|---|---|
+| Activity variance | Lage variantie wijst op dead/saturated regime; gematigde variantie wijst op bruikbare dynamiek. |
+| Transition entropy | Meet hoeveel trinary states over stappen wisselen; extreem laag is frozen/dead, extreem hoog met instabiele propagation is random-like. |
+| Neutral-state occupancy | Houdt bij of het trinary netwerk vooral neutraal/subthreshold buffert of volledig actief/saturated is. |
+| Branching ratio | Eenvoudige activity-propagation proxy: actieve neuronen in stap t+1 tegenover stap t. |
+| Modulation action-change rate | Geeft aan of neuromodulator feedback later observable decisions wijzigt of alleen interne state. |
+
 ## 6. Statistische vergelijking
 
 | Vergelijking | Tissue accuracy | Baseline accuracy | Verschil | p approx | Significant |
@@ -147,6 +161,8 @@ De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor 
 - Summary CSV: `benchmarks/results/analysis/benchmark_summary.csv`
 - Scenario breakdown CSV: `benchmarks/results/analysis/scenario_type_breakdown.csv`
 - Statistical tests CSV: `benchmarks/results/analysis/statistical_tests.csv`
+- Dynamics metrics CSV: `benchmarks/results/analysis/dynamics_metrics.csv`
+- Criticality summary CSV: `benchmarks/results/analysis/criticality_summary.csv`
 - Diagnostic traces: `benchmarks/results/diagnostics/action_mapping_traces.json`
 - Diagnostic report: `benchmarks/results/diagnostics/action_mapping_diagnostic_report.md`
 - Holdout/noisy generalization: `benchmarks/results/holdout_noisy_generalization.json`
@@ -156,3 +172,4 @@ De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor 
   - `benchmarks/results/analysis/plots/confidence_distribution.png`
   - `benchmarks/results/analysis/plots/neuromodulator_trends.png`
   - `benchmarks/results/analysis/plots/learning_curve.png`
+  - `benchmarks/results/analysis/plots/activity_energy_trends.png`

@@ -222,11 +222,14 @@ def test_analyze_benchmark_results_exports_summary_csvs_and_pngs(tmp_path) -> No
     assert analysis.output_paths.summary_csv == output_dir / "benchmark_summary.csv"
     assert analysis.output_paths.scenario_type_csv == output_dir / "scenario_type_breakdown.csv"
     assert analysis.output_paths.statistical_tests_csv == output_dir / "statistical_tests.csv"
+    assert analysis.output_paths.dynamics_csv == output_dir / "dynamics_metrics.csv"
+    assert analysis.output_paths.criticality_csv == output_dir / "criticality_summary.csv"
     assert set(analysis.output_paths.plots) == {
         "accuracy_by_agent",
         "confidence_distribution",
         "neuromodulator_trends",
         "learning_curve",
+        "activity_energy_trends",
     }
 
     summary_rows = list(csv.DictReader(analysis.output_paths.summary_csv.open()))
@@ -240,6 +243,33 @@ def test_analyze_benchmark_results_exports_summary_csvs_and_pngs(tmp_path) -> No
     assert tissue_row["success_count"] == "4"
     assert tissue_row["accuracy"] == "0.666667"
     assert float(tissue_row["confidence_stddev"]) > 0
+
+    dynamics_rows = list(csv.DictReader(analysis.output_paths.dynamics_csv.open()))
+    assert dynamics_rows
+    assert {
+        "agent_name",
+        "scenario_name",
+        "seed",
+        "observation_index",
+        "step_index",
+        "activity",
+        "energy",
+        "neutral_state_occupancy",
+        "dopamine",
+    }.issubset(dynamics_rows[0])
+
+    criticality_rows = list(csv.DictReader(analysis.output_paths.criticality_csv.open()))
+    tissue_criticality = next(
+        row for row in criticality_rows if row["agent_name"] == "neuraxon_tissue"
+    )
+    assert tissue_criticality["dynamics_regime"] in {
+        "dead",
+        "saturated",
+        "random_like",
+        "near_useful_dynamic_regime",
+    }
+    assert float(tissue_criticality["activity_variance_mean"]) >= 0.0
+    assert tissue_criticality["modulation_action_change_rate"]
 
     for plot_path in analysis.output_paths.plots.values():
         assert plot_path.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")

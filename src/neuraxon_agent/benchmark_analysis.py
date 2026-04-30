@@ -12,7 +12,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from statistics import fmean, stdev
-from typing import Iterable
+from typing import Any, Iterable
 
 from neuraxon_agent.baselines import run_baseline_benchmarks
 from neuraxon_agent.benchmark import BenchmarkResult, BenchmarkScenario
@@ -25,6 +25,7 @@ PLOT_NAMES = (
     "confidence_distribution",
     "neuromodulator_trends",
     "learning_curve",
+    "activity_energy_trends",
 )
 
 
@@ -43,6 +44,9 @@ class BenchmarkRun:
     elapsed_seconds: float
     seed: int | None = None
     neuromodulator_levels: dict[str, float] | None = None
+    dynamics_samples: list[dict[str, Any]] | None = None
+    criticality_metrics: dict[str, float] | None = None
+    modulation_effect: dict[str, float] | None = None
 
 
 @dataclass(frozen=True)
@@ -89,12 +93,29 @@ class StatisticalComparison:
 
 
 @dataclass(frozen=True)
+class CriticalitySummary:
+    """Aggregate criticality and modulation diagnostics for one agent."""
+
+    agent_name: str
+    run_count: int
+    activity_variance_mean: float
+    transition_entropy_mean: float
+    neutral_state_occupancy_mean: float
+    branching_ratio_mean: float
+    energy_mean: float
+    modulation_action_change_rate: float
+    dynamics_regime: str
+
+
+@dataclass(frozen=True)
 class BenchmarkAnalysisOutputPaths:
     """Files written by benchmark analysis."""
 
     summary_csv: Path
     scenario_type_csv: Path
     statistical_tests_csv: Path
+    dynamics_csv: Path
+    criticality_csv: Path
     plots: dict[str, Path]
 
 
@@ -106,6 +127,7 @@ class BenchmarkAnalysis:
     agent_summaries: list[AgentSummary]
     scenario_type_summaries: list[ScenarioTypeSummary]
     statistical_comparisons: list[StatisticalComparison]
+    criticality_summaries: list[CriticalitySummary]
     output_paths: BenchmarkAnalysisOutputPaths
 
 
@@ -125,6 +147,7 @@ def analyze_benchmark_results(
     agent_summaries = _summarize_agents(runs, scenario_list)
     scenario_type_summaries = _summarize_scenario_types(runs)
     statistical_comparisons = _compare_against_baselines(runs, "neuraxon_tissue")
+    criticality_summaries = _summarize_criticality_by_agent(runs)
 
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -134,30 +157,39 @@ def analyze_benchmark_results(
     summary_csv = output_path / "benchmark_summary.csv"
     scenario_type_csv = output_path / "scenario_type_breakdown.csv"
     statistical_tests_csv = output_path / "statistical_tests.csv"
+    dynamics_csv = output_path / "dynamics_metrics.csv"
+    criticality_csv = output_path / "criticality_summary.csv"
     _write_agent_summary_csv(summary_csv, agent_summaries)
     _write_scenario_type_csv(scenario_type_csv, scenario_type_summaries)
     _write_statistical_tests_csv(statistical_tests_csv, statistical_comparisons)
+    _write_dynamics_csv(dynamics_csv, runs)
+    _write_criticality_csv(criticality_csv, criticality_summaries)
 
     plot_paths = {
         "accuracy_by_agent": plots_dir / "accuracy_by_agent.png",
         "confidence_distribution": plots_dir / "confidence_distribution.png",
         "neuromodulator_trends": plots_dir / "neuromodulator_trends.png",
         "learning_curve": plots_dir / "learning_curve.png",
+        "activity_energy_trends": plots_dir / "activity_energy_trends.png",
     }
     _plot_accuracy_by_agent(plot_paths["accuracy_by_agent"], agent_summaries)
     _plot_confidence_distribution(plot_paths["confidence_distribution"], runs)
     _plot_neuromodulator_trends(plot_paths["neuromodulator_trends"], runs)
     _plot_learning_curve(plot_paths["learning_curve"], runs, scenario_list)
+    _plot_activity_energy_trends(plot_paths["activity_energy_trends"], runs)
 
     return BenchmarkAnalysis(
         runs=runs,
         agent_summaries=agent_summaries,
         scenario_type_summaries=scenario_type_summaries,
         statistical_comparisons=statistical_comparisons,
+        criticality_summaries=criticality_summaries,
         output_paths=BenchmarkAnalysisOutputPaths(
             summary_csv=summary_csv,
             scenario_type_csv=scenario_type_csv,
             statistical_tests_csv=statistical_tests_csv,
+            dynamics_csv=dynamics_csv,
+            criticality_csv=criticality_csv,
             plots=plot_paths,
         ),
     )
@@ -182,9 +214,53 @@ def _load_tissue_runs(path: Path) -> list[BenchmarkRun]:
                 key: float(value)
                 for key, value in dict(result.get("neuromodulator_levels", {})).items()
             },
+            dynamics_samples=_result_dynamics_samples(result),
+            criticality_metrics=_float_dict(result.get("criticality_metrics", {})),
+            modulation_effect=_float_dict(result.get("modulation_effect", {})),
         )
         for result in payload["results"]
     ]
+
+
+def _result_dynamics_samples(result: dict[str, Any]) -> list[dict[str, Any]]:
+    raw_samples = result.get("dynamics_samples")
+    if isinstance(raw_samples, list):
+        return [dict(sample) for sample in raw_samples if isinstance(sample, dict)]
+    state = dict(result.get("state", {})) if isinstance(result.get("state"), dict) else {}
+    modulators = (
+        dict(result.get("neuromodulator_levels", {}))
+        if isinstance(result.get("neuromodulator_levels"), dict)
+        else {}
+    )
+    num_neurons = int(state.get("num_neurons", 0) or 0)
+    activity = float(state.get("activity", 0.0) or 0.0)
+    active_count = round(activity * num_neurons)
+    neutral_count = max(0, num_neurons - active_count)
+    return [
+        {
+            "observation_index": 0,
+            "step_index": 0,
+            "step_count": int(state.get("step_count", 0) or 0),
+            "activity": activity,
+            "energy": float(state.get("energy", 0.0) or 0.0),
+            "active_count": active_count,
+            "previous_active_count": 0,
+            "changed_fraction": 0.0,
+            "neutral_state_occupancy": neutral_count / max(num_neurons, 1),
+            "trinary_distribution": {
+                "negative": 0,
+                "neutral": neutral_count,
+                "positive": active_count,
+            },
+            "neuromodulator_levels": modulators,
+        }
+    ]
+
+
+def _float_dict(value: object) -> dict[str, float]:
+    if not isinstance(value, dict):
+        return {}
+    return {str(key): float(item) for key, item in value.items()}
 
 
 def _run_baseline_runs(
@@ -216,6 +292,9 @@ def _baseline_result_to_run(
         elapsed_seconds=result.elapsed_seconds,
         seed=None,
         neuromodulator_levels=result.neuromodulator_levels,
+        dynamics_samples=[],
+        criticality_metrics={},
+        modulation_effect={},
     )
 
 
@@ -299,6 +378,60 @@ def _compare_against_baselines(
     return comparisons
 
 
+def _summarize_criticality_by_agent(runs: list[BenchmarkRun]) -> list[CriticalitySummary]:
+    summaries: list[CriticalitySummary] = []
+    for agent_name, agent_runs in _group_by_agent(runs).items():
+        metrics = [run.criticality_metrics or {} for run in agent_runs]
+        modulation_effects = [run.modulation_effect or {} for run in agent_runs]
+        activity_variance = _safe_mean([m.get("activity_variance", 0.0) for m in metrics])
+        transition_entropy = _safe_mean([m.get("transition_entropy", 0.0) for m in metrics])
+        neutral_state_occupancy = _safe_mean([
+            m.get("neutral_state_occupancy", 0.0) for m in metrics
+        ])
+        branching_ratio = _safe_mean([m.get("branching_ratio", 0.0) for m in metrics])
+        energy_mean = _safe_mean([m.get("energy_mean", 0.0) for m in metrics])
+        action_change_rate = _safe_mean([
+            effect.get("action_changed", 0.0) for effect in modulation_effects
+        ])
+        summaries.append(
+            CriticalitySummary(
+                agent_name=agent_name,
+                run_count=len(agent_runs),
+                activity_variance_mean=activity_variance,
+                transition_entropy_mean=transition_entropy,
+                neutral_state_occupancy_mean=neutral_state_occupancy,
+                branching_ratio_mean=branching_ratio,
+                energy_mean=energy_mean,
+                modulation_action_change_rate=action_change_rate,
+                dynamics_regime=_classify_dynamics_regime(
+                    activity_variance=activity_variance,
+                    transition_entropy=transition_entropy,
+                    neutral_state_occupancy=neutral_state_occupancy,
+                    branching_ratio=branching_ratio,
+                    energy_mean=energy_mean,
+                ),
+            )
+        )
+    return summaries
+
+
+def _classify_dynamics_regime(
+    *,
+    activity_variance: float,
+    transition_entropy: float,
+    neutral_state_occupancy: float,
+    branching_ratio: float,
+    energy_mean: float,
+) -> str:
+    if energy_mean < 0.05 or neutral_state_occupancy > 0.95 or transition_entropy < 0.01:
+        return "dead"
+    if neutral_state_occupancy < 0.05 and activity_variance < 0.001:
+        return "saturated"
+    if transition_entropy > 0.9 and (branching_ratio < 0.4 or branching_ratio > 1.8):
+        return "random_like"
+    return "near_useful_dynamic_regime"
+
+
 def _write_agent_summary_csv(path: Path, summaries: list[AgentSummary]) -> None:
     fieldnames = [
         "agent_name",
@@ -352,6 +485,87 @@ def _write_statistical_tests_csv(path: Path, comparisons: list[StatisticalCompar
         writer.writeheader()
         for comparison in comparisons:
             writer.writerow(_format_dataclass_row(comparison))
+
+
+def _write_dynamics_csv(path: Path, runs: list[BenchmarkRun]) -> None:
+    fieldnames = [
+        "agent_name",
+        "scenario_name",
+        "seed",
+        "observation_index",
+        "step_index",
+        "step_count",
+        "activity",
+        "energy",
+        "active_count",
+        "previous_active_count",
+        "changed_fraction",
+        "neutral_state_occupancy",
+        "negative_count",
+        "neutral_count",
+        "positive_count",
+        "dopamine",
+        "serotonin",
+        "acetylcholine",
+        "norepinephrine",
+    ]
+    with path.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        for run in runs:
+            for sample in run.dynamics_samples or []:
+                writer.writerow(_format_dynamics_row(run, sample))
+
+
+def _format_dynamics_row(run: BenchmarkRun, sample: dict[str, Any]) -> dict[str, str]:
+    distribution = _as_object_dict(sample.get("trinary_distribution"))
+    modulators = _as_object_dict(sample.get("neuromodulator_levels"))
+    return {
+        "agent_name": run.agent_name,
+        "scenario_name": run.scenario_name,
+        "seed": "" if run.seed is None else str(run.seed),
+        "observation_index": str(sample.get("observation_index", 0)),
+        "step_index": str(sample.get("step_index", 0)),
+        "step_count": str(sample.get("step_count", 0)),
+        "activity": _format_csv_value(float(sample.get("activity", 0.0))),
+        "energy": _format_csv_value(float(sample.get("energy", 0.0))),
+        "active_count": str(sample.get("active_count", 0)),
+        "previous_active_count": str(sample.get("previous_active_count", 0)),
+        "changed_fraction": _format_csv_value(float(sample.get("changed_fraction", 0.0))),
+        "neutral_state_occupancy": _format_csv_value(
+            float(sample.get("neutral_state_occupancy", 0.0))
+        ),
+        "negative_count": str(distribution.get("negative", 0)),
+        "neutral_count": str(distribution.get("neutral", 0)),
+        "positive_count": str(distribution.get("positive", 0)),
+        "dopamine": _format_csv_value(float(modulators.get("dopamine", 0.0))),
+        "serotonin": _format_csv_value(float(modulators.get("serotonin", 0.0))),
+        "acetylcholine": _format_csv_value(float(modulators.get("acetylcholine", 0.0))),
+        "norepinephrine": _format_csv_value(float(modulators.get("norepinephrine", 0.0))),
+    }
+
+
+def _write_criticality_csv(path: Path, summaries: list[CriticalitySummary]) -> None:
+    fieldnames = [
+        "agent_name",
+        "run_count",
+        "activity_variance_mean",
+        "transition_entropy_mean",
+        "neutral_state_occupancy_mean",
+        "branching_ratio_mean",
+        "energy_mean",
+        "modulation_action_change_rate",
+        "dynamics_regime",
+    ]
+    with path.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        for summary in summaries:
+            writer.writerow(_format_dataclass_row(summary))
+
+
+def _as_object_dict(value: Any) -> dict[str, Any]:
+    return dict(value) if isinstance(value, dict) else {}
 
 
 def _format_dataclass_row(item: object) -> dict[str, str]:
@@ -488,6 +702,19 @@ def _plot_learning_curve(
         _learning_curve_by_scenario_index(agent_runs, scenarios) for agent_runs in grouped.values()
     ]
     _draw_line_chart(path, series, title="Learning curve")
+
+
+def _plot_activity_energy_trends(path: Path, runs: list[BenchmarkRun]) -> None:
+    tissue_samples = [
+        sample
+        for run in runs
+        if run.agent_name == "neuraxon_tissue"
+        for sample in (run.dynamics_samples or [])
+    ]
+    activity = [float(sample.get("activity", 0.0)) for sample in tissue_samples]
+    energy = [float(sample.get("energy", 0.0)) for sample in tissue_samples]
+    neutral = [float(sample.get("neutral_state_occupancy", 0.0)) for sample in tissue_samples]
+    _draw_line_chart(path, [activity, energy, neutral], title="Activity/energy dynamics")
 
 
 def _draw_bar_chart(

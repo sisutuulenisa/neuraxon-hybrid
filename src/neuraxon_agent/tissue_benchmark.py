@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import random
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -35,6 +36,9 @@ class TissueBenchmarkResult:
     elapsed_seconds: float
     state: dict[str, float | int]
     neuromodulator_levels: dict[str, float]
+    dynamics_samples: list[dict[str, Any]]
+    criticality_metrics: dict[str, float]
+    modulation_effect: dict[str, float]
     decoded_action: str | None = None
     normalized_benchmark_action: str | None = None
     raw_decoder_output: list[int] | None = None
@@ -193,15 +197,30 @@ def _run_one_seeded_scenario(
         tissue = AgentTissue(params, semantic_policy_enabled=policy_mode != "raw_network")
         start = perf_counter()
         action = None
-        for observation in scenario.observation_sequence:
+        dynamics_samples: list[dict[str, Any]] = []
+        previous_states: list[int] | None = None
+        for observation_index, observation in enumerate(scenario.observation_sequence):
             tissue.observe(observation)
-            action = tissue.think(steps=steps_per_observation)
+            for step_index in range(steps_per_observation):
+                tissue.network.simulate_step()
+                sample, previous_states = _capture_dynamics_sample(
+                    tissue,
+                    observation_index=observation_index,
+                    step_index=step_index,
+                    previous_states=previous_states,
+                )
+                dynamics_samples.append(sample)
+            action = tissue.think(steps=0)
         if action is None:
             raise ValueError(f"scenario {scenario.name!r} has no observations")
         benchmark_action = normalize_benchmark_action(action.actie_type)
         expected_action = normalize_benchmark_action(scenario.expected_optimal_action)
         outcome = _score_action(benchmark_action, expected_action)
-        tissue.modulate(outcome)
+        modulation_effect = _apply_modulation_and_capture_effect(
+            tissue,
+            outcome=outcome,
+            benchmark_action=benchmark_action,
+        )
         elapsed = perf_counter() - start
     finally:
         random.setstate(rng_state)
@@ -232,6 +251,9 @@ def _run_one_seeded_scenario(
             "acetylcholine": state.acetylcholine,
             "norepinephrine": state.norepinephrine,
         },
+        dynamics_samples=dynamics_samples,
+        criticality_metrics=_summarize_criticality(dynamics_samples),
+        modulation_effect=modulation_effect,
         decoded_action=action.actie_type,
         normalized_benchmark_action=benchmark_action,
         raw_decoder_output=(
@@ -240,6 +262,119 @@ def _run_one_seeded_scenario(
         action_source=tissue.last_action_source or "raw_network",
         policy_mode=policy_mode,
     )
+
+
+def _capture_dynamics_sample(
+    tissue: AgentTissue,
+    *,
+    observation_index: int,
+    step_index: int,
+    previous_states: list[int] | None,
+) -> tuple[dict[str, Any], list[int]]:
+    """Capture deterministic per-step tissue dynamics without touching vendor code."""
+    state = tissue.state
+    all_states = _flat_trinary_states(tissue)
+    distribution = _trinary_distribution(all_states)
+    active_count = distribution["negative"] + distribution["positive"]
+    previous_active_count = (
+        sum(1 for value in previous_states if value != 0) if previous_states is not None else 0
+    )
+    changed_fraction = _changed_fraction(previous_states, all_states)
+    sample = {
+        "observation_index": observation_index,
+        "step_index": step_index,
+        "step_count": state.step_count,
+        "activity": state.activity,
+        "energy": state.energy,
+        "active_count": active_count,
+        "previous_active_count": previous_active_count,
+        "changed_fraction": changed_fraction,
+        "trinary_distribution": distribution,
+        "neutral_state_occupancy": distribution["neutral"] / max(len(all_states), 1),
+        "neuromodulator_levels": {
+            "dopamine": state.dopamine,
+            "serotonin": state.serotonin,
+            "acetylcholine": state.acetylcholine,
+            "norepinephrine": state.norepinephrine,
+        },
+    }
+    return sample, all_states
+
+
+def _flat_trinary_states(tissue: AgentTissue) -> list[int]:
+    all_states: list[int] = []
+    for group in tissue.network.get_all_states().values():
+        all_states.extend(int(value) for value in group)
+    return all_states
+
+
+def _trinary_distribution(states: list[int]) -> dict[str, int]:
+    return {
+        "negative": sum(1 for value in states if value < 0),
+        "neutral": sum(1 for value in states if value == 0),
+        "positive": sum(1 for value in states if value > 0),
+    }
+
+
+def _changed_fraction(previous_states: list[int] | None, states: list[int]) -> float:
+    if previous_states is None or not states:
+        return 0.0
+    paired = zip(previous_states, states)
+    changed = sum(1 for before, after in paired if before != after)
+    return changed / max(min(len(previous_states), len(states)), 1)
+
+
+def _apply_modulation_and_capture_effect(
+    tissue: AgentTissue,
+    *,
+    outcome: str,
+    benchmark_action: str,
+) -> dict[str, float]:
+    before = {key: float(value) for key, value in tissue.network.neuromodulators.items()}
+    tissue.modulate(outcome)
+    after = {key: float(value) for key, value in tissue.network.neuromodulators.items()}
+    post_action = tissue.think(steps=0)
+    normalized_post_action = normalize_benchmark_action(post_action.actie_type)
+    effect = {f"{key}_delta": after.get(key, 0.0) - before.get(key, 0.0) for key in after}
+    effect["action_changed"] = 1.0 if normalized_post_action != benchmark_action else 0.0
+    return effect
+
+
+def _summarize_criticality(samples: list[dict[str, Any]]) -> dict[str, float]:
+    activities = [float(sample["activity"]) for sample in samples]
+    energies = [float(sample["energy"]) for sample in samples]
+    neutral_occupancies = [float(sample["neutral_state_occupancy"]) for sample in samples]
+    changed_fractions = [float(sample["changed_fraction"]) for sample in samples]
+    branching_ratios = [
+        float(sample["active_count"]) / float(sample["previous_active_count"])
+        for sample in samples
+        if float(sample["previous_active_count"]) > 0.0
+    ]
+    return {
+        "activity_variance": _population_variance(activities),
+        "transition_entropy": _binary_entropy(_mean(changed_fractions)),
+        "neutral_state_occupancy": _mean(neutral_occupancies),
+        "branching_ratio": _mean(branching_ratios),
+        "energy_mean": _mean(energies),
+    }
+
+
+def _population_variance(values: list[float]) -> float:
+    if not values:
+        return 0.0
+    mean = _mean(values)
+    return sum((value - mean) ** 2 for value in values) / len(values)
+
+
+def _binary_entropy(probability: float) -> float:
+    p = min(1.0, max(0.0, probability))
+    if p in {0.0, 1.0}:
+        return 0.0
+    return -(p * math.log2(p) + (1.0 - p) * math.log2(1.0 - p))
+
+
+def _mean(values: list[float]) -> float:
+    return sum(values) / len(values) if values else 0.0
 
 
 def _scenario_seed(seed: int, scenario_index: int) -> int:
