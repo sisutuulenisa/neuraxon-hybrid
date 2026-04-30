@@ -1,0 +1,1936 @@
+{
+  "claim_boundary": "No broad Qubic/Neuraxon intelligence claim is made from adapter-only behavior; this benchmark only reports whether reward feedback changed later decisions.",
+  "episode_count": 24,
+  "modes": {
+    "always_execute": {
+      "accuracy_delta": 0.0,
+      "after_accuracy": 0.25,
+      "after_actions": [
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute"
+      ],
+      "before_accuracy": 0.25,
+      "before_actions": [
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "execute"
+      ],
+      "decision_change_rate": 0.0,
+      "feedback_events": [
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "always_execute",
+      "training_feedback_count": 24
+    },
+    "cold_tissue": {
+      "accuracy_delta": -0.08333333333333334,
+      "after_accuracy": 0.16666666666666666,
+      "after_actions": [
+        "assertive",
+        "query",
+        "query",
+        "execute",
+        "execute",
+        "assertive",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "before_accuracy": 0.25,
+      "before_actions": [
+        "query",
+        "execute",
+        "assertive",
+        "assertive",
+        "execute",
+        "assertive",
+        "execute",
+        "execute",
+        "execute",
+        "execute",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "execute",
+        "execute",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "decision_change_rate": 0.4166666666666667,
+      "feedback_events": [],
+      "internal_state_changed": true,
+      "mode": "cold_tissue",
+      "training_feedback_count": 0
+    },
+    "feedback_trained_tissue": {
+      "accuracy_delta": 0.04166666666666666,
+      "after_accuracy": 0.25,
+      "after_actions": [
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "retry",
+        "retry",
+        "retry",
+        "retry",
+        "retry",
+        "retry",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "before_accuracy": 0.20833333333333334,
+      "before_actions": [
+        "assertive",
+        "retry",
+        "retry",
+        "query",
+        "query",
+        "retry",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "query"
+      ],
+      "decision_change_rate": 0.375,
+      "feedback_events": [
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.22285396893986667,
+            "dopamine": -0.0876230789239463,
+            "norepinephrine": 0.31237692107605364,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.27025714210265095,
+            "dopamine": -0.06255200959644824,
+            "norepinephrine": 0.3287722865046616,
+            "serotonin": -0.17264422169312504
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.30485313394482805,
+            "dopamine": -0.00029973014394961417,
+            "norepinephrine": 0.21075488198385084,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.05505714329735634,
+            "dopamine": -0.00029973014394961417,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.38692857096903727,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": 0.09999999999999998
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.004937096433026478,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.20000000000000007
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.002861236231494646,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.014791046385613682,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.42151379879836026,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.1758840447376182
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.027332825888425782,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.24339883915185245
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.03738645358459003,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.24654439471964062
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.03781622904561255,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23618941260324156
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.08363304545737238,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2383422110649316
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23721342246280064
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23589421661774956
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.233896952083537
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23496542133531984
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23193577535253085
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2299789030707724
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22947070245618484
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22953959614206765
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22796649517979617
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2316837850218989
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23000655534710535
+          },
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "feedback_trained_tissue",
+      "training_feedback_count": 24
+    },
+    "persisted_checkpoint": {
+      "accuracy_delta": -0.041666666666666685,
+      "after_accuracy": 0.25,
+      "after_actions": [
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query"
+      ],
+      "before_accuracy": 0.2916666666666667,
+      "before_actions": [
+        "execute",
+        "retry",
+        "retry",
+        "retry",
+        "query",
+        "execute",
+        "execute",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "decision_change_rate": 0.2916666666666667,
+      "feedback_events": [
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.21633351674205262,
+            "dopamine": -0.08882831366784899,
+            "norepinephrine": 0.31117168633215103,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.24241735983687185,
+            "dopamine": -0.06134918315376744,
+            "norepinephrine": 0.32495013069109085,
+            "serotonin": -0.15032467466333355
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.2964563082948506,
+            "dopamine": -0.00029973014394961417,
+            "norepinephrine": 0.2157698233157357,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.09764726759663667,
+            "dopamine": 0.36493254881102927,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": 0.10000000000000003
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.3748307700513129,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": 0.09999999999999998
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.261545233509887,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.17693362248839706
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.006875494687959005,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.276562791328403
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.007530481313237303,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2611493976781236
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.019448716369333985,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.24673466865460858
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0036868216071468396,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23175738066875828
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0012366294748680229,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2294874430318279
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0034217578579356367,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22594058907333148
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.015084924610686334,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22588085192660312
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0017610000113528201,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22932548449215195
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0007121700240872997,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23106236683757575
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.002922706711563361,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22943998488454564
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.006316471849239225,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22779412245277664
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -4.4946259116773746e-06,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22633858696822506
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0035961809960078917,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2248718731762347
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.005675851545964505,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2248547265425842
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.016024348420293544,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22531170076579965
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.00966316675491563,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22371228196272064
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.010762989496403197,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2249564330141638
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.008006134556979738,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22826736387300461
+          },
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "persisted_checkpoint",
+      "training_feedback_count": 24
+    },
+    "random": {
+      "accuracy_delta": 0.08333333333333333,
+      "after_accuracy": 0.16666666666666666,
+      "after_actions": [
+        "assertive",
+        "execute",
+        "query",
+        "assertive",
+        "explore",
+        "retry",
+        "query",
+        "cautious",
+        "cautious",
+        "execute",
+        "explore",
+        "explore",
+        "assertive",
+        "retry",
+        "assertive",
+        "cautious",
+        "query",
+        "cautious",
+        "cautious",
+        "cautious",
+        "retry",
+        "query",
+        "execute",
+        "execute"
+      ],
+      "before_accuracy": 0.08333333333333333,
+      "before_actions": [
+        "execute",
+        "query",
+        "query",
+        "assertive",
+        "execute",
+        "cautious",
+        "cautious",
+        "execute",
+        "assertive",
+        "cautious",
+        "query",
+        "assertive",
+        "query",
+        "cautious",
+        "query",
+        "assertive",
+        "retry",
+        "query",
+        "execute",
+        "explore",
+        "cautious",
+        "execute",
+        "retry",
+        "cautious"
+      ],
+      "decision_change_rate": 0.9166666666666666,
+      "feedback_events": [
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "explore",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {},
+          "outcome": "success"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        },
+        {
+          "action": "cautious",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {},
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "random",
+      "training_feedback_count": 24
+    },
+    "raw_network_only": {
+      "accuracy_delta": 0.0,
+      "after_accuracy": 0.20833333333333334,
+      "after_actions": [
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "before_accuracy": 0.20833333333333334,
+      "before_actions": [
+        "query",
+        "assertive",
+        "assertive",
+        "assertive",
+        "assertive",
+        "assertive",
+        "assertive",
+        "execute",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "query"
+      ],
+      "decision_change_rate": 0.4583333333333333,
+      "feedback_events": [
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.11372852596769761,
+            "dopamine": 0.3045615185129116,
+            "norepinephrine": 0.05456151851291166,
+            "serotonin": 0.09999999999999998
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.27527158243015765,
+            "dopamine": -0.081408731540063,
+            "norepinephrine": 0.3185912684599371,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.3497647749096746,
+            "dopamine": -0.07382547380196108,
+            "norepinephrine": 0.326174526198039,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.11371340974376531,
+            "dopamine": -0.06543334027527331,
+            "norepinephrine": 0.15292281727408652,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.061940938869614326,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.05921733269220078,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "assertive",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.05006941967795116,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.04205815322356116,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.37209332704835363,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.18958634455809098
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.01573735768200346,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2527848492148306
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.003584732190926865,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23819785713705466
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.00017091228109472612,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.23162257088651428
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.3965512911965027,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22498250496243655
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.005555143396011708,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22496073484347456
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.00950587344689291,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22363607565612642
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.008075098834645633,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22621493365993595
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.2607227741076751,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2254729107083806
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0065932373673984745,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22711477407452074
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.005971460832549624,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22610075467425483
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.002752871673964874,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22776427913859054
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.02202233071260551,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22663892744720204
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 8.873066353443093e-05,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2285339917881395
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0002822841661480613,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22671812886414888
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0025565945732597406,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22562800224275836
+          },
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "raw_network_only",
+      "training_feedback_count": 24
+    },
+    "semantic_bridge": {
+      "accuracy_delta": 0.0,
+      "after_accuracy": 0.20833333333333334,
+      "after_actions": [
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "before_accuracy": 0.20833333333333334,
+      "before_actions": [
+        "query",
+        "query",
+        "query",
+        "execute",
+        "query",
+        "query",
+        "query",
+        "query",
+        "retry",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query",
+        "query"
+      ],
+      "decision_change_rate": 0.16666666666666666,
+      "feedback_events": [
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-0",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.10716166516070738,
+            "dopamine": 0.30455467264638836,
+            "norepinephrine": 0.054554672646388386,
+            "serotonin": 0.1
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-1",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.21909986392209796,
+            "dopamine": -0.08721511264893411,
+            "norepinephrine": 0.3127848873510658,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-2",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.24225519381696536,
+            "dopamine": -0.06563125855065016,
+            "norepinephrine": 0.3343687414493499,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "execute",
+          "episode_id": "reward-plasticity-71-3",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.2789815275059834,
+            "dopamine": -0.04187693154234384,
+            "norepinephrine": 0.15053498028179768,
+            "serotonin": -0.2
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-4",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.006191144877932819,
+            "dopamine": 0.36893650917886295,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": 0.09999999999999998
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-5",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.02011326487528753,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.20000000000000007
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-6",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.017552250135230762,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-7",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.003912952232119071,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "retry",
+          "episode_id": "reward-plasticity-71-8",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0038053945573995884,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-9",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.005876618033545666,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-10",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.007232204958437349,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-11",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0045482983462183935,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.19999999999999996
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-12",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.4000583436467937,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.20433042119519218
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-13",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0016984708157146144,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22661622592913
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-14",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.0010400129744356779,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22696100335605296
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-15",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0025731367442878295,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22562426635202093
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-16",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.006617371853584908,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22651551199467224
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-17",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.00035817442931951327,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22781941826011343
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-18",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0026289052604286933,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22561378961341316
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-19",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.004768934536999225,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22509446422214752
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-20",
+          "expected_action": "query",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": 0.014507393505791999,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.2304587043307682
+          },
+          "outcome": "success"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-21",
+          "expected_action": "execute",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0012230306917295763,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22524763737093156
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-22",
+          "expected_action": "explore",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.0034186249983660932,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22531566819237447
+          },
+          "outcome": "failure"
+        },
+        {
+          "action": "query",
+          "episode_id": "reward-plasticity-71-23",
+          "expected_action": "retry",
+          "neuromodulator_delta": {
+            "acetylcholine": 0.0016984708157146144,
+            "dopamine": -0.005519880384188491,
+            "norepinephrine": 0.0016984708157146144,
+            "serotonin": -0.22494025757969327
+          },
+          "outcome": "failure"
+        }
+      ],
+      "internal_state_changed": true,
+      "mode": "semantic_bridge",
+      "training_feedback_count": 24
+    }
+  },
+  "seed": 71,
+  "verdict": "behavioral_plasticity_observed"
+}
