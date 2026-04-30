@@ -1,0 +1,23 @@
+{
+  "baselines": {
+    "always_execute": {
+      "run_count": 140,
+      "success_count": 40,
+      "success_rate": 0.2857142857142857
+    },
+    "random": {
+      "run_count": 140,
+      "success_count": 25,
+      "success_rate": 0.17857142857142858
+    }
+  },
+  "decision": "pass_holdout_noisy_generalization",
+  "interpretation": "This tests the semantic policy bridge against deterministic holdout/noisy variants, not autonomous learning by the raw Neuraxon network dynamics.",
+  "neuraxon_tissue": {
+    "run_count": 140,
+    "success_count": 140,
+    "success_rate": 1.0
+  },
+  "scenario_count": 140,
+  "seed_count": 1
+}

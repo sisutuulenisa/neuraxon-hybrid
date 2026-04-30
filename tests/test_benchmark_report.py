@@ -58,3 +58,5 @@ def test_benchmark_report_keeps_memory_and_visual_perception_out_of_scope() -> N
     assert "visuele" in report.lower() or "visual" in report.lower()
     assert "niet bewezen" in report.lower()
     assert "generalisatie" in report.lower()
+    assert "holdout/noisy" in report.lower()
+    assert "benchmarks/results/holdout_noisy_generalization.json" in report

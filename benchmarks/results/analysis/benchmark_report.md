@@ -6,6 +6,8 @@ Na de semantic tissue policy is de mock benchmark volledig opgelost voor de best
 
 Resultaat: `neuraxon_tissue` haalt nu 700/700 correcte runs = 100.00% accuracy. Dat is significant beter dan zowel random (15.71%) als always-execute (28.57%).
 
+Een extra holdout/noisy generalization smoke benchmark haalt 140/140 correcte runs = 100.00% op deterministisch verstoorde scenario-varianten zonder de originele `simple_tool_call`, `complex_multi_step` of `error_recovery` labels. Ook daar blijft de tissue boven always-execute (28.57%).
+
 Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
 ## 2. Benchmarkopzet
@@ -17,6 +19,7 @@ Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit be
 - Tissue runs: 140 × 5 = 700
 - Baselines: random en always-execute, elk 140 runs
 - Metrics: accuracy, confidence, per-scenario breakdown, learning curve, simple two-proportion z-tests
+- Holdout/noisy smoke benchmark: 140 deterministische varianten, 1 seed, originele scenario-type labels vervangen door `holdout_<expected_action>`
 
 ## 3. Resultaten
 
@@ -39,6 +42,20 @@ Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit be
 | success_streak | 100.00% | 25.00% | 0.00% |
 
 ## 5. Interpretatie
+
+### Holdout/noisy generalization smoke
+
+| Agent | Runs | Correct | Accuracy |
+|---|---:|---:|---:|
+| Neuraxon tissue | 140 | 140 | 100.00% |
+| Random baseline | 140 | 25 | 17.86% |
+| Always-execute baseline | 140 | 40 | 28.57% |
+
+De holdout/noisy set is geen volledig bewijs van generalisatie, maar wel een betere smoke test dan de exacte mock benchmark. De varianten verwijderen enkele originele scenario-type labels en voegen irrelevante/noisy velden toe. De policy moet daardoor op algemene observatievelden zoals ontbrekende parameters, retryability, ambiguity, risk en success streaks leunen.
+
+Beslissing: `pass_holdout_noisy_generalization`. De semantic policy bridge blijft boven always-execute op deze deterministische holdout/noisy set.
+
+### Beslislaag interpretatie
 
 De eerdere resultaten lieten twee afzonderlijke blockers zien:
 
@@ -92,6 +109,7 @@ De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor 
 - Statistical tests CSV: `benchmarks/results/analysis/statistical_tests.csv`
 - Diagnostic traces: `benchmarks/results/diagnostics/action_mapping_traces.json`
 - Diagnostic report: `benchmarks/results/diagnostics/action_mapping_diagnostic_report.md`
+- Holdout/noisy generalization: `benchmarks/results/holdout_noisy_generalization.json`
 - Plots:
   - `benchmarks/results/analysis/plots/accuracy_by_agent.png`
   - `benchmarks/results/analysis/plots/confidence_distribution.png`
