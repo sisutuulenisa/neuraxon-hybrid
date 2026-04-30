@@ -43,3 +43,6 @@ logs/
 
 # Worktrees
 .worktrees/
+
+# Local automation runtime artifacts
+.ralph-state/
