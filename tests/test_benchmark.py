@@ -43,8 +43,22 @@ def test_harness_collects_action_confidence_outcome_timing_and_modulators() -> N
     assert report.run_count == 1
     result = report.results[0]
     assert result.scenario_name == "one-step"
-    assert result.action in {"execute", "query", "retry", "assertive", "explore"}
-    assert result.decoded_action in {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
+    assert result.action in {
+        "execute",
+        "query",
+        "retry",
+        "assertive",
+        "explore",
+        "cautious",
+    }
+    assert result.decoded_action in {
+        "PROCEED",
+        "PAUSE",
+        "RETRY",
+        "ESCALATE",
+        "EXPLORE",
+        "CAUTIOUS",
+    }
     assert 0.0 <= result.confidence <= 1.0
     assert result.outcome in {"success", "failure"}
     assert result.elapsed_seconds >= 0.0

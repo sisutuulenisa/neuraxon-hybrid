@@ -4,10 +4,11 @@ from __future__ import annotations
 import tempfile
 from pathlib import Path
 
-from neuraxon_agent import AgentTissue, PerceptionEncoder, ActionDecoder, AgentEvolution
-from neuraxon_agent.tissue import AgentTissue
+from neuraxon_agent import ActionDecoder, AgentEvolution
+from neuraxon_agent.action_contract import normalize_benchmark_action
+from neuraxon_agent.persistence import load_state, save_state
 from neuraxon_agent.streaming import StreamingLoop
-from neuraxon_agent.persistence import save_state, load_state
+from neuraxon_agent.tissue import AgentTissue
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 
 
@@ -21,7 +22,15 @@ def test_full_agent_loop() -> None:
 
     # Think
     action = tissue.think(steps=5)
-    assert action.actie_type in ("idle", "execute", "query", "respond", "explore", "retry")
+    assert action.actie_type in ActionDecoder.get_all_defined_actions()
+    assert normalize_benchmark_action(action.actie_type) in (
+        "execute",
+        "query",
+        "retry",
+        "assertive",
+        "explore",
+        "cautious",
+    )
 
     # Modulate
     tissue.modulate("success")

@@ -9,8 +9,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from neuraxon_agent.tissue import AgentTissue, TissueState
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
+from neuraxon_agent.tissue import AgentTissue, TissueState
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 
 
@@ -182,7 +182,10 @@ def main(argv: list[str] | None = None) -> int:
     p_load.add_argument("--output", "-o", required=True, help="Result JSON file")
     p_load.set_defaults(func=cmd_load)
 
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit as exc:
+        return int(exc.code or 0)
     if args.command is None:
         parser.print_help()
         return 2
