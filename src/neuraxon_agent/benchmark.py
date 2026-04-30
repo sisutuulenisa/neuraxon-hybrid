@@ -9,11 +9,26 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass
 from time import perf_counter
-from typing import Any, Callable
+from typing import Any, Callable, Protocol
 
+from neuraxon_agent.action import AgentAction
 from neuraxon_agent.tissue import AgentTissue
 
-TissueFactory = Callable[[], AgentTissue]
+
+class BenchmarkAgent(Protocol):
+    """Minimal tissue-like interface required by the benchmark harness."""
+
+    def observe(self, observation: dict[str, Any]) -> None: ...
+
+    def think(self, steps: int = 10) -> AgentAction: ...
+
+    def modulate(self, outcome: str) -> dict[str, float]: ...
+
+    @property
+    def state(self) -> Any: ...
+
+
+TissueFactory = Callable[[], BenchmarkAgent]
 
 
 @dataclass(frozen=True)
@@ -109,6 +124,20 @@ class BenchmarkHarness:
             total_elapsed_seconds=total_elapsed,
             results=results,
         )
+
+    def run_agents(
+        self,
+        scenarios: list[BenchmarkScenario],
+        agent_factories: dict[str, TissueFactory],
+    ) -> dict[str, BenchmarkReport]:
+        """Run the same scenarios for multiple named tissue-like agents."""
+        return {
+            agent_name: BenchmarkHarness(
+                tissue_factory=factory,
+                steps_per_observation=self.steps_per_observation,
+            ).run(scenarios)
+            for agent_name, factory in agent_factories.items()
+        }
 
     def run_one(self, scenario: BenchmarkScenario) -> BenchmarkResult:
         """Run one scenario against a fresh tissue and collect raw metrics."""
