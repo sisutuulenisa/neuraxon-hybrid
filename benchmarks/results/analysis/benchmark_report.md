@@ -80,6 +80,18 @@ Daarom is er nu een kleine temporal dynamics probe toegevoegd. De finale observa
 
 Interpretatie: de huidige runtime draagt nog onvoldoende taakrelevante temporele dynamiek door tot een finale probe zonder expliciete action oracle. Dat is geen regressie; het is een eerlijkere onderzoeksmeting die voorkomt dat de semantic bridge als Neuraxon-generalisatie wordt verkocht.
 
+### Policy-ablation benchmark
+
+Issue #52 voegt de expliciete ablation toe die semantic-bridge performance scheidt van raw-network performance. Dezelfde 140 scenario's × 5 seeds zijn in drie modes gedraaid:
+
+| Mode | Runs | Correct | Accuracy | Interpretatie |
+|---|---:|---:|---:|---|
+| semantic-bridge enabled | 700 | 700 | 100.00% | Handgeschreven semantische brug lost policy-covered observations op. |
+| raw-network only | 700 | 138 | 19.71% | Low-level decoderpad zonder semantic policy; dit is de ruwe Neuraxon-bijdrage in deze slice. |
+| semantic-bridge coverage audit | 700 | 700 | 100.00% | Auditmodus die zichtbaar houdt dat policy-covered observations niet als Neuraxon-generalisatie mogen tellen. |
+
+Conclusie: raw-network performance blijft apart gerapporteerd en ligt onder always-execute op de huidige mock benchmark. Er wordt daarom geen claim van Neuraxon generalization gemaakt uit policy-covered observations; de 100% score is een semantic-bridge resultaat.
+
 ### Beslislaag interpretatie
 
 De eerdere resultaten lieten twee afzonderlijke blockers zien:
@@ -135,6 +147,7 @@ De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor 
 - Diagnostic traces: `benchmarks/results/diagnostics/action_mapping_traces.json`
 - Diagnostic report: `benchmarks/results/diagnostics/action_mapping_diagnostic_report.md`
 - Holdout/noisy generalization: `benchmarks/results/holdout_noisy_generalization.json`
+- Policy-ablation benchmark: `benchmarks/results/policy_ablation.json`
 - Plots:
   - `benchmarks/results/analysis/plots/accuracy_by_agent.png`
   - `benchmarks/results/analysis/plots/confidence_distribution.png`

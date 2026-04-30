@@ -54,8 +54,10 @@ class ActionMappingTrace:
     decoded_action: str
     normalized_action: str
     raw_output: tuple[int, ...]
+    raw_decoder_output: tuple[int, ...]
     confidence: float
     outcome: str
+    action_source: str
     observation_trace: list[ObservationTrace]
 
 
@@ -201,7 +203,11 @@ def _trace_one_scenario(
                 ObservationTrace(
                     observation=dict(observation),
                     encoded_input=encoded_input,
-                    raw_output_after_think=action.raw_output,
+                    raw_output_after_think=(
+                        tissue.last_raw_decoder_action.raw_output
+                        if tissue.last_raw_decoder_action is not None
+                        else action.raw_output
+                    ),
                 )
             )
         if action is None:
@@ -219,8 +225,14 @@ def _trace_one_scenario(
         decoded_action=action.actie_type,
         normalized_action=normalized_action,
         raw_output=action.raw_output,
+        raw_decoder_output=(
+            tissue.last_raw_decoder_action.raw_output
+            if tissue.last_raw_decoder_action is not None
+            else action.raw_output
+        ),
         confidence=action.confidence,
         outcome=outcome,
+        action_source=tissue.last_action_source or "raw_network",
         observation_trace=observation_trace,
     )
 
@@ -298,6 +310,10 @@ def _render_report(diagnostics: ActionMappingDiagnostics) -> str:
     observed = ", ".join(sorted(diagnostics.observed_actions))
     missing_decoder = ", ".join(sorted(diagnostics.missing_decoder_actions)) or "none"
     missing_observed = ", ".join(sorted(diagnostics.missing_observed_expected_actions)) or "none"
+    source_counts = Counter(trace.action_source for trace in diagnostics.traces)
+    source_summary = ", ".join(
+        f"{source}={count}" for source, count in sorted(source_counts.items())
+    )
 
     lines = [
         "# Neuraxon Tissue Action Mapping Diagnostic",
@@ -314,6 +330,8 @@ def _render_report(diagnostics: ActionMappingDiagnostics) -> str:
         f"- The traced tissue runs observed after normalization: `{observed}`.",
         f"- Expected actions missing from decoder vocabulary: `{missing_decoder}`.",
         f"- Expected actions not observed in traced runs: `{missing_observed}`.",
+        f"- Action source split: `{source_summary}`.",
+        "- Diagnostics distinguish semantic bridge wins from raw network decoder output.",
         "",
         "Benchmark scoring now uses the normalized benchmark action contract, "
         "so the previous pure string-vocabulary mismatch is no longer the main "

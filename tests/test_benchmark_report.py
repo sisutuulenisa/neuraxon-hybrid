@@ -62,3 +62,12 @@ def test_benchmark_report_keeps_memory_and_visual_perception_out_of_scope() -> N
     assert "generalisatie" in report.lower()
     assert "holdout/noisy" in report.lower()
     assert "benchmarks/results/holdout_noisy_generalization.json" in report
+
+
+def test_benchmark_report_states_policy_ablation_result() -> None:
+    report = REPORT_PATH.read_text(encoding="utf-8")
+
+    assert "policy-ablation" in report.lower()
+    assert "raw-network" in report.lower() or "raw network" in report.lower()
+    assert "semantic-bridge" in report.lower() or "semantic bridge" in report.lower()
+    assert "policy-covered observations" in report.lower()

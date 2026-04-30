@@ -31,6 +31,24 @@ def test_tissue_think() -> None:
     assert 0.0 <= action.confidence <= 1.0
 
 
+def test_tissue_can_disable_semantic_policy_and_use_raw_decoder_path() -> None:
+    params = NetworkParameters(num_input_neurons=3, num_hidden_neurons=5, num_output_neurons=2)
+    tissue = AgentTissue(params, semantic_policy_enabled=False)
+    tissue.observe(
+        {
+            "scenario_type": "simple_tool_call",
+            "intent": "call_tool",
+            "parameters": {"target": "resource", "mode": "read"},
+            "missing_parameters": [],
+        }
+    )
+
+    action = tissue.think(steps=1)
+
+    assert action == tissue.decoder.last()
+    assert tissue.last_action_source == "raw_network"
+
+
 def test_tissue_modulate_success() -> None:
     tissue = AgentTissue()
     pre = tissue.state.dopamine

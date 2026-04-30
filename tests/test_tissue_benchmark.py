@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 from neuraxon_agent.scenarios import load_mock_agent_scenarios
-from neuraxon_agent.tissue_benchmark import run_neuraxon_tissue_benchmark
+from neuraxon_agent.tissue_benchmark import (
+    run_neuraxon_tissue_benchmark,
+    run_policy_ablation_benchmark,
+)
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 
 
@@ -82,7 +86,7 @@ def test_neuraxon_tissue_benchmark_default_run_has_at_least_500_runs() -> None:
     assert len(report.results) == report.run_count
 
 
-def test_neuraxon_tissue_benchmark_exports_raw_json(tmp_path) -> None:
+def test_neuraxon_tissue_benchmark_exports_raw_json(tmp_path: Path) -> None:
     output_path = tmp_path / "neuraxon-tissue-raw.json"
 
     report = run_neuraxon_tissue_benchmark(
@@ -102,3 +106,52 @@ def test_neuraxon_tissue_benchmark_exports_raw_json(tmp_path) -> None:
     assert payload["agent_name"] == "neuraxon_tissue"
     assert payload["run_count"] == 4
     assert len(payload["results"]) == 4
+
+
+def test_neuraxon_tissue_benchmark_records_policy_mode_and_action_source() -> None:
+    report = run_neuraxon_tissue_benchmark(
+        scenarios=load_mock_agent_scenarios()[:2],
+        seeds=[0],
+        steps_per_observation=1,
+        policy_mode="raw_network",
+        params=NetworkParameters(
+            num_input_neurons=3,
+            num_hidden_neurons=5,
+            num_output_neurons=2,
+        ),
+    )
+
+    assert report.policy_mode == "raw_network"
+    assert {result.policy_mode for result in report.results} == {"raw_network"}
+    assert {result.action_source for result in report.results} == {"raw_network"}
+    for result in report.results:
+        assert result.raw_decoder_output is not None
+        assert result.decoded_action is not None
+        assert result.normalized_benchmark_action == result.action
+
+
+def test_policy_ablation_benchmark_exports_per_mode_results(tmp_path: Path) -> None:
+    output_path = tmp_path / "policy-ablation.json"
+
+    report = run_policy_ablation_benchmark(
+        scenarios=load_mock_agent_scenarios()[:3],
+        seeds=[0],
+        steps_per_observation=1,
+        output_path=output_path,
+        params=NetworkParameters(
+            num_input_neurons=3,
+            num_hidden_neurons=5,
+            num_output_neurons=2,
+        ),
+    )
+
+    assert set(report.reports) == {
+        "semantic_bridge",
+        "raw_network",
+        "semantic_coverage_audit",
+    }
+    assert report.reports["semantic_bridge"].policy_mode == "semantic_bridge"
+    assert report.reports["raw_network"].policy_mode == "raw_network"
+    assert report.reports["semantic_coverage_audit"].policy_mode == "semantic_coverage_audit"
+    payload = json.loads(output_path.read_text())
+    assert set(payload["reports"]) == set(report.reports)
