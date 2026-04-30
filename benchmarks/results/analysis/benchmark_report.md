@@ -12,6 +12,21 @@ Daarom is de NIA-geïnspireerde temporal dynamics probe uitgebreid van 6 smoke c
 
 Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
+### Proven / not proven summary
+
+Proven:
+
+- semantic bridge performance: 700/700 correcte runs (100.00%) op de huidige mock benchmark.
+- explicit temporal context adapter performance: 108/108 correcte runs (100.00%) op de temporal dynamics probe met identieke finale observaties.
+- simple baseline performance: random haalt 22/140 (15.71%) en always-execute haalt 40/140 (28.57%) op de mock benchmark; de temporal baselines halen 0.00% tot 17.59%, behalve de sequence-majority oracle op 100.00%.
+- criticality/dynamics instrumentation evidence: `dynamics_metrics.csv` bevat 11.000 per-step samples en `criticality_summary.csv` classificeert de tissue-run als `near_useful_dynamic_regime` met neutral-state occupancy 0.757844, transition entropy 0.332013 en modulation action-change rate 0.000000.
+
+Not proven:
+
+- raw Neuraxon network generalization: policy-ablation `raw_network` haalt 110/700 (15.71%), dus geen claim dat de ruwe continuous-time/trinary dynamics zelfstandig een nuttige policy boven eenvoudige baselines leren.
+- learned policy uit feedback: modulation verandert interne state, maar deze regeneratie toont geen post-feedback behavioral action changes.
+- memory persistence of visual perception value: beide blijven buiten scope tot raw/adapter separation sterker bewijs levert.
+
 ## 2. Benchmarkopzet
 
 - Scenario dataset: `benchmarks/scenarios/mock_agent_scenarios.json`
@@ -90,7 +105,7 @@ Issue #52 voegt de expliciete ablation toe die semantic-bridge performance schei
 | Mode | Runs | Correct | Accuracy | Interpretatie |
 |---|---:|---:|---:|---|
 | semantic-bridge enabled | 700 | 700 | 100.00% | Handgeschreven semantische brug lost policy-covered observations op. |
-| raw-network only | 700 | 138 | 19.71% | Low-level decoderpad zonder semantic policy; dit is de ruwe Neuraxon-bijdrage in deze slice. |
+| raw-network only | 700 | 110 | 15.71% | Low-level decoderpad zonder semantic policy; dit is de ruwe Neuraxon-bijdrage in deze slice. |
 | semantic-bridge coverage audit | 700 | 700 | 100.00% | Auditmodus die zichtbaar houdt dat policy-covered observations niet als Neuraxon-generalisatie mogen tellen. |
 
 Conclusie: raw-network performance blijft apart gerapporteerd en ligt onder always-execute op de huidige mock benchmark. Er wordt daarom geen claim van Neuraxon generalization gemaakt uit policy-covered observations; de 100% score is een semantic-bridge resultaat.

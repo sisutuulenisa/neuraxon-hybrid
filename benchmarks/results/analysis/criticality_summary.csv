@@ -1,0 +1,4 @@
+agent_name,run_count,activity_variance_mean,transition_entropy_mean,neutral_state_occupancy_mean,branching_ratio_mean,energy_mean,modulation_action_change_rate,dynamics_regime
+neuraxon_tissue,700,0.012349,0.332013,0.757844,1.194208,0.542639,0.000000,near_useful_dynamic_regime
+random,140,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,dead
+always_execute,140,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,dead
