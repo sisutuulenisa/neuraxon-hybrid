@@ -71,3 +71,16 @@ def test_benchmark_report_states_policy_ablation_result() -> None:
     assert "raw-network" in report.lower() or "raw network" in report.lower()
     assert "semantic-bridge" in report.lower() or "semantic bridge" in report.lower()
     assert "policy-covered observations" in report.lower()
+
+
+def test_benchmark_report_states_expanded_temporal_dataset_and_separation() -> None:
+    report = REPORT_PATH.read_text(encoding="utf-8")
+
+    assert "108" in report
+    assert "counterfactual" in report.lower()
+    assert "noise/perturbation" in report.lower()
+    assert "last-observation-only" in report.lower()
+    assert "sequence-majority" in report.lower()
+    assert "semantic-policy-only" in report.lower()
+    assert "semantic-policy success" in report.lower()
+    assert "temporal/stateful neuraxon evidence" in report.lower()

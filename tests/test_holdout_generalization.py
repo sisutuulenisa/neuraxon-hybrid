@@ -62,6 +62,7 @@ def test_temporal_dynamics_scenarios_hide_action_oracles_in_final_probe() -> Non
 
     final_observations = [scenario.observation_sequence[-1] for scenario in scenarios]
 
+    assert len(scenarios) >= 72
     assert {scenario.expected_optimal_action for scenario in scenarios} == {
         "execute",
         "query",
@@ -70,6 +71,11 @@ def test_temporal_dynamics_scenarios_hide_action_oracles_in_final_probe() -> Non
         "cautious",
         "assertive",
     }
+    assert {scenario.scenario_type for scenario in scenarios} >= {
+        "temporal_counterfactual",
+        "temporal_noise_perturbation",
+    }
+    assert {len(scenario.observation_sequence) for scenario in scenarios} >= {3, 4, 5}
     assert all(len(scenario.observation_sequence) >= 3 for scenario in scenarios)
     assert all(
         observation.get("intent") == "temporal_decision_probe"
@@ -80,6 +86,36 @@ def test_temporal_dynamics_scenarios_hide_action_oracles_in_final_probe() -> Non
     assert all("retryable" not in observation for observation in final_observations)
     assert all("known_options" not in observation for observation in final_observations)
     assert all("confidence_signal" not in observation for observation in final_observations)
+
+
+def test_temporal_dynamics_counterfactuals_require_prior_state() -> None:
+    scenarios = generate_temporal_dynamics_scenarios()
+    final_probe_groups: dict[tuple[tuple[str, object], ...], set[str]] = {}
+
+    for scenario in scenarios:
+        final_probe = tuple(sorted(scenario.observation_sequence[-1].items()))
+        final_probe_groups.setdefault(final_probe, set()).add(scenario.expected_optimal_action)
+
+    assert any(len(expected_actions) > 1 for expected_actions in final_probe_groups.values())
+
+
+def test_temporal_dynamics_summary_uses_temporal_specific_baselines() -> None:
+    report = run_holdout_generalization_benchmark(seeds=(0, 1), steps_per_observation=1)
+    temporal = report.to_dict()["temporal_dynamics"]
+
+    assert temporal["scenario_count"] >= 72
+    assert temporal["seed_count"] == 2
+    assert set(temporal["baselines"]) >= {
+        "random",
+        "always_execute",
+        "last_observation_only",
+        "sequence_majority",
+        "semantic_policy_only",
+    }
+    assert temporal["baselines"]["semantic_policy_only"]["success_rate"] == 0.0
+    assert temporal["neuraxon_tissue"]["run_count"] == temporal["scenario_count"] * 2
+    assert "semantic policy bridge result" in report.interpretation
+    assert "temporal/stateful Neuraxon evidence" in temporal["interpretation"]
 
 
 def test_semantic_tissue_beats_always_execute_on_holdout_noisy_benchmark() -> None:
