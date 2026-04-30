@@ -13,7 +13,7 @@ from neuraxon_agent.modulation import ModulationFeedback
 from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.semantic_policy import SemanticTissuePolicy
 from neuraxon_agent.temporal_context import TemporalContextBuffer
-from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork
+from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork, load_network
 
 
 @dataclass
@@ -137,7 +137,7 @@ class AgentTissue:
             num_output_neurons=params_data.get("num_output_neurons", 5),
         )
         instance = cls(params)
-        # TODO: restore full network state from dict when upstream supports from_dict
+        instance.network = load_network(path)
         # Restore memory if saved alongside
         memory_path = data.pop("_memory_path", None)
         if memory_path and Path(memory_path).exists():

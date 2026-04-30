@@ -52,7 +52,7 @@ from neuraxon_agent.holdout_generalization import (
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
 from neuraxon_agent.perception import PerceptionEncoder
-from neuraxon_agent.persistence import load_state, save_state
+from neuraxon_agent.persistence import PersistentAgentTissue, load_state, save_state
 from neuraxon_agent.scenarios import MOCK_AGENT_ACTIONS, load_mock_agent_scenarios
 from neuraxon_agent.semantic_policy import SemanticTissuePolicy
 from neuraxon_agent.streaming import StreamEvent, StreamingLoop
@@ -74,6 +74,7 @@ __all__ = [
     "benchmark_action_coverage",
     "normalize_benchmark_action",
     "AgentTissue",
+    "PersistentAgentTissue",
     "TissueState",
     "Modulation",
     "Memory",
