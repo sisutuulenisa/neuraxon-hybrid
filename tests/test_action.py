@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from neuraxon_agent.action import ActionDecoder, AgentAction, TRINARY_STATES
+from neuraxon_agent.action import TRINARY_STATES, ActionDecoder, AgentAction
 
 
 class TestAgentAction:
@@ -209,7 +209,14 @@ class TestActionDecoderMappings:
 
     def test_all_defined_actions(self) -> None:
         actions = ActionDecoder.get_all_defined_actions()
-        assert actions == ["PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"]
+        assert actions == [
+            "PROCEED",
+            "PAUSE",
+            "RETRY",
+            "ESCALATE",
+            "EXPLORE",
+            "CAUTIOUS",
+        ]
 
 
 class TestActionDecoderConfidence:

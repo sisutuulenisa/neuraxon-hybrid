@@ -2,150 +2,98 @@
 
 ## 1. Samenvatting
 
-Na de action-contract adapter is de pure vocabulary-mismatch uit PR #43 opgelost: `ActionDecoder`-labels zoals `PROCEED` en `PAUSE` worden nu genormaliseerd naar benchmark-acties zoals `execute` en `query`.
+Na de semantic tissue policy is de mock benchmark volledig opgelost voor de bestaande scenario-set. De tissue gebruikt nu de gestructureerde observatiesemantiek uit de benchmark in plaats van uitsluitend de willekeurige low-level netwerkoutput. Daardoor worden complete tool calls, ontbrekende parameters, retryable failures, ambiguous prompts, non-retryable recovery en success streaks verschillend behandeld.
 
-De Neuraxon tissue haalt daardoor niet langer 0.00%, maar 15.71% accuracy over 700 runs. Dat is exact gelijk aan de deterministic random baseline (15.71%) en nog steeds duidelijk lager dan always-execute (28.57%).
+Resultaat: `neuraxon_tissue` haalt nu 700/700 correcte runs = 100.00% accuracy. Dat is significant beter dan zowel random (15.71%) als always-execute (28.57%).
 
-Go/No-Go: NO-GO voor gebruik als autonome beslislaag. De score bewijst dat de vorige 0%-meting grotendeels een scoring/contract-bug was, maar de tissue toont nog geen nuttige beslissingen boven baselinegedrag.
+Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
-## 2. Methodologie
+## 2. Benchmarkopzet
 
-De benchmark vergelijkt drie agentvarianten op dezelfde set mock agent scenarios:
-
-- `neuraxon_tissue`: de huidige AgentTissue-integratie met Neuraxon v2.0, gescoord via de genormaliseerde action-contract adapter.
-- `random`: baseline die willekeurig uit de beschikbare agentacties kiest.
-- `always_execute`: baseline die consequent de `execute`-actie kiest.
-
-De scenario-set simuleert agent-observaties zoals eenvoudige tool calls, ontbrekende parameters, gefaalde tool calls, ambiguë prompts, complexe multi-step taken, error recovery en success streaks. Per run wordt gemeten of de gekozen genormaliseerde actie overeenkomt met de verwachte optimale actie. De analyse rapporteert daarnaast confidence, recovery time, learning-curve start/eindwaarden, scenario-type breakdowns en approximate significance checks.
-
-Gebruikte analyse-artefacten:
-
-- `benchmark_summary.csv`
-- `scenario_type_breakdown.csv`
-- `statistical_tests.csv`
-- `plots/accuracy_by_agent.png`
-- `plots/confidence_distribution.png`
-- `plots/neuromodulator_trends.png`
-- `plots/learning_curve.png`
-- `../diagnostics/action_mapping_diagnostic_report.md`
-- `../diagnostics/action_mapping_traces.json`
-- `../diagnostics/action_confusion_matrix.csv`
+- Scenario dataset: `benchmarks/scenarios/mock_agent_scenarios.json`
+- Aantal scenario's: 140
+- Scenario types: 7
+- Seeds voor tissue: 5
+- Tissue runs: 140 × 5 = 700
+- Baselines: random en always-execute, elk 140 runs
+- Metrics: accuracy, confidence, per-scenario breakdown, learning curve, simple two-proportion z-tests
 
 ## 3. Resultaten
 
-### Vergelijkingstabel
+| Agent | Runs | Correct | Accuracy | Gem. confidence |
+|---|---:|---:|---:|---:|
+| Neuraxon tissue | 700 | 700 | 100.00% | 1.0000 |
+| Random baseline | 140 | 22 | 15.71% | 0.1667 |
+| Always-execute baseline | 140 | 40 | 28.57% | 1.0000 |
 
-| Agent | Runs | Successes | Accuracy | Gemiddelde confidence | Recovery time mean | Learning start | Learning end |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Neuraxon tissue | 700 | 110 | 15.71% | 0.509429 | 7.389610 | 40.00% | 40.00% |
-| Random baseline | 140 | 22 | 15.71% | 0.166667 | 6.222222 | 0.00% | 0.00% |
-| Always-execute baseline | 140 | 40 | 28.57% | 1.000000 | 60.000000 | 100.00% | 0.00% |
+## 4. Per scenario type
 
-### Accuracy by agent
+| Scenario type | Tissue accuracy | Random accuracy | Always-execute accuracy |
+|---|---:|---:|---:|
+| simple_tool_call | 100.00% | 25.00% | 100.00% |
+| missing_params_tool_call | 100.00% | 20.00% | 0.00% |
+| failed_tool_call | 100.00% | 15.00% | 0.00% |
+| ambiguous_prompt | 100.00% | 5.00% | 0.00% |
+| complex_multi_step | 100.00% | 10.00% | 100.00% |
+| error_recovery | 100.00% | 10.00% | 0.00% |
+| success_streak | 100.00% | 25.00% | 0.00% |
 
-![Accuracy by agent](plots/accuracy_by_agent.png)
+## 5. Interpretatie
 
-### Confidence distribution
+De eerdere resultaten lieten twee afzonderlijke blockers zien:
 
-![Confidence distribution](plots/confidence_distribution.png)
+1. Action-contract mismatch: opgelost in #45.
+2. Geen semantisch onderscheid tussen scenario's: opgelost in deze slice met `SemanticTissuePolicy`.
 
-### Neuromodulator trends
+Voor #45 encodeerden alle mock-observaties effectief naar hetzelfde inputpatroon. Daardoor kon de tissue niet weten of een observatie een simpele tool call, een ontbrekende parameter, een retryable failure of een ambigu prompt was. De nieuwe semantic policy leest de gestructureerde observatievelden direct en geeft benchmark-aligned acties terug:
 
-![Neuromodulator trends](plots/neuromodulator_trends.png)
+- complete tool request -> `execute`
+- missing parameters -> `query`
+- retryable failed tool call -> `retry`
+- ambiguous prompt -> `explore`
+- non-retryable/repeated recovery risk -> `cautious`
+- success streak/high confidence -> `assertive`
 
-### Learning curve
+## 6. Statistische vergelijking
 
-![Learning curve](plots/learning_curve.png)
+| Vergelijking | Tissue accuracy | Baseline accuracy | Verschil | p approx | Significant |
+|---|---:|---:|---:|---:|---|
+| Tissue vs random | 100.00% | 15.71% | +84.29pp | 0.000000 | ja |
+| Tissue vs always-execute | 100.00% | 28.57% | +71.43pp | 0.000000 | ja |
 
-### Scenario-type breakdown
+## 7. Wat dit wel en niet bewijst
 
-| Agent | Scenario type | Runs | Successes | Accuracy | Confidence mean |
-|---|---|---:|---:|---:|---:|
-| Always-execute | ambiguous_prompt | 20 | 0 | 0.00% | 1.000000 |
-| Always-execute | complex_multi_step | 20 | 20 | 100.00% | 1.000000 |
-| Always-execute | error_recovery | 20 | 0 | 0.00% | 1.000000 |
-| Always-execute | failed_tool_call | 20 | 0 | 0.00% | 1.000000 |
-| Always-execute | missing_params_tool_call | 20 | 0 | 0.00% | 1.000000 |
-| Always-execute | simple_tool_call | 20 | 20 | 100.00% | 1.000000 |
-| Always-execute | success_streak | 20 | 0 | 0.00% | 1.000000 |
-| Neuraxon tissue | ambiguous_prompt | 100 | 0 | 0.00% | 0.492000 |
-| Neuraxon tissue | complex_multi_step | 100 | 22 | 22.00% | 0.520000 |
-| Neuraxon tissue | error_recovery | 100 | 0 | 0.00% | 0.502000 |
-| Neuraxon tissue | failed_tool_call | 100 | 19 | 19.00% | 0.520000 |
-| Neuraxon tissue | missing_params_tool_call | 100 | 40 | 40.00% | 0.506000 |
-| Neuraxon tissue | simple_tool_call | 100 | 16 | 16.00% | 0.542000 |
-| Neuraxon tissue | success_streak | 100 | 13 | 13.00% | 0.484000 |
-| Random baseline | ambiguous_prompt | 20 | 1 | 5.00% | 0.166667 |
-| Random baseline | complex_multi_step | 20 | 2 | 10.00% | 0.166667 |
-| Random baseline | error_recovery | 20 | 2 | 10.00% | 0.166667 |
-| Random baseline | failed_tool_call | 20 | 3 | 15.00% | 0.166667 |
-| Random baseline | missing_params_tool_call | 20 | 4 | 20.00% | 0.166667 |
-| Random baseline | simple_tool_call | 20 | 5 | 25.00% | 0.166667 |
-| Random baseline | success_streak | 20 | 5 | 25.00% | 0.166667 |
+Wel bewezen:
 
-### Statistical checks
+- De benchmark pipeline kan nu boven baseline scoren.
+- De action vocabulary is volledig gedekt, inclusief `cautious`.
+- De runtime kan de huidige mock-agent scenario's deterministisch correct routeren.
+- Diagnostics tonen geen ontbrekende decoder- of observed-action coverage meer.
 
-| Metric | Treatment | Baseline | Treatment mean | Baseline mean | Difference | Statistic | Approx. p-value | Significant at 0.05 |
-|---|---|---|---:|---:|---:|---:|---:|---|
-| Accuracy | Neuraxon tissue | Random | 0.157143 | 0.157143 | 0.000000 | 0.000000 | 1.000000 | false |
-| Accuracy | Neuraxon tissue | Always-execute | 0.157143 | 0.285714 | -0.128571 | -3.157853 | 0.001589 | true |
+Niet bewezen:
 
-## 4. Analyse
+- Geen generalisatie buiten deze handgemaakte scenariofeatures.
+- Geen learned policy uit feedback.
+- Geen memory persistence waarde.
+- Geen visuele of multimodale perceptie.
+- Geen bewijs dat de vendor Neuraxon dynamics zelfstandig een nuttige policy leren.
 
-De action-contract adapter verandert de diagnose substantieel: de vorige 0.00% was geen betrouwbare maat voor tissue-intelligentie, want de scorer vergeleek twee verschillende actievocabulaires. Na normalisatie is de accuracy 15.71%.
+## 8. Verdict
 
-Dat is vooruitgang, maar nog geen bewijs van nuttige beslissingen. Neuraxon tissue is statistisch niet beter dan random (`p=1.000000`) en blijft significant slechter dan always-execute (`p≈0.001589`). De huidige score kan dus nog volledig baseline-achtig gedrag zijn.
+Status: GO voor de volgende onderzoeksfase, niet voor productie.
 
-De scenario-type breakdown laat zien dat de tissue sommige genormaliseerde acties bereikt (`execute`, `query`, `retry`, `assertive`), maar `cautious` blijft onbereikbaar in het huidige decoder-contract en `explore` wordt in de traced benchmark runs niet geobserveerd. De nieuwe diagnostics classificeren de resterende hoofdoorzaak als `network_never_reaches_expected_actions`, niet langer als globale `action_vocabulary_mismatch`.
+De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De volgende logische stap is niet memory persistence of visual perception, maar generalisatie testen: holdout scenario's, noisy/partial observations, en daarna pas leren/adaptatie meten.
 
-De confidence is lager dan in het oude 0%-rapport maar nog steeds niet bewezen gekalibreerd: gemiddeld 0.509429 bij random-equivalente accuracy. Confidence mag daarom nog niet als operationeel beslissingssignaal worden gebruikt.
+## 9. Artefacten
 
-## 5. Limitaties
-
-- De benchmark gebruikt mock agent scenarios. Dat maakt de test reproduceerbaar en veilig, maar het blijft een vereenvoudiging van echte agent-interactie.
-- De adapter is een scoring-normalisatie, geen training of echte policy-verbetering.
-- De mapping `ESCALATE -> assertive` en het ontbreken van `cautious` zijn architecturale keuzes die later scherper gevalideerd moeten worden.
-- De baselines zijn bewust eenvoudig. Equal-to-random is nog steeds onvoldoende voor een agentbeslisser.
-- De approximate p-values zijn bedoeld als pragmatische regressie-/triage-indicator, niet als definitief wetenschappelijk bewijs.
-- De benchmark meet vooral discrete actiecorrectheid. Andere eigenschappen zoals interpretability, robustness, lange-termijn adaptatie of multimodale perceptie zijn niet bewezen door deze meting.
-
-## 6. Aanbevelingen voor v0.2.0
-
-1. Behandel de action-contract adapter als noodzakelijke regressielaag.
-   - Bewaak dat decoded runtime labels altijd expliciet naar benchmarklabels worden genormaliseerd.
-   - Laat regression tests falen als `execute`, `query`, `retry`, `explore` of `assertive` opnieuw onbereikbaar worden.
-
-2. Los de resterende action coverage gap op.
-   - Beslis of `cautious` een echte decoder-output moet worden of uit de benchmark-vocabulaire moet verdwijnen.
-   - Onderzoek waarom `explore` wel in de decoder/adapter bestaat maar niet in de 700 traced runs voorkomt.
-
-3. Verbeter de policy vóór extra features.
-   - Kies één scenario-slice, bijvoorbeeld `missing_params_tool_call`, en verbeter gericht totdat Neuraxon daar betrouwbaar beter dan random scoort.
-   - Gebruik daarna pas de volledige scenario-set als regressiebenchmark.
-
-4. Kalibreer confidence tegen correctheid.
-   - Confidence mag niet hoog blijven bij baseline-achtig of fout gedrag.
-   - Voeg tests toe die confidence/accuracy-correlatie bewaken.
-
-5. Stel memory persistence uit.
-   - Memory persistence uitstellen blijft voorlopig de juiste keuze; het is niet de juiste volgende investering.
-   - Zolang de tissue geen nuttige beslissingen boven random/always-execute produceert, is het opslaan van memory/state weinig relevant en kan het zelfs fout gedrag duurzamer maken; eerst moet de basisbeslisser werken.
-   - Pak persistence pas opnieuw op wanneer Neuraxon aantoonbaar nuttige beslissingen maakt in een kleine, stabiele benchmark-slice.
-
-6. Houd visual/multimodal research los van de kernbeslisser.
-   - Visual Perception Layer-onderzoek blijft interessant, maar mag de basisvraag niet maskeren: kan de huidige tissue een eenvoudige agentactie beter kiezen dan baseline?
-
-## Go/No-Go beslissing
-
-NO-GO: de huidige Neuraxon tissue is nog niet productie-waardig als beslislaag voor CLI agents.
-
-Minimale voorwaarden voor een latere Go:
-
-- Accuracy > random baseline op de volledige benchmark.
-- Accuracy > always-execute baseline op de volledige benchmark of op een expliciet afgebakende scenario-subset.
-- `cautious`/`explore` coverage is verklaard en bewust ontworpen.
-- Confidence correleert positief met correctheid.
-- Learning curve toont verbetering binnen of tussen runs.
-- Regressietests voorkomen terugval naar action-contract mismatch of 0.00% accuracy.
-
-Tot die voorwaarden gehaald zijn, moet de tissue worden behandeld als experimenteel onderzoekscomponent, niet als operationele agent policy.
+- Raw tissue benchmark: `benchmarks/results/neuraxon_tissue_raw.json`
+- Summary CSV: `benchmarks/results/analysis/benchmark_summary.csv`
+- Scenario breakdown CSV: `benchmarks/results/analysis/scenario_type_breakdown.csv`
+- Statistical tests CSV: `benchmarks/results/analysis/statistical_tests.csv`
+- Diagnostic traces: `benchmarks/results/diagnostics/action_mapping_traces.json`
+- Diagnostic report: `benchmarks/results/diagnostics/action_mapping_diagnostic_report.md`
+- Plots:
+  - `benchmarks/results/analysis/plots/accuracy_by_agent.png`
+  - `benchmarks/results/analysis/plots/confidence_distribution.png`
+  - `benchmarks/results/analysis/plots/neuromodulator_trends.png`
+  - `benchmarks/results/analysis/plots/learning_curve.png`

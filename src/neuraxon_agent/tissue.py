@@ -1,21 +1,24 @@
 """Tissue layer — NeuraxonNetwork wrapper for agent runtime."""
+
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork
-from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.action import ActionDecoder, AgentAction
-from neuraxon_agent.modulation import ModulationFeedback
 from neuraxon_agent.memory import TissueMemory
+from neuraxon_agent.modulation import ModulationFeedback
+from neuraxon_agent.perception import PerceptionEncoder
+from neuraxon_agent.semantic_policy import SemanticTissuePolicy
+from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork
 
 
 @dataclass
 class TissueState:
     """Observable state of the agent tissue."""
+
     energy: float
     activity: float
     step_count: int
@@ -30,11 +33,16 @@ class TissueState:
 class AgentTissue:
     """Wraps NeuraxonNetwork for agent runtime: perception, thinking, action, modulation."""
 
-    def __init__(self, params: NetworkParameters | None = None) -> None:
+    def __init__(
+        self,
+        params: NetworkParameters | None = None,
+        semantic_policy: SemanticTissuePolicy | None = None,
+    ) -> None:
         self.params = params or NetworkParameters()
         self.network = NeuraxonNetwork(self.params)
         self.encoder = PerceptionEncoder(self.params.num_input_neurons)
         self.decoder = ActionDecoder(self.params.num_output_neurons)
+        self.semantic_policy = semantic_policy or SemanticTissuePolicy()
         self._last_observation: dict[str, Any] | None = None
         self._feedback = ModulationFeedback()
         self.memory = TissueMemory(self.params)
@@ -49,6 +57,10 @@ class AgentTissue:
         """Run the network for N steps and decode the output into an action."""
         for _ in range(steps):
             self.network.simulate_step()
+        if self._last_observation is not None:
+            semantic_action = self.semantic_policy.decide(self._last_observation)
+            if semantic_action is not None:
+                return semantic_action
         output_states = self.network.get_output_states()
         return self.decoder.decode(output_states)
 
@@ -76,7 +88,9 @@ class AgentTissue:
             raise RuntimeError("No observation to store; call observe() first.")
         return self.memory.store_experience(self._last_observation, action, outcome)
 
-    def recall_similar(self, observation: dict[str, Any] | None = None, top_k: int = 1) -> list:
+    def recall_similar(
+        self, observation: dict[str, Any] | None = None, top_k: int = 1
+    ) -> list[Any]:
         """Recall experiences similar to *observation* (or the last observation)."""
         obs = observation if observation is not None else self._last_observation
         if obs is None:

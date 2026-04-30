@@ -143,6 +143,7 @@ def diagnose_tissue_action_mapping(
         missing_decoder_actions=missing_decoder_actions,
         missing_observed_expected_actions=missing_observed_expected_actions,
         success_count=success_count,
+        run_count=len(traces),
     )
 
     output_paths = DiagnosticOutputPaths(
@@ -244,10 +245,13 @@ def _classify_root_cause(
     missing_decoder_actions: set[str],
     missing_observed_expected_actions: set[str],
     success_count: int,
+    run_count: int,
 ) -> str:
     """Classify the dominant diagnosis from reachability and run evidence."""
     if missing_decoder_actions and success_count == 0:
         return "action_vocabulary_mismatch"
+    if success_count == run_count:
+        return "semantic_policy_working"
     if missing_observed_expected_actions:
         return "network_never_reaches_expected_actions"
     if success_count == 0:
@@ -271,6 +275,7 @@ def _write_confusion_csv(diagnostics: ActionMappingDiagnostics) -> None:
         writer = csv.DictWriter(
             handle,
             fieldnames=["expected_action", "decoded_action", "count"],
+            lineterminator="\n",
         )
         writer.writeheader()
         for expected_action in sorted(diagnostics.confusion_matrix):

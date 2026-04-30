@@ -19,6 +19,7 @@ ACTION_DECODER_TO_BENCHMARK_ACTION: dict[str, str] = {
     ActionDecoder.RETRY: "retry",
     ActionDecoder.ESCALATE: "assertive",
     ActionDecoder.EXPLORE: "explore",
+    ActionDecoder.CAUTIOUS: "cautious",
 }
 
 BENCHMARK_ACTIONS = frozenset(ACTION_DECODER_TO_BENCHMARK_ACTION.values())
