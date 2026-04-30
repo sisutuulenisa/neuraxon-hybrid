@@ -53,6 +53,16 @@ from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
 from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.persistence import PersistentAgentTissue, load_state, save_state
+from neuraxon_agent.reward_plasticity_benchmark import (
+    DEFAULT_REWARD_PLASTICITY_MARKDOWN_PATH,
+    DEFAULT_REWARD_PLASTICITY_PATH,
+    FeedbackEvent,
+    PlasticityModeMetrics,
+    RewardPlasticityBenchmarkReport,
+    RewardPlasticityEpisode,
+    generate_reward_plasticity_episodes,
+    run_reward_plasticity_benchmark,
+)
 from neuraxon_agent.scenarios import MOCK_AGENT_ACTIONS, load_mock_agent_scenarios
 from neuraxon_agent.semantic_policy import SemanticTissuePolicy
 from neuraxon_agent.streaming import StreamEvent, StreamingLoop
@@ -121,6 +131,14 @@ __all__ = [
     "TissueBenchmarkReport",
     "TissueBenchmarkResult",
     "run_neuraxon_tissue_benchmark",
+    "DEFAULT_REWARD_PLASTICITY_MARKDOWN_PATH",
+    "DEFAULT_REWARD_PLASTICITY_PATH",
+    "FeedbackEvent",
+    "PlasticityModeMetrics",
+    "RewardPlasticityBenchmarkReport",
+    "RewardPlasticityEpisode",
+    "generate_reward_plasticity_episodes",
+    "run_reward_plasticity_benchmark",
     "MOCK_AGENT_ACTIONS",
     "load_mock_agent_scenarios",
     "SemanticTissuePolicy",
