@@ -63,6 +63,19 @@ class TemporalDynamicsBenchmark:
 
 
 @dataclass(frozen=True)
+class AntiOracleTemporalBenchmark:
+    """Masked temporal benchmark that defeats simple sequence-majority oracles."""
+
+    scenario_count: int
+    train_scenario_count: int
+    test_scenario_count: int
+    seed_count: int
+    tissue_modes: dict[str, AgentGeneralizationScore]
+    baselines: dict[str, AgentGeneralizationScore]
+    interpretation: str
+
+
+@dataclass(frozen=True)
 class HoldoutGeneralizationReport:
     """Summary report for holdout/noisy semantic policy generalization."""
 
@@ -72,6 +85,7 @@ class HoldoutGeneralizationReport:
     baselines: dict[str, AgentGeneralizationScore]
     semantic_policy_coverage: SemanticPolicyCoverage
     temporal_dynamics: TemporalDynamicsBenchmark
+    anti_oracle_temporal: AntiOracleTemporalBenchmark
     decision: str
     interpretation: str
 
@@ -213,6 +227,104 @@ def generate_temporal_dynamics_scenarios() -> list[BenchmarkScenario]:
     return scenarios
 
 
+_ANTI_ORACLE_ACTION_CODES: dict[str, int] = {
+    "execute": 1,
+    "query": 2,
+    "retry": 3,
+    "explore": 4,
+    "cautious": 5,
+    "assertive": 6,
+}
+_ANTI_ORACLE_CODE_ACTIONS = {code: action for action, code in _ANTI_ORACLE_ACTION_CODES.items()}
+
+
+def generate_anti_oracle_temporal_scenarios(seed: int = 0) -> list[BenchmarkScenario]:
+    """Generate a deterministic masked temporal benchmark with task-family split.
+
+    The final probe is identical for every scenario and prior observations avoid
+    the semantic field names used by the normal bridge (``signal``, ``risk``,
+    ``missing_count`` ...).  A compact masked evidence code is distributed across
+    the sequence so the explicit temporal adapter can read state, while simple
+    final-observation, semantic-policy, and sequence-majority baselines cannot
+    solve it from benchmark-specific labels or majority action hints.
+    """
+    del seed  # The construction is deterministic; the parameter pins the public API.
+    actions = tuple(_ANTI_ORACLE_ACTION_CODES)
+    families = (
+        ("calibration", "anti_oracle_train"),
+        ("transfer", "anti_oracle_train"),
+        ("counterfactual", "anti_oracle_test"),
+        ("perturbation", "anti_oracle_test"),
+    )
+    final_probe = {"z0": 0, "z1": "probe", "z2": 1}
+    scenarios: list[BenchmarkScenario] = []
+    pair_id = 0
+    for family_index, (family_name, split) in enumerate(families):
+        for left_index in range(0, len(actions), 2):
+            action_pair = actions[left_index : left_index + 2]
+            pair_id += 1
+            for variant_index, action in enumerate(action_pair):
+                for perturbation in range(2):
+                    observations = _anti_oracle_prefix(
+                        action=action,
+                        pair_id=pair_id,
+                        family_name=family_name,
+                        family_index=family_index,
+                        variant_index=variant_index,
+                        perturbation=perturbation,
+                    )
+                    scenarios.append(
+                        BenchmarkScenario(
+                            name=(
+                                "anti_oracle_temporal_"
+                                f"{split.removeprefix('anti_oracle_')}_"
+                                f"{family_name}_pair{pair_id}_{action}_p{perturbation}"
+                            ),
+                            observation_sequence=[*observations, dict(final_probe)],
+                            expected_optimal_action=action,
+                            difficulty=0.95,
+                            scenario_type=split,
+                            expected_actions=(action,),
+                        )
+                    )
+    return scenarios
+
+
+def _anti_oracle_prefix(
+    *,
+    action: str,
+    pair_id: int,
+    family_name: str,
+    family_index: int,
+    variant_index: int,
+    perturbation: int,
+) -> list[dict[str, Any]]:
+    code = _ANTI_ORACLE_ACTION_CODES[action]
+    # Keep the x0/x1/x2 aggregate signature identical for each counterfactual
+    # pair.  The adapter reads the distributed masked code from z3/z4 instead.
+    aggregate_template = (
+        (0.25, 0.75, 0.50),
+        (0.75, 0.25, 0.50),
+        (0.50, 0.50, 0.50),
+    )
+    return [
+        {
+            "x0": x0,
+            "x1": x1,
+            "x2": x2,
+            "z3": code if event_index == 1 else 0,
+            "z4": 1 if event_index == 1 else 0,
+            "z5": round((family_index + 1) * 0.13 + perturbation * 0.01, 3),
+            "z6": round((event_index + 1) * 0.07, 3),
+            "z7": pair_id,
+            "z8": family_name,
+            "z9": perturbation,
+            "n0": f"noise-{pair_id}-{variant_index}-{event_index}-{perturbation}",
+        }
+        for event_index, (x0, x1, x2) in enumerate(aggregate_template)
+    ]
+
+
 def measure_semantic_policy_coverage(
     scenarios: list[BenchmarkScenario],
     policy: SemanticTissuePolicy | None = None,
@@ -264,6 +376,22 @@ def run_holdout_generalization_benchmark(
         steps_per_observation=steps_per_observation,
     )
     temporal_baselines = _run_temporal_baseline_benchmarks(temporal_scenarios)
+    anti_oracle_scenarios = generate_anti_oracle_temporal_scenarios()
+    anti_oracle_reports = {
+        mode: run_neuraxon_tissue_benchmark(
+            anti_oracle_scenarios,
+            seeds=seed_list,
+            steps_per_observation=steps_per_observation,
+            policy_mode=mode,
+        )
+        for mode in (
+            "semantic_bridge",
+            "raw_network",
+            "semantic_policy_only",
+            "temporal_context_adapter",
+        )
+    }
+    anti_oracle_baselines = _run_temporal_baseline_benchmarks(anti_oracle_scenarios)
     report = _summarize_generalization(
         tissue_report=tissue_report,
         baseline_reports=baseline_reports,
@@ -274,6 +402,12 @@ def run_holdout_generalization_benchmark(
             temporal_report=temporal_report,
             baseline_reports=temporal_baselines,
             scenario_count=len(temporal_scenarios),
+            seed_count=len(seed_list),
+        ),
+        anti_oracle_temporal=_summarize_anti_oracle_temporal(
+            reports=anti_oracle_reports,
+            baseline_reports=anti_oracle_baselines,
+            scenarios=anti_oracle_scenarios,
             seed_count=len(seed_list),
         ),
     )
@@ -482,6 +616,41 @@ def _summarize_temporal_dynamics(
     )
 
 
+def _summarize_anti_oracle_temporal(
+    *,
+    reports: dict[str, TissueBenchmarkReport],
+    baseline_reports: dict[str, BenchmarkReport],
+    scenarios: list[BenchmarkScenario],
+    seed_count: int,
+) -> AntiOracleTemporalBenchmark:
+    return AntiOracleTemporalBenchmark(
+        scenario_count=len(scenarios),
+        train_scenario_count=sum(
+            1 for scenario in scenarios if scenario.scenario_type == "anti_oracle_train"
+        ),
+        test_scenario_count=sum(
+            1 for scenario in scenarios if scenario.scenario_type == "anti_oracle_test"
+        ),
+        seed_count=seed_count,
+        tissue_modes={
+            name: AgentGeneralizationScore.from_counts(report.success_count, report.run_count)
+            for name, report in reports.items()
+        },
+        baselines={
+            name: AgentGeneralizationScore.from_counts(report.success_count, report.run_count)
+            for name, report in baseline_reports.items()
+        },
+        interpretation=(
+            "Anti-oracle temporal benchmark with a task-family train/test split, "
+            "identical final probes, masked schema fields, counterfactual pairs "
+            "with matching aggregate sequence statistics, and perturbation fields. "
+            "It is designed so sequence-majority and semantic-policy-only baselines "
+            "cannot trivially reach 100%, while reported modes separate explicit "
+            "temporal-context adapter success from raw-network success."
+        ),
+    )
+
+
 def _summarize_generalization(
     *,
     tissue_report: TissueBenchmarkReport,
@@ -490,6 +659,7 @@ def _summarize_generalization(
     seed_count: int,
     semantic_policy_coverage: SemanticPolicyCoverage,
     temporal_dynamics: TemporalDynamicsBenchmark,
+    anti_oracle_temporal: AntiOracleTemporalBenchmark,
 ) -> HoldoutGeneralizationReport:
     tissue_score = AgentGeneralizationScore.from_counts(
         tissue_report.success_count,
@@ -525,6 +695,7 @@ def _summarize_generalization(
         baselines=baseline_scores,
         semantic_policy_coverage=semantic_policy_coverage,
         temporal_dynamics=temporal_dynamics,
+        anti_oracle_temporal=anti_oracle_temporal,
         decision=decision,
         interpretation=(
             "The holdout/noisy score is a semantic policy bridge result. The "

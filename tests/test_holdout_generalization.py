@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from neuraxon_agent.baselines import run_baseline_benchmarks
 from neuraxon_agent.holdout_generalization import (
+    generate_anti_oracle_temporal_scenarios,
     generate_holdout_noisy_scenarios,
     generate_temporal_dynamics_scenarios,
     measure_semantic_policy_coverage,
@@ -175,3 +176,77 @@ def test_holdout_generalization_summary_is_serializable_and_critical() -> None:
     )
     assert payload["decision"] == "pass_temporal_context_bridge_evidence"
     assert "explicit temporal context adapter" in payload["interpretation"]
+
+
+def test_anti_oracle_temporal_scenarios_are_split_masked_and_counterfactual() -> None:
+    first = generate_anti_oracle_temporal_scenarios(seed=17)
+    second = generate_anti_oracle_temporal_scenarios(seed=17)
+
+    assert first == second
+    assert {scenario.scenario_type for scenario in first} == {
+        "anti_oracle_train",
+        "anti_oracle_test",
+    }
+    assert {scenario.expected_optimal_action for scenario in first} == {
+        "execute",
+        "query",
+        "retry",
+        "explore",
+        "cautious",
+        "assertive",
+    }
+    assert all(
+        scenario.observation_sequence[-1] == {"z0": 0, "z1": "probe", "z2": 1}
+        for scenario in first
+    )
+    assert all(
+        "signal" not in observation
+        and "risk" not in observation
+        and "missing_count" not in observation
+        and "expected_action" not in observation
+        and "latent_action_hint" not in observation
+        for scenario in first
+        for observation in scenario.observation_sequence
+    )
+
+    pair_groups: dict[tuple[int, str, int], set[str]] = {}
+    aggregate_signatures: dict[tuple[tuple[float, ...], ...], set[str]] = {}
+    for scenario in first:
+        observations = scenario.observation_sequence[:-1]
+        pair_id = (observations[0]["z9"], observations[0]["z8"], observations[0]["z7"])
+        pair_groups.setdefault(pair_id, set()).add(scenario.expected_optimal_action)
+        signature = tuple(
+            sorted(
+                (
+                    round(sum(float(obs[key]) for obs in observations), 3),
+                    round(max(float(obs[key]) for obs in observations), 3),
+                    round(min(float(obs[key]) for obs in observations), 3),
+                )
+                for key in ("x0", "x1", "x2")
+            )
+        )
+        aggregate_signatures.setdefault(signature, set()).add(scenario.expected_optimal_action)
+
+    assert any(len(actions) > 1 for actions in pair_groups.values())
+    assert any(len(actions) > 1 for actions in aggregate_signatures.values())
+
+
+def test_anti_oracle_temporal_summary_separates_adapter_and_raw_network() -> None:
+    report = run_holdout_generalization_benchmark(seeds=(0,), steps_per_observation=1)
+    anti_oracle = report.to_dict()["anti_oracle_temporal"]
+
+    assert anti_oracle["scenario_count"] >= 48
+    assert anti_oracle["train_scenario_count"] > 0
+    assert anti_oracle["test_scenario_count"] > 0
+    assert anti_oracle["baselines"]["sequence_majority"]["success_rate"] < 1.0
+    assert set(anti_oracle["tissue_modes"]) >= {
+        "semantic_bridge",
+        "raw_network",
+        "semantic_policy_only",
+        "temporal_context_adapter",
+    }
+    assert anti_oracle["tissue_modes"]["temporal_context_adapter"]["success_rate"] > anti_oracle[
+        "tissue_modes"
+    ]["raw_network"]["success_rate"]
+    assert "task-family train/test split" in anti_oracle["interpretation"]
+    assert "sequence-majority" in anti_oracle["interpretation"]

@@ -1,4 +1,60 @@
 {
+  "anti_oracle_temporal": {
+    "baselines": {
+      "always_execute": {
+        "run_count": 48,
+        "success_count": 8,
+        "success_rate": 0.16666666666666666
+      },
+      "last_observation_only": {
+        "run_count": 48,
+        "success_count": 0,
+        "success_rate": 0.0
+      },
+      "random": {
+        "run_count": 48,
+        "success_count": 5,
+        "success_rate": 0.10416666666666667
+      },
+      "semantic_policy_only": {
+        "run_count": 48,
+        "success_count": 0,
+        "success_rate": 0.0
+      },
+      "sequence_majority": {
+        "run_count": 48,
+        "success_count": 0,
+        "success_rate": 0.0
+      }
+    },
+    "interpretation": "Anti-oracle temporal benchmark with a task-family train/test split, identical final probes, masked schema fields, counterfactual pairs with matching aggregate sequence statistics, and perturbation fields. It is designed so sequence-majority and semantic-policy-only baselines cannot trivially reach 100%, while reported modes separate explicit temporal-context adapter success from raw-network success.",
+    "scenario_count": 48,
+    "seed_count": 1,
+    "test_scenario_count": 24,
+    "tissue_modes": {
+      "raw_network": {
+        "run_count": 48,
+        "success_count": 7,
+        "success_rate": 0.14583333333333334
+      },
+      "semantic_bridge": {
+        "run_count": 48,
+        "success_count": 48,
+        "success_rate": 1.0
+      },
+      "semantic_policy_only": {
+        "run_count": 48,
+        "success_count": 7,
+        "success_rate": 0.14583333333333334
+      },
+      "temporal_context_adapter": {
+        "run_count": 48,
+        "success_count": 48,
+        "success_rate": 1.0
+      }
+    },
+    "train_scenario_count": 24
+  },
   "baselines": {
     "always_execute": {
       "run_count": 140,
