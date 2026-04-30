@@ -75,7 +75,7 @@ class SemanticTissuePolicy:
         return (
             status == "failure" and (not bool(observation.get("retryable")) or attempt >= 2)
         ) or (
-            scenario_type == "error_recovery"
+            (scenario_type == "error_recovery" or status == "failure")
             and (risk in {"medium", "high"} or "avoid" in instruction)
         )
 
@@ -98,7 +98,8 @@ class SemanticTissuePolicy:
     def _is_executable_request(observation: dict[str, Any], scenario_type: str) -> bool:
         if scenario_type in {"simple_tool_call", "complex_multi_step"}:
             return True
-        if str(observation.get("intent", "")).lower() == "call_tool":
+        intent = str(observation.get("intent", "")).lower()
+        if intent in {"call_tool", "next_step"}:
             missing = observation.get("missing_parameters") or []
             parameters = observation.get("parameters") or {}
             return not missing and not any(value is None for value in parameters.values())

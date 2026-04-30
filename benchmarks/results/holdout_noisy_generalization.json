@@ -1,0 +1,51 @@
+{
+  "baselines": {
+    "always_execute": {
+      "run_count": 140,
+      "success_count": 40,
+      "success_rate": 0.2857142857142857
+    },
+    "random": {
+      "run_count": 140,
+      "success_count": 25,
+      "success_rate": 0.17857142857142858
+    }
+  },
+  "decision": "needs_temporal_dynamics_evidence",
+  "interpretation": "The 100% holdout/noisy score is a semantic policy bridge result, not evidence of the continuous time, stateful, neuromodulated and edge-of-chaos dynamics described in Qubic's NIA articles. Treat it as an oracle-coverage warning and require temporal dynamics evidence before claiming Neuraxon generalization.",
+  "neuraxon_tissue": {
+    "run_count": 140,
+    "success_count": 140,
+    "success_rate": 1.0
+  },
+  "scenario_count": 140,
+  "seed_count": 1,
+  "semantic_policy_coverage": {
+    "coverage_rate": 1.0,
+    "covered_count": 140,
+    "scenario_count": 140,
+    "warning": "semantic_policy_oracle_coverage_high: final observations are directly decidable by the explicit policy bridge, so perfect accuracy is not evidence of continuous-time Neuraxon dynamics."
+  },
+  "temporal_dynamics": {
+    "baselines": {
+      "always_execute": {
+        "run_count": 6,
+        "success_count": 1,
+        "success_rate": 0.16666666666666666
+      },
+      "random": {
+        "run_count": 6,
+        "success_count": 2,
+        "success_rate": 0.3333333333333333
+      }
+    },
+    "interpretation": "Temporal probe inspired by NIA Vol. 1/2/3/5/7: final observations hide explicit action cues, so success must come from continuous time, state carry-over, trinary buffering and modulation-like dynamics.",
+    "neuraxon_tissue": {
+      "run_count": 6,
+      "success_count": 1,
+      "success_rate": 0.16666666666666666
+    },
+    "scenario_count": 6,
+    "seed_count": 1
+  }
+}

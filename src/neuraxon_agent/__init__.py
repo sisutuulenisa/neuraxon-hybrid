@@ -37,6 +37,17 @@ from neuraxon_agent.benchmark_diagnostics import (
     enumerate_decoder_actions,
 )
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
+from neuraxon_agent.holdout_generalization import (
+    DEFAULT_HOLDOUT_GENERALIZATION_PATH,
+    AgentGeneralizationScore,
+    HoldoutGeneralizationReport,
+    SemanticPolicyCoverage,
+    TemporalDynamicsBenchmark,
+    generate_holdout_noisy_scenarios,
+    generate_temporal_dynamics_scenarios,
+    measure_semantic_policy_coverage,
+    run_holdout_generalization_benchmark,
+)
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
 from neuraxon_agent.perception import PerceptionEncoder
@@ -67,6 +78,15 @@ __all__ = [
     "Memory",
     "AgentEvolution",
     "EvolutionConfig",
+    "AgentGeneralizationScore",
+    "DEFAULT_HOLDOUT_GENERALIZATION_PATH",
+    "HoldoutGeneralizationReport",
+    "SemanticPolicyCoverage",
+    "TemporalDynamicsBenchmark",
+    "generate_holdout_noisy_scenarios",
+    "generate_temporal_dynamics_scenarios",
+    "measure_semantic_policy_coverage",
+    "run_holdout_generalization_benchmark",
     "StreamingLoop",
     "StreamEvent",
     "save_state",
