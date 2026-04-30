@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from neuraxon_agent.action import ActionDecoder
+from neuraxon_agent.action_contract import (
+    benchmark_action_coverage,
+    normalize_benchmark_action,
+)
 from neuraxon_agent.benchmark import BenchmarkScenario
 from neuraxon_agent.scenarios import load_mock_agent_scenarios
 from neuraxon_agent.tissue import AgentTissue
@@ -48,6 +52,7 @@ class ActionMappingTrace:
     scenario_type: str
     expected_action: str
     decoded_action: str
+    normalized_action: str
     raw_output: tuple[int, ...]
     confidence: float
     outcome: str
@@ -63,6 +68,7 @@ class ActionMappingDiagnostics:
     success_count: int
     expected_actions: set[str]
     decoder_actions: set[str]
+    normalized_decoder_actions: set[str]
     observed_actions: set[str]
     missing_decoder_actions: set[str]
     missing_observed_expected_actions: set[str]
@@ -75,6 +81,7 @@ class ActionMappingDiagnostics:
         payload = asdict(self)
         payload["expected_actions"] = sorted(self.expected_actions)
         payload["decoder_actions"] = sorted(self.decoder_actions)
+        payload["normalized_decoder_actions"] = sorted(self.normalized_decoder_actions)
         payload["observed_actions"] = sorted(self.observed_actions)
         payload["missing_decoder_actions"] = sorted(self.missing_decoder_actions)
         payload["missing_observed_expected_actions"] = sorted(
@@ -124,10 +131,12 @@ def diagnose_tissue_action_mapping(
     ]
 
     expected_actions = {scenario.expected_optimal_action for scenario in scenario_list}
-    decoder_actions = enumerate_decoder_actions(network_params.num_output_neurons)
-    observed_actions = {trace.decoded_action for trace in traces}
+    coverage = benchmark_action_coverage(expected_actions)
+    decoder_actions = coverage.decoder_actions
+    normalized_decoder_actions = {normalize_benchmark_action(action) for action in decoder_actions}
+    observed_actions = {trace.normalized_action for trace in traces}
     confusion_matrix = _build_confusion_matrix(traces)
-    missing_decoder_actions = expected_actions - decoder_actions
+    missing_decoder_actions = coverage.unreachable_benchmark_actions
     missing_observed_expected_actions = expected_actions - observed_actions
     success_count = sum(1 for trace in traces if trace.outcome == "success")
     root_cause = _classify_root_cause(
@@ -147,6 +156,7 @@ def diagnose_tissue_action_mapping(
         success_count=success_count,
         expected_actions=expected_actions,
         decoder_actions=decoder_actions,
+        normalized_decoder_actions=normalized_decoder_actions,
         observed_actions=observed_actions,
         missing_decoder_actions=missing_decoder_actions,
         missing_observed_expected_actions=missing_observed_expected_actions,
@@ -198,13 +208,15 @@ def _trace_one_scenario(
     finally:
         random.setstate(rng_state)
 
-    outcome = "success" if action.actie_type == scenario.expected_optimal_action else "failure"
+    normalized_action = normalize_benchmark_action(action.actie_type)
+    outcome = "success" if normalized_action == scenario.expected_optimal_action else "failure"
     return ActionMappingTrace(
         seed=seed,
         scenario_name=scenario.name,
         scenario_type=scenario.scenario_type,
         expected_action=scenario.expected_optimal_action,
         decoded_action=action.actie_type,
+        normalized_action=normalized_action,
         raw_output=action.raw_output,
         confidence=action.confidence,
         outcome=outcome,
@@ -234,7 +246,7 @@ def _classify_root_cause(
     success_count: int,
 ) -> str:
     """Classify the dominant diagnosis from reachability and run evidence."""
-    if missing_decoder_actions:
+    if missing_decoder_actions and success_count == 0:
         return "action_vocabulary_mismatch"
     if missing_observed_expected_actions:
         return "network_never_reaches_expected_actions"
@@ -277,6 +289,7 @@ def _render_report(diagnostics: ActionMappingDiagnostics) -> str:
     """Render the diagnostic conclusion as Markdown."""
     expected = ", ".join(sorted(diagnostics.expected_actions))
     decoder = ", ".join(sorted(diagnostics.decoder_actions))
+    normalized_decoder = ", ".join(sorted(diagnostics.normalized_decoder_actions))
     observed = ", ".join(sorted(diagnostics.observed_actions))
     missing_decoder = ", ".join(sorted(diagnostics.missing_decoder_actions)) or "none"
     missing_observed = ", ".join(sorted(diagnostics.missing_observed_expected_actions)) or "none"
@@ -292,15 +305,16 @@ def _render_report(diagnostics: ActionMappingDiagnostics) -> str:
         "## Core Finding",
         f"- The mock benchmark expects: `{expected}`.",
         f"- ActionDecoder emits: `{decoder}`.",
-        f"- The traced tissue runs observed: `{observed}`.",
+        f"- ActionDecoder normalized benchmark actions: `{normalized_decoder}`.",
+        f"- The traced tissue runs observed after normalization: `{observed}`.",
         f"- Expected actions missing from decoder vocabulary: `{missing_decoder}`.",
         f"- Expected actions not observed in traced runs: `{missing_observed}`.",
         "",
-        "The 0% benchmark accuracy is therefore explained before learning, memory, "
-        "or visual perception enter the picture: the benchmark scenarios use a "
-        "lowercase task-policy vocabulary while the current ActionDecoder emits "
-        "uppercase control-policy labels. No current decoder output can equal the "
-        "expected mock benchmark actions, so equality scoring must always fail.",
+        "Benchmark scoring now uses the normalized benchmark action contract, "
+        "so the previous pure string-vocabulary mismatch is no longer the main "
+        "failure mode. Any remaining misses are now evidence about which normalized "
+        "actions the tissue actually reaches, before learning, memory, or visual "
+        "perception enter the picture.",
         "",
         "## Non-goals for the next fix",
         "- Do not implement memory persistence yet; persistence would only store "
@@ -309,11 +323,11 @@ def _render_report(diagnostics: ActionMappingDiagnostics) -> str:
         "simple mock scenarios first.",
         "",
         "## Recommended follow-up",
-        "1. Decide whether benchmark actions should map onto the existing decoder "
-        "vocabulary or whether the decoder should emit the benchmark vocabulary.",
-        "2. Add an explicit action-contract adapter and tests for all expected benchmark actions.",
-        "3. Re-run the benchmark after the contract is aligned, then diagnose actual "
-        "network decision quality separately from scoring compatibility.",
+        "1. Re-run the full benchmark and compare normalized Neuraxon accuracy "
+        "against random and always-execute baselines.",
+        "2. Diagnose remaining decision-quality gaps separately from scoring compatibility.",
+        "3. Only revisit memory persistence or visual perception after the simple "
+        "mock-scenario action policy beats baseline behavior.",
         "",
         "## Artefacts",
         f"- Trace JSON: `{diagnostics.output_paths.trace_json}`",

@@ -43,7 +43,8 @@ def test_harness_collects_action_confidence_outcome_timing_and_modulators() -> N
     assert report.run_count == 1
     result = report.results[0]
     assert result.scenario_name == "one-step"
-    assert result.action in {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
+    assert result.action in {"execute", "query", "retry", "assertive", "explore"}
+    assert result.decoded_action in {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
     assert 0.0 <= result.confidence <= 1.0
     assert result.outcome in {"success", "failure"}
     assert result.elapsed_seconds >= 0.0
@@ -76,6 +77,7 @@ def test_harness_exports_valid_json_with_all_required_fields() -> None:
     assert result["expected_optimal_action"] == "PAUSE"
     assert result["difficulty"] == 0.2
     assert "action" in result
+    assert "decoded_action" in result
     assert "confidence" in result
     assert "outcome" in result
     assert "elapsed_seconds" in result

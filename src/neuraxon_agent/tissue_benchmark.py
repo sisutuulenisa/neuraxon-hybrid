@@ -9,6 +9,7 @@ from pathlib import Path
 from time import perf_counter
 from typing import Any, Iterable
 
+from neuraxon_agent.action_contract import normalize_benchmark_action
 from neuraxon_agent.benchmark import BenchmarkScenario
 from neuraxon_agent.scenarios import load_mock_agent_scenarios
 from neuraxon_agent.tissue import AgentTissue
@@ -34,6 +35,7 @@ class TissueBenchmarkResult:
     elapsed_seconds: float
     state: dict[str, float | int]
     neuromodulator_levels: dict[str, float]
+    decoded_action: str | None = None
 
 
 @dataclass(frozen=True)
@@ -135,7 +137,9 @@ def _run_one_seeded_scenario(
             action = tissue.think(steps=steps_per_observation)
         if action is None:
             raise ValueError(f"scenario {scenario.name!r} has no observations")
-        outcome = _score_action(action.actie_type, scenario.expected_optimal_action)
+        benchmark_action = normalize_benchmark_action(action.actie_type)
+        expected_action = normalize_benchmark_action(scenario.expected_optimal_action)
+        outcome = _score_action(benchmark_action, expected_action)
         tissue.modulate(outcome)
         elapsed = perf_counter() - start
     finally:
@@ -149,7 +153,7 @@ def _run_one_seeded_scenario(
         expected_optimal_action=scenario.expected_optimal_action,
         difficulty=scenario.difficulty,
         observation_count=len(scenario.observation_sequence),
-        action=action.actie_type,
+        action=benchmark_action,
         confidence=action.confidence,
         outcome=outcome,
         elapsed_seconds=elapsed,
@@ -166,6 +170,7 @@ def _run_one_seeded_scenario(
             "acetylcholine": state.acetylcholine,
             "norepinephrine": state.norepinephrine,
         },
+        decoded_action=action.actie_type,
     )
 
 

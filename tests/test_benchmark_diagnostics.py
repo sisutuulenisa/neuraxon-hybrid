@@ -40,7 +40,7 @@ def _diagnostic_scenarios() -> list[BenchmarkScenario]:
     ]
 
 
-def test_diagnostics_identify_action_vocabulary_mismatch(tmp_path: Path) -> None:
+def test_diagnostics_use_normalized_benchmark_action_contract(tmp_path: Path) -> None:
     diagnostics = diagnose_tissue_action_mapping(
         scenarios=_diagnostic_scenarios(),
         seeds=(0, 1),
@@ -50,10 +50,10 @@ def test_diagnostics_identify_action_vocabulary_mismatch(tmp_path: Path) -> None
 
     assert diagnostics.run_count == 6
     assert diagnostics.expected_actions == {"execute", "query", "retry"}
-    assert set(diagnostics.decoder_actions).isdisjoint(MOCK_AGENT_ACTIONS)
-    assert diagnostics.missing_decoder_actions == {"execute", "query", "retry"}
-    assert diagnostics.root_cause == "action_vocabulary_mismatch"
-    assert diagnostics.success_count == 0
+    assert diagnostics.decoder_actions == {"PROCEED", "PAUSE", "RETRY", "ESCALATE", "EXPLORE"}
+    assert diagnostics.normalized_decoder_actions >= {"execute", "query", "retry"}
+    assert diagnostics.missing_decoder_actions == set()
+    assert diagnostics.root_cause != "action_vocabulary_mismatch"
 
 
 def test_diagnostics_export_trace_json_confusion_csv_and_report(tmp_path: Path) -> None:
@@ -92,19 +92,21 @@ def test_diagnostics_export_trace_json_confusion_csv_and_report(tmp_path: Path) 
 
     report = diagnostics.output_paths.report_md.read_text()
     assert "# Neuraxon Tissue Action Mapping Diagnostic" in report
-    assert "action_vocabulary_mismatch" in report
     assert "ActionDecoder emits" in report
+    assert "normalized benchmark actions" in report
     assert "mock benchmark expects" in report
     assert "memory persistence" in report.lower()
     assert "visual perception" in report.lower()
 
 
-def test_default_diagnostics_explain_existing_zero_accuracy_artifact(tmp_path: Path) -> None:
+def test_default_diagnostics_explain_remaining_post_contract_gap(tmp_path: Path) -> None:
     diagnostics = diagnose_tissue_action_mapping(output_dir=tmp_path)
 
     assert diagnostics.run_count == 700
-    assert diagnostics.success_count == 0
     assert diagnostics.expected_actions == MOCK_AGENT_ACTIONS
-    assert diagnostics.missing_decoder_actions == MOCK_AGENT_ACTIONS
-    assert diagnostics.root_cause == "action_vocabulary_mismatch"
+    assert diagnostics.missing_decoder_actions == {"cautious"}
+    assert diagnostics.root_cause in {
+        "network_never_reaches_expected_actions",
+        "partially_working",
+    }
     assert diagnostics.output_paths.report_md.exists()

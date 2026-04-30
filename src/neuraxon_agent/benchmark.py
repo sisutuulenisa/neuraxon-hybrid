@@ -12,6 +12,7 @@ from time import perf_counter
 from typing import Any, Callable, Protocol
 
 from neuraxon_agent.action import AgentAction
+from neuraxon_agent.action_contract import normalize_benchmark_action
 from neuraxon_agent.tissue import AgentTissue
 
 
@@ -68,6 +69,7 @@ class BenchmarkResult:
     outcome: str
     elapsed_seconds: float
     neuromodulator_levels: dict[str, float]
+    decoded_action: str | None = None
 
 
 @dataclass(frozen=True)
@@ -154,7 +156,9 @@ class BenchmarkHarness:
         if action is None:  # defensive; empty sequences are rejected above
             raise RuntimeError("scenario produced no action")
 
-        outcome = self._score_action(action.actie_type, scenario.expected_optimal_action)
+        benchmark_action = normalize_benchmark_action(action.actie_type)
+        expected_action = normalize_benchmark_action(scenario.expected_optimal_action)
+        outcome = self._score_action(benchmark_action, expected_action)
         tissue.modulate(outcome)
         elapsed = perf_counter() - start
         state = tissue.state
@@ -164,7 +168,7 @@ class BenchmarkHarness:
             expected_optimal_action=scenario.expected_optimal_action,
             difficulty=scenario.difficulty,
             observation_count=len(scenario.observation_sequence),
-            action=action.actie_type,
+            action=benchmark_action,
             confidence=action.confidence,
             outcome=outcome,
             elapsed_seconds=elapsed,
@@ -174,6 +178,7 @@ class BenchmarkHarness:
                 "acetylcholine": state.acetylcholine,
                 "norepinephrine": state.norepinephrine,
             },
+            decoded_action=action.actie_type,
         )
 
     @staticmethod
