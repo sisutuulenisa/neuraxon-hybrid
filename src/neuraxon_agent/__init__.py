@@ -22,6 +22,14 @@ from neuraxon_agent.benchmark_analysis import (
     StatisticalComparison,
     analyze_benchmark_results,
 )
+from neuraxon_agent.benchmark_diagnostics import (
+    ActionMappingDiagnostics,
+    ActionMappingTrace,
+    DiagnosticOutputPaths,
+    ObservationTrace,
+    diagnose_tissue_action_mapping,
+    enumerate_decoder_actions,
+)
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
@@ -63,6 +71,12 @@ __all__ = [
     "ScenarioTypeSummary",
     "StatisticalComparison",
     "analyze_benchmark_results",
+    "ActionMappingDiagnostics",
+    "ActionMappingTrace",
+    "DiagnosticOutputPaths",
+    "ObservationTrace",
+    "diagnose_tissue_action_mapping",
+    "enumerate_decoder_actions",
     "AlwaysExecuteAgent",
     "BaselineAgentState",
     "RandomAgent",
