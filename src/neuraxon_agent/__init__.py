@@ -1,6 +1,12 @@
 """Neuraxon Agent — Intelligence Tissue for CLI AI Agents."""
 
 from neuraxon_agent.action import ActionDecoder, AgentAction
+from neuraxon_agent.action_contract import (
+    ACTION_DECODER_TO_BENCHMARK_ACTION,
+    ActionContractCoverage,
+    benchmark_action_coverage,
+    normalize_benchmark_action,
+)
 from neuraxon_agent.baselines import (
     AlwaysExecuteAgent,
     BaselineAgentState,
@@ -50,6 +56,10 @@ __all__ = [
     "PerceptionEncoder",
     "ActionDecoder",
     "AgentAction",
+    "ACTION_DECODER_TO_BENCHMARK_ACTION",
+    "ActionContractCoverage",
+    "benchmark_action_coverage",
+    "normalize_benchmark_action",
     "AgentTissue",
     "TissueState",
     "Modulation",

@@ -39,6 +39,7 @@
   },
   "decoder_actions": [
     "ESCALATE",
+    "EXPLORE",
     "PAUSE",
     "PROCEED",
     "RETRY"
@@ -52,40 +53,39 @@
     "retry"
   ],
   "missing_decoder_actions": [
-    "assertive",
-    "cautious",
-    "execute",
-    "explore",
-    "query",
-    "retry"
+    "cautious"
   ],
   "missing_observed_expected_actions": [
-    "assertive",
     "cautious",
+    "explore"
+  ],
+  "normalized_decoder_actions": [
+    "assertive",
     "execute",
     "explore",
     "query",
     "retry"
   ],
   "observed_actions": [
-    "ESCALATE",
-    "PAUSE",
-    "PROCEED",
-    "RETRY"
+    "assertive",
+    "execute",
+    "query",
+    "retry"
   ],
   "output_paths": {
     "confusion_csv": "benchmarks/results/diagnostics/action_confusion_matrix.csv",
     "report_md": "benchmarks/results/diagnostics/action_mapping_diagnostic_report.md",
     "trace_json": "benchmarks/results/diagnostics/action_mapping_traces.json"
   },
-  "root_cause": "action_vocabulary_mismatch",
+  "root_cause": "network_never_reaches_expected_actions",
   "run_count": 700,
-  "success_count": 0,
+  "success_count": 110,
   "traces": [
     {
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -134,6 +134,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -182,6 +183,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -230,6 +232,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -278,6 +281,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -326,6 +330,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -374,6 +379,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -422,6 +428,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -454,7 +461,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -470,6 +477,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -518,6 +526,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -566,6 +575,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -614,6 +624,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -662,6 +673,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -694,7 +706,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -710,6 +722,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -758,6 +771,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -790,7 +804,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         -1,
@@ -806,6 +820,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -854,6 +869,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -902,6 +918,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -934,7 +951,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -950,6 +967,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -998,6 +1016,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1046,6 +1065,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1080,7 +1100,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -1096,6 +1116,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1130,7 +1151,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -1146,6 +1167,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1180,7 +1202,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -1196,6 +1218,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1246,6 +1269,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1296,6 +1320,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1346,6 +1371,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1396,6 +1422,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1446,6 +1473,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1496,6 +1524,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1530,7 +1559,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -1546,6 +1575,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1596,6 +1626,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1646,6 +1677,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1696,6 +1728,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1746,6 +1779,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1796,6 +1830,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1846,6 +1881,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1896,6 +1932,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1930,7 +1967,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -1946,6 +1983,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -1996,6 +2034,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2046,6 +2085,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2091,6 +2131,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2120,7 +2161,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -2136,6 +2177,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2181,6 +2223,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2226,6 +2269,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2271,6 +2315,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2316,6 +2361,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2361,6 +2407,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2406,6 +2453,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2451,6 +2499,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2480,7 +2529,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -2496,6 +2545,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2525,7 +2575,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -2541,6 +2591,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2586,6 +2637,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2631,6 +2683,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2676,6 +2729,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2721,6 +2775,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2766,6 +2821,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2811,6 +2867,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2856,6 +2913,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2901,6 +2959,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2946,6 +3005,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -2993,6 +3053,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3040,6 +3101,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3087,6 +3149,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3134,6 +3197,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3181,6 +3245,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3228,6 +3293,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3275,6 +3341,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3322,6 +3389,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3369,6 +3437,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3416,6 +3485,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3463,6 +3533,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3510,6 +3581,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3557,6 +3629,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3604,6 +3677,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3651,6 +3725,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3698,6 +3773,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3745,6 +3821,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3792,6 +3869,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3839,6 +3917,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3886,6 +3965,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -3982,6 +4062,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4078,6 +4159,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4174,6 +4256,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4270,6 +4353,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4350,7 +4434,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -4366,6 +4450,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4462,6 +4547,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4558,6 +4644,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4654,6 +4741,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4734,7 +4822,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -4750,6 +4838,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4846,6 +4935,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -4942,6 +5032,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5038,6 +5129,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5118,7 +5210,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -5134,6 +5226,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5230,6 +5323,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5310,7 +5404,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -5326,6 +5420,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5406,7 +5501,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -5422,6 +5517,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5518,6 +5614,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5598,7 +5695,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -5614,6 +5711,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5694,7 +5792,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -5710,6 +5808,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5790,7 +5889,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -5806,6 +5905,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5876,6 +5976,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -5946,6 +6047,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6016,6 +6118,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6086,6 +6189,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6156,6 +6260,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6226,6 +6331,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6296,6 +6402,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6366,6 +6473,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6436,6 +6544,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6506,6 +6615,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6576,6 +6686,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6646,6 +6757,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6716,6 +6828,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6786,6 +6899,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6856,6 +6970,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6926,6 +7041,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -6996,6 +7112,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7066,6 +7183,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7136,6 +7254,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7206,6 +7325,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7259,7 +7379,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -7275,6 +7395,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7344,6 +7465,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7413,6 +7535,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7482,6 +7605,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7551,6 +7675,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7620,6 +7745,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7689,6 +7815,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7758,6 +7885,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7827,6 +7955,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7896,6 +8025,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -7965,6 +8095,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8034,6 +8165,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8103,6 +8235,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8172,6 +8305,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8241,6 +8375,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8294,7 +8429,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -8310,6 +8445,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8379,6 +8515,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8448,6 +8585,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8517,6 +8655,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8586,6 +8725,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8634,6 +8774,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8682,6 +8823,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8714,7 +8856,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -8730,6 +8872,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8778,6 +8921,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8826,6 +8970,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8874,6 +9019,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8922,6 +9068,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -8970,6 +9117,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9018,6 +9166,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9066,6 +9215,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9114,6 +9264,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9162,6 +9313,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9210,6 +9362,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9258,6 +9411,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9306,6 +9460,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9338,7 +9493,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -9354,6 +9509,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9402,6 +9558,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9450,6 +9607,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9498,6 +9656,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9546,6 +9705,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9596,6 +9756,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9630,7 +9791,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -9646,6 +9807,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9680,7 +9842,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         -1,
@@ -9696,6 +9858,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9730,7 +9893,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -9746,6 +9909,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9780,7 +9944,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -9796,6 +9960,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9830,7 +9995,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -9846,6 +10011,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9880,7 +10046,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -9896,6 +10062,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9930,7 +10097,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -9946,6 +10113,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -9980,7 +10148,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -9996,6 +10164,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10030,7 +10199,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -10046,6 +10215,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10080,7 +10250,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -10096,6 +10266,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10130,7 +10301,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -10146,6 +10317,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10196,6 +10368,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10230,7 +10403,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -10246,6 +10419,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10296,6 +10470,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10346,6 +10521,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10396,6 +10572,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10446,6 +10623,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10480,7 +10658,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -10496,6 +10674,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10546,6 +10725,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10591,6 +10771,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10636,6 +10817,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10681,6 +10863,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10726,6 +10909,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10771,6 +10955,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10816,6 +11001,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10861,6 +11047,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10890,7 +11077,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -10906,6 +11093,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10951,6 +11139,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -10980,7 +11169,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -10996,6 +11185,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11041,6 +11231,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11086,6 +11277,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11131,6 +11323,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11176,6 +11369,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11221,6 +11415,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11266,6 +11461,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11295,7 +11491,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         -1,
@@ -11311,6 +11507,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11356,6 +11553,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11401,6 +11599,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11446,6 +11645,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11493,6 +11693,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11540,6 +11741,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11587,6 +11789,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11634,6 +11837,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11681,6 +11885,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11728,6 +11933,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11775,6 +11981,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11822,6 +12029,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11869,6 +12077,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11916,6 +12125,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -11963,6 +12173,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12010,6 +12221,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12057,6 +12269,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12104,6 +12317,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12151,6 +12365,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12198,6 +12413,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12245,6 +12461,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12292,6 +12509,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12339,6 +12557,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12386,6 +12605,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12482,6 +12702,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12578,6 +12799,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12674,6 +12896,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12770,6 +12993,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12866,6 +13090,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -12962,6 +13187,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13058,6 +13284,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13138,7 +13365,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -13154,6 +13381,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13250,6 +13478,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13346,6 +13575,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13442,6 +13672,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13538,6 +13769,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13634,6 +13866,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13730,6 +13963,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13810,7 +14044,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -13826,6 +14060,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -13922,6 +14157,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14002,7 +14238,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -14018,6 +14254,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14114,6 +14351,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14194,7 +14432,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -14210,6 +14448,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14306,6 +14545,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14376,6 +14616,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14446,6 +14687,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14516,6 +14758,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14586,6 +14829,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14656,6 +14900,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14726,6 +14971,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14796,6 +15042,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14866,6 +15113,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -14936,6 +15184,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15006,6 +15255,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15076,6 +15326,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15146,6 +15397,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15216,6 +15468,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15286,6 +15539,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15356,6 +15610,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15426,6 +15681,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15496,6 +15752,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15566,6 +15823,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15636,6 +15894,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15706,6 +15965,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15759,7 +16019,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -15775,6 +16035,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15844,6 +16105,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15913,6 +16175,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -15966,7 +16229,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -15982,6 +16245,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16051,6 +16315,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16120,6 +16385,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16189,6 +16455,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16258,6 +16525,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16327,6 +16595,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16396,6 +16665,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16465,6 +16735,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16518,7 +16789,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -16534,6 +16805,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16603,6 +16875,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16672,6 +16945,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16741,6 +17015,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16810,6 +17085,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16879,6 +17155,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -16948,6 +17225,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17017,6 +17295,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17086,6 +17365,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17118,7 +17398,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -17134,6 +17414,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17182,6 +17463,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17230,6 +17512,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17262,7 +17545,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -17278,6 +17561,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17326,6 +17610,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17374,6 +17659,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17422,6 +17708,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17470,6 +17757,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17518,6 +17806,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17550,7 +17839,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -17566,6 +17855,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17598,7 +17888,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -17614,6 +17904,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17662,6 +17953,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17710,6 +18002,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17758,6 +18051,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17806,6 +18100,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17854,6 +18149,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17902,6 +18198,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17950,6 +18247,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -17998,6 +18296,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18046,6 +18345,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18080,7 +18380,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -18096,6 +18396,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18130,7 +18431,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -18146,6 +18447,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18180,7 +18482,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -18196,6 +18498,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18246,6 +18549,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18296,6 +18600,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18346,6 +18651,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18396,6 +18702,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18430,7 +18737,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -18446,6 +18753,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18496,6 +18804,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18546,6 +18855,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18596,6 +18906,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18646,6 +18957,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18696,6 +19008,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18730,7 +19043,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -18746,6 +19059,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18796,6 +19110,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18846,6 +19161,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18880,7 +19196,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -18896,6 +19212,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18946,6 +19263,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -18980,7 +19298,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -18996,6 +19314,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19046,6 +19365,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19091,6 +19411,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19136,6 +19457,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19181,6 +19503,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19226,6 +19549,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19271,6 +19595,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19316,6 +19641,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19361,6 +19687,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19406,6 +19733,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19435,7 +19763,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -19451,6 +19779,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19496,6 +19825,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19541,6 +19871,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19586,6 +19917,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19631,6 +19963,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19660,7 +19993,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -19676,6 +20009,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19721,6 +20055,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19766,6 +20101,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19811,6 +20147,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19856,6 +20193,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19901,6 +20239,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19946,6 +20285,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -19993,6 +20333,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20040,6 +20381,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20087,6 +20429,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20134,6 +20477,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20181,6 +20525,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20228,6 +20573,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20275,6 +20621,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20322,6 +20669,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20369,6 +20717,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20416,6 +20765,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20463,6 +20813,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20510,6 +20861,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20557,6 +20909,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20604,6 +20957,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20651,6 +21005,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20698,6 +21053,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20745,6 +21101,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20792,6 +21149,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20839,6 +21197,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20886,6 +21245,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -20982,6 +21342,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21078,6 +21439,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21174,6 +21536,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21270,6 +21633,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21366,6 +21730,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21462,6 +21827,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21558,6 +21924,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21654,6 +22021,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21750,6 +22118,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21846,6 +22215,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -21942,6 +22312,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22038,6 +22409,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22134,6 +22506,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22230,6 +22603,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22310,7 +22684,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -22326,6 +22700,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22422,6 +22797,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22502,7 +22878,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -22518,6 +22894,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22598,7 +22975,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -22614,6 +22991,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22710,6 +23088,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22806,6 +23185,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22876,6 +23256,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -22946,6 +23327,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23016,6 +23398,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23086,6 +23469,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23156,6 +23540,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23226,6 +23611,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23296,6 +23682,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23366,6 +23753,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23436,6 +23824,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23506,6 +23895,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23576,6 +23966,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23646,6 +24037,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23716,6 +24108,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23786,6 +24179,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23856,6 +24250,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23926,6 +24321,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -23996,6 +24392,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24066,6 +24463,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24136,6 +24534,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24206,6 +24605,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24275,6 +24675,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24344,6 +24745,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24413,6 +24815,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24482,6 +24885,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24551,6 +24955,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24604,7 +25009,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         -1,
@@ -24620,6 +25025,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24689,6 +25095,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24742,7 +25149,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -24758,6 +25165,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24827,6 +25235,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24896,6 +25305,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -24965,6 +25375,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25034,6 +25445,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25103,6 +25515,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25172,6 +25585,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25225,7 +25639,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -25241,6 +25655,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25310,6 +25725,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25379,6 +25795,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25448,6 +25865,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25517,6 +25935,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25570,7 +25989,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -25586,6 +26005,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25634,6 +26054,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25682,6 +26103,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25730,6 +26152,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25778,6 +26201,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25826,6 +26250,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25874,6 +26299,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25922,6 +26348,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -25970,6 +26397,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26018,6 +26446,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26066,6 +26495,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26114,6 +26544,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26162,6 +26593,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26210,6 +26642,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26258,6 +26691,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26306,6 +26740,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26354,6 +26789,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26402,6 +26838,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26450,6 +26887,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26498,6 +26936,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26546,6 +26985,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26596,6 +27036,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26630,7 +27071,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -26646,6 +27087,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26696,6 +27138,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26746,6 +27189,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26796,6 +27240,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26846,6 +27291,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26896,6 +27342,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26946,6 +27393,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -26996,6 +27444,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27046,6 +27495,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27096,6 +27546,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27146,6 +27597,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27196,6 +27648,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27246,6 +27699,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27296,6 +27750,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27330,7 +27785,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -27346,6 +27801,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27396,6 +27852,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27430,7 +27887,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -27446,6 +27903,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27480,7 +27938,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         -1,
@@ -27496,6 +27954,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27530,7 +27989,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -27546,6 +28005,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27575,7 +28035,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -27591,6 +28051,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27636,6 +28097,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27681,6 +28143,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27710,7 +28173,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -27726,6 +28189,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27771,6 +28235,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27816,6 +28281,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27861,6 +28327,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27890,7 +28357,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -27906,6 +28373,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27951,6 +28419,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -27980,7 +28449,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -27996,6 +28465,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28025,7 +28495,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -28041,6 +28511,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28086,6 +28557,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28115,7 +28587,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -28131,6 +28603,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28176,6 +28649,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28221,6 +28695,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28266,6 +28741,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28311,6 +28787,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28340,7 +28817,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -28356,6 +28833,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28401,6 +28879,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28446,6 +28925,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28493,6 +28973,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28540,6 +29021,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28587,6 +29069,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28634,6 +29117,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28681,6 +29165,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28728,6 +29213,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28775,6 +29261,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28822,6 +29309,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28869,6 +29357,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28916,6 +29405,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -28963,6 +29453,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29010,6 +29501,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29057,6 +29549,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29104,6 +29597,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29151,6 +29645,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29198,6 +29693,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29245,6 +29741,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29292,6 +29789,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29339,6 +29837,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29386,6 +29885,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29482,6 +29982,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29578,6 +30079,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29658,7 +30160,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -29674,6 +30176,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29770,6 +30273,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29866,6 +30370,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -29962,6 +30467,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30058,6 +30564,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30154,6 +30661,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30250,6 +30758,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30330,7 +30839,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -30346,6 +30855,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30442,6 +30952,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30538,6 +31049,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30618,7 +31130,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -30634,6 +31146,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30730,6 +31243,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30826,6 +31340,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -30922,6 +31437,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31018,6 +31534,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31114,6 +31631,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31210,6 +31728,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31306,6 +31825,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31376,6 +31896,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31446,6 +31967,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31516,6 +32038,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31586,6 +32109,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31656,6 +32180,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31726,6 +32251,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31796,6 +32322,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31866,6 +32393,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -31936,6 +32464,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32006,6 +32535,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32076,6 +32606,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32146,6 +32677,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32216,6 +32748,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32286,6 +32819,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32356,6 +32890,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32426,6 +32961,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32496,6 +33032,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32566,6 +33103,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32636,6 +33174,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32706,6 +33245,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32775,6 +33315,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32844,6 +33385,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32913,6 +33455,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -32982,6 +33525,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33051,6 +33595,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33120,6 +33665,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33173,7 +33719,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         1,
@@ -33189,6 +33735,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33258,6 +33805,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33327,6 +33875,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33396,6 +33945,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33465,6 +34015,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33534,6 +34085,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33603,6 +34155,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33672,6 +34225,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33741,6 +34295,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33810,6 +34365,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33879,6 +34435,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -33948,6 +34505,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34017,6 +34575,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34070,7 +34629,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -34086,6 +34645,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34118,7 +34678,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -34134,6 +34694,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34182,6 +34743,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34214,7 +34776,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -34230,6 +34792,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34278,6 +34841,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34326,6 +34890,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34374,6 +34939,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34422,6 +34988,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34470,6 +35037,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34502,7 +35070,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -34518,6 +35086,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34566,6 +35135,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34598,7 +35168,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -34614,6 +35184,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34662,6 +35233,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34710,6 +35282,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34758,6 +35331,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34806,6 +35380,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34838,7 +35413,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -34854,6 +35429,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34902,6 +35478,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34950,6 +35527,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -34982,7 +35560,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -34998,6 +35576,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35046,6 +35625,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35080,7 +35660,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -35096,6 +35676,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35130,7 +35711,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -35146,6 +35727,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35180,7 +35762,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -35196,6 +35778,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35230,7 +35813,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         0,
@@ -35246,6 +35829,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35280,7 +35864,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -35296,6 +35880,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35346,6 +35931,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35380,7 +35966,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         1,
@@ -35396,6 +35982,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35430,7 +36017,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -35446,6 +36033,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35496,6 +36084,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35546,6 +36135,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35596,6 +36186,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35630,7 +36221,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -35646,6 +36237,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35696,6 +36288,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "query",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35746,6 +36339,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35780,7 +36374,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -35796,6 +36390,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "query",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35830,7 +36425,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -35846,6 +36441,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35896,6 +36492,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35946,6 +36543,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "query",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -35996,6 +36594,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "query",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36046,6 +36645,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36091,6 +36691,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36136,6 +36737,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36181,6 +36783,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36210,7 +36813,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -36226,6 +36829,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36271,6 +36875,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36300,7 +36905,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         -1,
         0,
@@ -36316,6 +36921,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36361,6 +36967,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36406,6 +37013,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36451,6 +37059,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36496,6 +37105,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36541,6 +37151,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36570,7 +37181,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -36586,6 +37197,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36631,6 +37243,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36676,6 +37289,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36721,6 +37335,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36766,6 +37381,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "retry",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36811,6 +37427,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "retry",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36856,6 +37473,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "retry",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36885,7 +37503,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -36901,6 +37519,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "retry",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36946,6 +37565,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -36993,6 +37613,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37040,6 +37661,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37087,6 +37709,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37134,6 +37757,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37181,6 +37805,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37228,6 +37853,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37275,6 +37901,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37322,6 +37949,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37369,6 +37997,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37416,6 +38045,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37463,6 +38093,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37510,6 +38141,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37557,6 +38189,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37604,6 +38237,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37651,6 +38285,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37698,6 +38333,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "explore",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37745,6 +38381,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "explore",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37792,6 +38429,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "explore",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37839,6 +38477,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "explore",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37886,6 +38525,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -37982,6 +38622,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38078,6 +38719,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38158,7 +38800,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         0,
@@ -38174,6 +38816,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38270,6 +38913,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38366,6 +39010,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38462,6 +39107,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38558,6 +39204,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38654,6 +39301,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38734,7 +39382,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -38750,6 +39398,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38830,7 +39479,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -38846,6 +39495,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -38942,6 +39592,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39038,6 +39689,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39134,6 +39786,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "execute",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39214,7 +39867,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         -1,
@@ -39230,6 +39883,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39326,6 +39980,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39422,6 +40077,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "execute",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39518,6 +40174,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "execute",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39614,6 +40271,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39710,6 +40368,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "execute",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39806,6 +40465,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39876,6 +40536,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -39946,6 +40607,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40016,6 +40678,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40086,6 +40749,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40156,6 +40820,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40226,6 +40891,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40296,6 +40962,7 @@
       "confidence": 0.4,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40366,6 +41033,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40436,6 +41104,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40506,6 +41175,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40576,6 +41246,7 @@
       "confidence": 0.2,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40646,6 +41317,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40716,6 +41388,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40786,6 +41459,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "cautious",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40856,6 +41530,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40926,6 +41601,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "cautious",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -40996,6 +41672,7 @@
       "confidence": 0.8,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41066,6 +41743,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "cautious",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41136,6 +41814,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "cautious",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41206,6 +41885,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41275,6 +41955,7 @@
       "confidence": 0.6,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41328,7 +42009,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         1,
         -1,
@@ -41344,6 +42025,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41413,6 +42095,7 @@
       "confidence": 0.2,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41482,6 +42165,7 @@
       "confidence": 1.0,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41551,6 +42235,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41620,6 +42305,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41689,6 +42375,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41758,6 +42445,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41827,6 +42515,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41896,6 +42585,7 @@
       "confidence": 0.4,
       "decoded_action": "ESCALATE",
       "expected_action": "assertive",
+      "normalized_action": "assertive",
       "observation_trace": [
         {
           "encoded_input": [
@@ -41949,7 +42639,7 @@
           ]
         }
       ],
-      "outcome": "failure",
+      "outcome": "success",
       "raw_output": [
         0,
         1,
@@ -41965,6 +42655,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42034,6 +42725,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42103,6 +42795,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42172,6 +42865,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42241,6 +42935,7 @@
       "confidence": 0.6,
       "decoded_action": "PROCEED",
       "expected_action": "assertive",
+      "normalized_action": "execute",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42310,6 +43005,7 @@
       "confidence": 0.4,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42379,6 +43075,7 @@
       "confidence": 0.6,
       "decoded_action": "PAUSE",
       "expected_action": "assertive",
+      "normalized_action": "query",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42448,6 +43145,7 @@
       "confidence": 0.2,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [
@@ -42517,6 +43215,7 @@
       "confidence": 0.6,
       "decoded_action": "RETRY",
       "expected_action": "assertive",
+      "normalized_action": "retry",
       "observation_trace": [
         {
           "encoded_input": [

@@ -37,10 +37,11 @@ def test_benchmark_report_states_explicit_no_go_and_baseline_comparison() -> Non
     report = REPORT_PATH.read_text(encoding="utf-8")
 
     assert "NO-GO" in report
-    assert "niet productie-waardig" in report
-    assert "0.00%" in report
+    assert "nog niet productie-waardig" in report
     assert "15.71%" in report
     assert "28.57%" in report
+    assert "110" in report
+    assert "niet beter dan random" in report
     assert "significant slechter" in report
 
     comparison_headers = ["Agent", "Runs", "Successes", "Accuracy", "Gemiddelde confidence"]

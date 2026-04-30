@@ -313,7 +313,7 @@ def _write_agent_summary_csv(path: Path, summaries: list[AgentSummary]) -> None:
         "learning_curve_end_accuracy",
     ]
     with path.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for summary in summaries:
             writer.writerow(_format_dataclass_row(summary))
@@ -329,7 +329,7 @@ def _write_scenario_type_csv(path: Path, summaries: list[ScenarioTypeSummary]) -
         "confidence_mean",
     ]
     with path.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for summary in summaries:
             writer.writerow(_format_dataclass_row(summary))
@@ -348,7 +348,7 @@ def _write_statistical_tests_csv(path: Path, comparisons: list[StatisticalCompar
         "significant_at_0_05",
     ]
     with path.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for comparison in comparisons:
             writer.writerow(_format_dataclass_row(comparison))
