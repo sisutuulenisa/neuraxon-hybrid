@@ -13,6 +13,15 @@ from neuraxon_agent.benchmark import (
     BenchmarkResult,
     BenchmarkScenario,
 )
+from neuraxon_agent.benchmark_analysis import (
+    AgentSummary,
+    BenchmarkAnalysis,
+    BenchmarkAnalysisOutputPaths,
+    BenchmarkRun,
+    ScenarioTypeSummary,
+    StatisticalComparison,
+    analyze_benchmark_results,
+)
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
@@ -47,6 +56,13 @@ __all__ = [
     "BenchmarkReport",
     "BenchmarkResult",
     "BenchmarkScenario",
+    "AgentSummary",
+    "BenchmarkAnalysis",
+    "BenchmarkAnalysisOutputPaths",
+    "BenchmarkRun",
+    "ScenarioTypeSummary",
+    "StatisticalComparison",
+    "analyze_benchmark_results",
     "AlwaysExecuteAgent",
     "BaselineAgentState",
     "RandomAgent",

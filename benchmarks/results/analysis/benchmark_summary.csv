@@ -1,0 +1,4 @@
+agent_name,run_count,success_count,accuracy,confidence_mean,confidence_stddev,elapsed_seconds_mean,recovery_time_mean,learning_curve_start_accuracy,learning_curve_end_accuracy
+neuraxon_tissue,700,0,0.000000,0.645429,0.369424,0.001040,,0.000000,0.000000
+random,140,22,0.157143,0.166667,0.000000,0.000001,6.222222,0.000000,0.000000
+always_execute,140,40,0.285714,1.000000,0.000000,0.000001,60.000000,1.000000,0.000000
