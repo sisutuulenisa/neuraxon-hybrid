@@ -37,6 +37,16 @@ from neuraxon_agent.benchmark_diagnostics import (
     diagnose_tissue_action_mapping,
     enumerate_decoder_actions,
 )
+from neuraxon_agent.checkpoint_persistence_evaluation import (
+    DEFAULT_CHECKPOINT_PERSISTENCE_MARKDOWN_PATH,
+    DEFAULT_CHECKPOINT_PERSISTENCE_PATH,
+    CheckpointPersistenceEvaluationReport,
+    PersistenceModeMetrics,
+    RestartPersistenceEpisode,
+    RestartPersistenceResult,
+    generate_restart_persistence_episodes,
+    run_checkpoint_persistence_evaluation,
+)
 from neuraxon_agent.evolution import AgentEvolution, EvolutionConfig
 from neuraxon_agent.holdout_generalization import (
     DEFAULT_HOLDOUT_GENERALIZATION_PATH,
@@ -52,7 +62,13 @@ from neuraxon_agent.holdout_generalization import (
 from neuraxon_agent.memory import Memory
 from neuraxon_agent.modulation import Modulation
 from neuraxon_agent.perception import PerceptionEncoder
-from neuraxon_agent.persistence import PersistentAgentTissue, load_state, save_state
+from neuraxon_agent.persistence import (
+    CHECKPOINT_SCHEMA_VERSION,
+    PersistenceLoadError,
+    PersistentAgentTissue,
+    load_state,
+    save_state,
+)
 from neuraxon_agent.reward_plasticity_benchmark import (
     DEFAULT_REWARD_PLASTICITY_MARKDOWN_PATH,
     DEFAULT_REWARD_PLASTICITY_PATH,
@@ -102,8 +118,18 @@ __all__ = [
     "run_holdout_generalization_benchmark",
     "StreamingLoop",
     "StreamEvent",
+    "CHECKPOINT_SCHEMA_VERSION",
+    "PersistenceLoadError",
     "save_state",
     "load_state",
+    "DEFAULT_CHECKPOINT_PERSISTENCE_MARKDOWN_PATH",
+    "DEFAULT_CHECKPOINT_PERSISTENCE_PATH",
+    "CheckpointPersistenceEvaluationReport",
+    "PersistenceModeMetrics",
+    "RestartPersistenceEpisode",
+    "RestartPersistenceResult",
+    "generate_restart_persistence_episodes",
+    "run_checkpoint_persistence_evaluation",
     "BenchmarkHarness",
     "BenchmarkReport",
     "BenchmarkResult",

@@ -6,10 +6,19 @@ import os
 from pathlib import Path
 
 from neuraxon_agent.action import AgentAction
-from neuraxon_agent.tissue import AgentTissue
+from neuraxon_agent.tissue import CHECKPOINT_SCHEMA_VERSION, AgentTissue, PersistenceLoadError
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, load_network
 
 DEFAULT_AUTO_SAVE_TRIGGERS = frozenset({"modulate", "store_experience", "shutdown"})
+
+__all__ = [
+    "CHECKPOINT_SCHEMA_VERSION",
+    "DEFAULT_AUTO_SAVE_TRIGGERS",
+    "PersistentAgentTissue",
+    "PersistenceLoadError",
+    "load_state",
+    "save_state",
+]
 
 
 def save_state(tissue: AgentTissue, path: str) -> None:

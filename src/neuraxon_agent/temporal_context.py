@@ -29,6 +29,28 @@ class TemporalContextBuffer:
         if len(self._observations) > self.max_observations:
             self._observations = self._observations[-self.max_observations :]
 
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serializable temporal context snapshot."""
+        return {
+            "max_observations": self.max_observations,
+            "confidence": self.confidence,
+            "observations": [dict(observation) for observation in self._observations],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TemporalContextBuffer:
+        """Restore a temporal context snapshot from checkpoint metadata."""
+        buffer = cls(
+            max_observations=int(data.get("max_observations", 8)),
+            confidence=float(data.get("confidence", 0.9)),
+        )
+        raw_observations = data.get("observations", [])
+        if isinstance(raw_observations, list):
+            for observation in raw_observations[-buffer.max_observations :]:
+                if isinstance(observation, dict):
+                    buffer.observe(observation)
+        return buffer
+
     def decide(self, observation: dict[str, Any]) -> AgentAction | None:
         """Return a temporal action when the current observation is a final probe."""
         if not _is_temporal_probe(observation):

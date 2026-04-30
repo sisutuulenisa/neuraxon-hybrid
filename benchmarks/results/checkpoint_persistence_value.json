@@ -1,0 +1,168 @@
+{
+  "episode_count": 5,
+  "mode_metrics": {
+    "cold_start": {
+      "failure_modes": {},
+      "mode": "cold_start",
+      "run_count": 5,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    "corrupt_checkpoint": {
+      "failure_modes": {
+        "corrupt_checkpoint": 1
+      },
+      "mode": "corrupt_checkpoint",
+      "run_count": 1,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    "incompatible_checkpoint": {
+      "failure_modes": {
+        "incompatible_checkpoint": 1
+      },
+      "mode": "incompatible_checkpoint",
+      "run_count": 1,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    "missing_checkpoint": {
+      "failure_modes": {
+        "missing_checkpoint": 1
+      },
+      "mode": "missing_checkpoint",
+      "run_count": 1,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    "persisted_checkpoint": {
+      "failure_modes": {},
+      "mode": "persisted_checkpoint",
+      "run_count": 5,
+      "success_count": 5,
+      "success_rate": 1.0
+    }
+  },
+  "persisted_beats_cold_start": true,
+  "results": [
+    {
+      "action": "execute",
+      "action_source": "temporal_context_bridge",
+      "episode_name": "complete_parameters_then_final_probe",
+      "expected_action": "execute",
+      "failure_mode": null,
+      "mode": "persisted_checkpoint",
+      "outcome": "success"
+    },
+    {
+      "action": "query",
+      "action_source": "raw_network",
+      "episode_name": "complete_parameters_then_final_probe",
+      "expected_action": "execute",
+      "failure_mode": null,
+      "mode": "cold_start",
+      "outcome": "failure"
+    },
+    {
+      "action": "query",
+      "action_source": "temporal_context_bridge",
+      "episode_name": "partial_parameters_then_final_probe",
+      "expected_action": "query",
+      "failure_mode": null,
+      "mode": "persisted_checkpoint",
+      "outcome": "success"
+    },
+    {
+      "action": "retry",
+      "action_source": "raw_network",
+      "episode_name": "partial_parameters_then_final_probe",
+      "expected_action": "query",
+      "failure_mode": null,
+      "mode": "cold_start",
+      "outcome": "failure"
+    },
+    {
+      "action": "retry",
+      "action_source": "temporal_context_bridge",
+      "episode_name": "transient_tool_failure_then_final_probe",
+      "expected_action": "retry",
+      "failure_mode": null,
+      "mode": "persisted_checkpoint",
+      "outcome": "success"
+    },
+    {
+      "action": "execute",
+      "action_source": "raw_network",
+      "episode_name": "transient_tool_failure_then_final_probe",
+      "expected_action": "retry",
+      "failure_mode": null,
+      "mode": "cold_start",
+      "outcome": "failure"
+    },
+    {
+      "action": "explore",
+      "action_source": "temporal_context_bridge",
+      "episode_name": "ambiguous_choice_then_final_probe",
+      "expected_action": "explore",
+      "failure_mode": null,
+      "mode": "persisted_checkpoint",
+      "outcome": "success"
+    },
+    {
+      "action": "query",
+      "action_source": "raw_network",
+      "episode_name": "ambiguous_choice_then_final_probe",
+      "expected_action": "explore",
+      "failure_mode": null,
+      "mode": "cold_start",
+      "outcome": "failure"
+    },
+    {
+      "action": "cautious",
+      "action_source": "temporal_context_bridge",
+      "episode_name": "nontransient_tool_failure_then_final_probe",
+      "expected_action": "cautious",
+      "failure_mode": null,
+      "mode": "persisted_checkpoint",
+      "outcome": "success"
+    },
+    {
+      "action": "query",
+      "action_source": "raw_network",
+      "episode_name": "nontransient_tool_failure_then_final_probe",
+      "expected_action": "cautious",
+      "failure_mode": null,
+      "mode": "cold_start",
+      "outcome": "failure"
+    },
+    {
+      "action": null,
+      "action_source": null,
+      "episode_name": "missing_checkpoint",
+      "expected_action": "load_checkpoint",
+      "failure_mode": "missing_checkpoint",
+      "mode": "missing_checkpoint",
+      "outcome": "failure"
+    },
+    {
+      "action": null,
+      "action_source": null,
+      "episode_name": "corrupt_checkpoint",
+      "expected_action": "load_checkpoint",
+      "failure_mode": "corrupt_checkpoint",
+      "mode": "corrupt_checkpoint",
+      "outcome": "failure"
+    },
+    {
+      "action": null,
+      "action_source": null,
+      "episode_name": "incompatible_checkpoint",
+      "expected_action": "load_checkpoint",
+      "failure_mode": "incompatible_checkpoint",
+      "mode": "incompatible_checkpoint",
+      "outcome": "failure"
+    }
+  ],
+  "schema_version": 1,
+  "verdict": "Persisted checkpoint mode beat cold-start on seeded restart scenarios; the measured decision value comes from checkpointed runtime temporal context, not from a standalone raw-network generalization claim."
+}

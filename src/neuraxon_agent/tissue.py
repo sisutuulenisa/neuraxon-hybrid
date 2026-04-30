@@ -15,6 +15,12 @@ from neuraxon_agent.semantic_policy import SemanticTissuePolicy
 from neuraxon_agent.temporal_context import TemporalContextBuffer
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork, load_network
 
+CHECKPOINT_SCHEMA_VERSION = 1
+
+
+class PersistenceLoadError(ValueError):
+    """Raised when a tissue checkpoint cannot be safely restored."""
+
 
 @dataclass
 class TissueState:
@@ -119,10 +125,18 @@ class AgentTissue:
     def save(self, path: str) -> None:
         """Serialize tissue and memory state to JSON."""
         data = self.network.to_dict()
+        data["_checkpoint_schema_version"] = CHECKPOINT_SCHEMA_VERSION
         data["_params"] = {
             "num_input_neurons": self.params.num_input_neurons,
             "num_hidden_neurons": self.params.num_hidden_neurons,
             "num_output_neurons": self.params.num_output_neurons,
+        }
+        data["_runtime_context"] = {
+            "last_observation": self._last_observation,
+            "temporal_context": self._temporal_context.to_dict(),
+            "semantic_policy_enabled": self.semantic_policy_enabled,
+            "temporal_context_enabled": self.temporal_context_enabled,
+            "last_action_source": self.last_action_source,
         }
         # Save memory alongside network
         memory_path = str(Path(path).with_suffix("")) + ".memory.json"
@@ -133,7 +147,16 @@ class AgentTissue:
     @classmethod
     def load(cls, path: str) -> AgentTissue:
         """Deserialize tissue and memory state from JSON."""
-        data = json.loads(Path(path).read_text())
+        try:
+            data = json.loads(Path(path).read_text())
+        except json.JSONDecodeError as exc:
+            raise PersistenceLoadError(f"Corrupt checkpoint JSON: {path}") from exc
+        schema_version = data.get("_checkpoint_schema_version", 0)
+        if schema_version > CHECKPOINT_SCHEMA_VERSION:
+            raise PersistenceLoadError(
+                "Unsupported checkpoint schema version "
+                f"{schema_version}; max supported is {CHECKPOINT_SCHEMA_VERSION}"
+            )
         params_data = data.pop("_params", {})
         params = NetworkParameters(
             num_input_neurons=params_data.get("num_input_neurons", 5),
@@ -141,11 +164,31 @@ class AgentTissue:
             num_output_neurons=params_data.get("num_output_neurons", 5),
         )
         instance = cls(params)
-        instance.network = load_network(path)
+        try:
+            instance.network = load_network(path)
+        except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            raise PersistenceLoadError(f"Invalid checkpoint payload: {path}") from exc
         # Restore memory if saved alongside
         memory_path = data.pop("_memory_path", None)
         if memory_path and Path(memory_path).exists():
             instance.memory = TissueMemory.load(memory_path)
+        runtime_context = data.pop("_runtime_context", {})
+        if isinstance(runtime_context, dict):
+            last_observation = runtime_context.get("last_observation")
+            if isinstance(last_observation, dict):
+                instance._last_observation = last_observation
+            temporal_context = runtime_context.get("temporal_context")
+            if isinstance(temporal_context, dict):
+                instance._temporal_context = TemporalContextBuffer.from_dict(temporal_context)
+            instance.semantic_policy_enabled = bool(
+                runtime_context.get("semantic_policy_enabled", instance.semantic_policy_enabled)
+            )
+            instance.temporal_context_enabled = bool(
+                runtime_context.get("temporal_context_enabled", instance.temporal_context_enabled)
+            )
+            last_action_source = runtime_context.get("last_action_source")
+            if isinstance(last_action_source, str):
+                instance.last_action_source = last_action_source
         return instance
 
     @property
