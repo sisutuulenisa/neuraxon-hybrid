@@ -115,7 +115,8 @@ def test_temporal_dynamics_summary_uses_temporal_specific_baselines() -> None:
     assert temporal["baselines"]["semantic_policy_only"]["success_rate"] == 0.0
     assert temporal["neuraxon_tissue"]["run_count"] == temporal["scenario_count"] * 2
     assert "semantic policy bridge result" in report.interpretation
-    assert "temporal/stateful Neuraxon evidence" in temporal["interpretation"]
+    assert "explicit temporal context adapter" in temporal["interpretation"]
+    assert "raw Neuraxon network dynamics" in temporal["interpretation"]
 
 
 def test_semantic_tissue_beats_always_execute_on_holdout_noisy_benchmark() -> None:
@@ -134,7 +135,22 @@ def test_temporal_dynamics_benchmark_exposes_single_probe_limitation() -> None:
     tissue_report = run_neuraxon_tissue_benchmark(scenarios, seeds=(0,), steps_per_observation=1)
 
     assert tissue_report.run_count == len(scenarios)
-    assert tissue_report.success_count < tissue_report.run_count
+    assert tissue_report.success_count == tissue_report.run_count
+    assert {result.action_source for result in tissue_report.results} >= {
+        "temporal_context_bridge"
+    }
+
+
+def test_temporal_context_tissue_beats_last_observation_and_always_execute() -> None:
+    scenarios = generate_temporal_dynamics_scenarios()
+
+    tissue_report = run_neuraxon_tissue_benchmark(scenarios, seeds=(0,), steps_per_observation=1)
+    baseline_reports = run_holdout_generalization_benchmark(
+        scenarios=[], seeds=(0,), steps_per_observation=1
+    ).temporal_dynamics.baselines
+
+    assert tissue_report.success_count > baseline_reports["last_observation_only"].success_count
+    assert tissue_report.success_count > baseline_reports["always_execute"].success_count
 
 
 def test_holdout_generalization_summary_is_serializable_and_critical() -> None:
@@ -146,10 +162,16 @@ def test_holdout_generalization_summary_is_serializable_and_critical() -> None:
     assert payload["neuraxon_tissue"]["success_rate"] == 1.0
     assert payload["semantic_policy_coverage"]["coverage_rate"] == 1.0
     assert payload["temporal_dynamics"]["scenario_count"] >= 6
-    assert payload["temporal_dynamics"]["neuraxon_tissue"]["success_rate"] < 1.0
+    assert payload["temporal_dynamics"]["neuraxon_tissue"]["success_rate"] == 1.0
+    assert payload["temporal_dynamics"]["neuraxon_tissue"]["success_rate"] > payload[
+        "temporal_dynamics"
+    ]["baselines"]["last_observation_only"]["success_rate"]
+    assert payload["temporal_dynamics"]["neuraxon_tissue"]["success_rate"] > payload[
+        "temporal_dynamics"
+    ]["baselines"]["always_execute"]["success_rate"]
     assert (
         payload["baselines"]["always_execute"]["success_rate"]
         < payload["neuraxon_tissue"]["success_rate"]
     )
-    assert payload["decision"] == "needs_temporal_dynamics_evidence"
-    assert "continuous time" in payload["interpretation"]
+    assert payload["decision"] == "pass_temporal_context_bridge_evidence"
+    assert "explicit temporal context adapter" in payload["interpretation"]

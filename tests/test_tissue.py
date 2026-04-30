@@ -5,6 +5,7 @@ import json
 import tempfile
 from pathlib import Path
 
+from neuraxon_agent.action_contract import normalize_benchmark_action
 from neuraxon_agent.tissue import AgentTissue, TissueState
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters
 
@@ -47,6 +48,36 @@ def test_tissue_can_disable_semantic_policy_and_use_raw_decoder_path() -> None:
 
     assert action == tissue.decoder.last()
     assert tissue.last_action_source == "raw_network"
+
+
+def test_tissue_temporal_context_disambiguates_identical_final_probe() -> None:
+    final_probe = {
+        "intent": "temporal_decision_probe",
+        "probe": "choose_action_from_prior_dynamics",
+    }
+    execute_tissue = AgentTissue()
+    query_tissue = AgentTissue()
+
+    for observation in (
+        {"signal": "task_context", "stability": 0.8, "novelty": 0.1},
+        {"signal": "parameters_complete", "missing_count": 0, "risk": "low"},
+        final_probe,
+    ):
+        execute_tissue.observe(observation)
+        execute_action = execute_tissue.think(steps=1)
+
+    for observation in (
+        {"signal": "task_context", "stability": 0.4, "novelty": 0.3},
+        {"signal": "parameters_partial", "missing_count": 2, "risk": "low"},
+        final_probe,
+    ):
+        query_tissue.observe(observation)
+        query_action = query_tissue.think(steps=1)
+
+    assert normalize_benchmark_action(execute_action.actie_type) == "execute"
+    assert normalize_benchmark_action(query_action.actie_type) == "query"
+    assert execute_tissue.last_action_source == "temporal_context_bridge"
+    assert query_tissue.last_action_source == "temporal_context_bridge"
 
 
 def test_tissue_modulate_success() -> None:

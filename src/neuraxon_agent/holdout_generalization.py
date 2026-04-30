@@ -474,9 +474,10 @@ def _summarize_temporal_dynamics(
         },
         interpretation=(
             "Temporal probe inspired by NIA Vol. 1/2/3/5/7: final observations "
-            "hide explicit action cues, so success must come from temporal/stateful "
-            "Neuraxon evidence such as continuous time, state carry-over, trinary "
-            "buffering and modulation-like dynamics."
+            "hide explicit action cues, so success must come from carried prior "
+            "state. Current neuraxon_tissue success is produced by the explicit "
+            "temporal context adapter in AgentTissue; raw Neuraxon network dynamics "
+            "remain separable through the raw_network policy-ablation mode."
         ),
     )
 
@@ -499,7 +500,17 @@ def _summarize_generalization(
         for name, report in baseline_reports.items()
     }
     always_execute_score = baseline_scores["always_execute"]
-    if semantic_policy_coverage.coverage_rate >= 0.95 or tissue_score.success_rate >= 0.999:
+    temporal_tissue_score = temporal_dynamics.neuraxon_tissue
+    temporal_baselines = temporal_dynamics.baselines
+    temporal_passes = (
+        temporal_tissue_score.success_rate
+        > temporal_baselines["last_observation_only"].success_rate
+        and temporal_tissue_score.success_rate
+        > temporal_baselines["always_execute"].success_rate
+    )
+    if temporal_passes:
+        decision = "pass_temporal_context_bridge_evidence"
+    elif semantic_policy_coverage.coverage_rate >= 0.95 or tissue_score.success_rate >= 0.999:
         decision = "needs_temporal_dynamics_evidence"
     else:
         decision = (
@@ -516,10 +527,10 @@ def _summarize_generalization(
         temporal_dynamics=temporal_dynamics,
         decision=decision,
         interpretation=(
-            "The 100% holdout/noisy score is a semantic policy bridge result, not "
-            "evidence of the continuous time, stateful, neuromodulated and "
-            "edge-of-chaos dynamics described in Qubic's NIA articles. Treat it "
-            "as an oracle-coverage warning and require temporal dynamics evidence "
-            "before claiming Neuraxon generalization."
+            "The holdout/noisy score is a semantic policy bridge result. The "
+            "temporal benchmark now passes through an explicit temporal context "
+            "adapter that summarizes prior observations before the identical final "
+            "probe; this is useful state carry-over evidence, but raw continuous-time "
+            "Neuraxon dynamics are still separated by policy-ablation results."
         ),
     )
