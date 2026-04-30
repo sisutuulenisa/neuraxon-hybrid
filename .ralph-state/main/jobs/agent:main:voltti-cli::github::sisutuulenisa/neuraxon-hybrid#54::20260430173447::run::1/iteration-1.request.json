@@ -1,0 +1,42 @@
+{
+  "jobId": "agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#54::20260430173447::run::1",
+  "iteration": 1,
+  "ownerProfile": "main",
+  "ownerAgentId": "main",
+  "sourceType": "github_issue",
+  "sourceRef": {
+    "owner": "sisutuulenisa",
+    "repo": "neuraxon-hybrid",
+    "issueNumber": 54
+  },
+  "executionMode": "implement",
+  "repoContext": {
+    "repoPath": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443",
+    "worktreePath": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443"
+  },
+  "identityContext": {
+    "basecampIdentityRequired": false,
+    "githubIdentityRequired": true
+  },
+  "artifactsContext": {
+    "progressFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443/progress.txt",
+    "iterationLogFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443/.ralph-state/main/jobs/agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#54::20260430173447::run::1/iteration-1.log",
+    "resultFile": "/home/seppe/Projects/neuraxon-hybrid/.worktrees/sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443/.ralph-state/main/jobs/agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#54::20260430173447::run::1/iteration-1.result.json"
+  },
+  "priorContext": {
+    "relevantLearnings": [
+      "GitHub related commit 49f4b0787701: test: expand temporal dynamics benchmark (#60) Generate a larger temporal benchmark with counterfactual and perturbation variants, temporal-specific baselines, refreshed artifacts, and report coverage. Closes #51 (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/49f4b0787701be608b1cc6a7c311da11497b28b5)",
+      "GitHub related commit 6a4917df8244: Add policy-ablation benchmark for raw tissue dynamics (#57) * feat: add tissue policy ablation benchmark * chore(voltti-task): apply run output for issue #52 Run summary: runStatus=success summary=Implemented issue #52 policy-ablation benchmark support, verified tests and focused lint/type checks, committed and opened PR #57. (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/6a4917df824408f728cf1b0323705357e6c6753d)",
+      "GitHub related commit 8b7074bb6bfb: Release v0.1.0: Neuraxon v2.0 Intelligence Tissue (#26) * Phase 1: Repo opschonen en nieuwe projectstructuur opzetten (#2) - Verwijder oude evaluatie-content: benchmarks/, dashboard/, data/, docs/, logs/, plugins/, sidecar/, scripts/ (behalve smoke_v1_v2.py en run_upstream_tests_no_pytest.py) - Wis oude toplevel documentatie en CI workflow - Maak src/neuraxon_agent/ package met __init__, tissue, perception, action, modulation, memory, evolution - Maak tests/ en examples/ directories - Voeg pyproject.toml toe met hatchling build, ruff, mypy, pytest - Schrijf nieuwe README.md met projectdoel en installatie - Update .gitignore voor Python project - Voeg .github/workflows/ci.yml toe met lint + imports check Verificatie: ruff, mypy en voorbeeldscript slagen lokaal. Closes #2 * ci: add test workflow to debug runner issues * feat(vendor): integrate Neuraxon v2.0 as git submodule with fallback (#17) - Add DavidVivancos/Neuraxon as git submodule under upstream/Neuraxon - Remove upstream/Neuraxon from .gitignore so submodule is tracked - Create src/neuraxon_agent/vendor/ shim package - __init__.py tries submodule first, falls back to bundled copy - Bundled neuraxon2.py vendor copy for offline/air-gapped use - Update CI to verify vendor imports and smoke test upstream v1/v2 - Document update process in README * test: add smoke test for Neuraxon v2.0 vendor integration (#4) * feat(perception): implement PerceptionEncoder for agent observations -> trinary input encoding (#18) - Add PerceptionEncoder class with categorical, numerical, and sequential encoding - Map tool results, error types, session context, environment status, and previous outcomes to {-1, 0, +1} - Support configurable num_input_neurons and thresholds - Add encode_sequential for trend-aware encoding - Export PerceptionEncoder from __init__ - Add comprehensive unit tests (51 tests, all passing) - Verify encoder output integrates with NeuraxonNetwork.set_input_states() Closes #5 * feat(action): implement ActionDecoder for trinary output -> agent actions (#19) - Add AgentAction dataclass with actie_type, confidence, raw_output - Implement ActionDecoder with basis (1 neuron) and multi-neuron modes - Add confidence scoring: 1.0 for exact patterns, scaled fallback otherwise - Ensure determinism and full coverage of all trinary combinations - Add comprehensive unit tests (32 tests, all passing) - Retain legacy Action class for backward compatibility Closes #6 * feat(tissue): implement AgentTissue wrapper for NeuraxonNetwork runtime (#7) (#20) - AgentTissue with observe(), think(), modulate(), save(), load() - Integrates PerceptionEncoder and ActionDecoder - TissueState dataclass for observable state - Tests for init, observe, think, modulate, save/load, state * feat(modulation): Phase 3 neuromodulator feedback loop (#21) - Implement ModulationFeedback class with configurable outcome-to-modulator mapping - Add adaptive mapping with exponential moving average convergence - Couple ModulationFeedback to AgentTissue.modulate() - Fix get_all_states() dict flattening bug in TissueState - Fix test_tissue_think to match actual ActionDecoder action types - Add comprehensive tests for feedback loop and adaptive convergence - Document modulation effects in README Acceptance criteria: - After modulate('success') dopamine level is increased - After modulate('failure') serotonin level is decreased - Adaptive mapping converges to stable values - Network behavior changes measurably after repeated feedback Closes #8 * feat(memory): implement TissueMemory with pattern storage/recall (#22) - Add TissueMemory class using NeuraxonApplication pattern storage/recall - store_experience(obs, action, outcome) encodes obs as trinary pattern - recall_similar(obs) finds closest patterns by Hamming distance - Forgetting: strength decay + pruning below threshold/capacity - Couple TissueMemory to AgentTissue with store_experience/recall_similar - AgentTissue save/load now persists memory state alongside network - Keep legacy Memory class for backward compatibility - Add comprehensive tests (18 cases, all passing) Closes #9 * feat(evolution): implement AgentEvolution with Aigarth hybrid training (#10) (#23) - AgentEvolution wrapping NeuraxonAigarthHybrid - Configurable task scenarios for tool-selection training - Fitness evaluation with reproduceerbaarheid (seed) - save/load persistence - 6 tests * feat(cli): implement Hermes-compatible JSON CLI interface (#11) (#24) - neuraxon-agent CLI with think/modulate/evolve/save/load commands - JSON in/out handlers - Base64 state serialisation - argparse subcommands - 5 CLI tests * feat: streaming, persistence, end-to-end tests, en documentatie (#12-15) (#25) - StreamingLoop voor real-time agent simulatie - Persistence helpers voor state save/load - End-to-end smoke tests (observe-think-modulate-memory-evolution) - README update met architectuur en voorbeelden - Closes #12, #13, #14, #15 (https://github.com/sisutuulenisa/neuraxon-hybrid/commit/8b7074bb6bfbfad49e277bc15c45ca4cbd69a19a)"
+    ]
+  },
+  "executionGoal": "Work on GitHub issue #54 in sisutuulenisa/neuraxon-hybrid (live) If scope appears broad or ambiguous, decompose it into bounded phases and keep implementing from highest confidence to lowest confidence. Before coding, fetch the live GitHub issue body/comments and treat acceptance criteria/checklists as mandatory. Only return ambiguous_requirement after documenting why no safe minimal phase can be executed.",
+  "successCriteria": [
+    "Live GitHub issue body and comments reviewed before implementation.",
+    "Acceptance criteria/checklist items translated into an explicit implementation checklist.",
+    "Implementation and verification evidence address all checklist items."
+  ],
+  "stopConditions": [
+    "If decomposition still yields no safe bounded phase, stop with a concrete blocker explanation and next-step plan."
+  ]
+}

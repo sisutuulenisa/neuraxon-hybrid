@@ -1,0 +1,58 @@
+{
+  "jobId": "agent:main:voltti-cli::github::sisutuulenisa/neuraxon-hybrid#54::20260430173447::run::1",
+  "iteration": 1,
+  "status": "success",
+  "retryable": false,
+  "summary": "Implemented issue #54 benchmark dynamics instrumentation, verified locally and in CI, opened and merged PR #62.",
+  "details": {
+    "issueReview": {
+      "source": "GitHub issue #54 sisutuulenisa/neuraxon-hybrid",
+      "title": "Instrument criticality and neuromodulator dynamics in benchmarks",
+      "commentsReviewed": true,
+      "commentsCount": 0
+    },
+    "implementationChecklist": [
+      "Capture per-step activity, energy, trinary state distribution and neuromodulator levels during benchmark runs.",
+      "Add criticality proxies: activity variance, transition entropy, neutral-state occupancy and branching/activity propagation ratio.",
+      "Track whether modulation changes later decisions via a deterministic modulation-effect probe.",
+      "Export plots and CSV artifacts under benchmarks/results/analysis/.",
+      "Avoid modifying vendored upstream Neuraxon code."
+    ],
+    "implemented": [
+      "Added deterministic dynamics sampling and criticality metrics to tissue benchmark results.",
+      "Added modulation-effect tracking for action changes and confidence shifts.",
+      "Added analysis exports: dynamics_metrics.csv, criticality_summary.csv and activity_energy_trends.png.",
+      "Updated benchmark report output and tests to cover the new dynamics artifacts and regime classification.",
+      "No vendored upstream Neuraxon code was modified."
+    ],
+    "verification": [
+      {
+        "command": "uv run --extra dev pytest",
+        "result": "188 passed, 3 existing smoke-test return-value warnings"
+      },
+      {
+        "command": "uv run --extra dev pytest tests/test_tissue_benchmark.py tests/test_benchmark_report.py tests/test_benchmark_analysis.py",
+        "result": "15 passed"
+      },
+      {
+        "command": "uv run --extra dev ruff check src/neuraxon_agent/tissue_benchmark.py src/neuraxon_agent/benchmark_analysis.py tests/test_tissue_benchmark.py tests/test_benchmark_report.py tests/test_benchmark_analysis.py",
+        "result": "All checks passed"
+      },
+      {
+        "command": "uv run --extra dev mypy src/neuraxon_agent/benchmark_analysis.py",
+        "result": "Success: no issues found in 1 source file"
+      },
+      {
+        "command": "gh pr checks 62 --repo sisutuulenisa/neuraxon-hybrid --watch --interval 10",
+        "result": "All PR checks passed"
+      }
+    ],
+    "git": {
+      "commit": "1e1e1f0",
+      "branch": "feature/voltti-task-sisutuulenisa-neuraxon-hybrid-issue-54-20260430193443",
+      "pullRequest": "https://github.com/sisutuulenisa/neuraxon-hybrid/pull/62",
+      "pullRequestState": "MERGED",
+      "mergedAt": "2026-04-30T17:43:41Z"
+    }
+  }
+}
