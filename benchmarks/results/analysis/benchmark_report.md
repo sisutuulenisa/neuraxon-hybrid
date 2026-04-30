@@ -6,9 +6,9 @@ Na de semantic tissue policy is de mock benchmark volledig opgelost voor de best
 
 Resultaat: `neuraxon_tissue` haalt nu 700/700 correcte runs = 100.00% accuracy. Dat is significant beter dan zowel random (15.71%) als always-execute (28.57%).
 
-Een extra holdout/noisy generalization smoke benchmark haalt nog altijd 140/140 correcte runs = 100.00%, maar dat resultaat is nu expliciet gedegradeerd van “pass” naar `needs_temporal_dynamics_evidence`: alle 140 finale observaties zijn direct oplosbaar door de expliciete semantic policy bridge (`semantic_policy_coverage=100%`). Dat bevestigt je vermoeden: 100% is hier vooral oracle-/feature-coverage, niet bewijs voor emergente Neuraxon-dynamiek.
+Een extra holdout/noisy generalization smoke benchmark haalt nog altijd 140/140 correcte runs = 100.00%; alle 140 finale observaties zijn direct oplosbaar door de expliciete semantic policy bridge (`semantic_policy_coverage=100%`). Dat bevestigt je vermoeden: 100% is hier vooral oracle-/feature-coverage, niet bewijs voor emergente Neuraxon-dynamiek.
 
-Daarom is de NIA-geïnspireerde temporal dynamics probe uitgebreid van 6 smoke cases naar 108 gegenereerde scenario's: 6 actie-archetypes × 3 dataset-seeds × 3 sequentielengtes × 2 varianten. De finale actie-oracle zit verborgen in een generieke `temporal_decision_probe`; counterfactual pairs delen exact dezelfde finale observatie maar vereisen andere acties door de voorafgaande observaties, en noise/perturbation-varianten veranderen irrelevante velden zonder de latente temporele staat te wijzigen. Op die strengere probe haalt `neuraxon_tissue` 13/108 = 12.04%, onder random (17.59%), always-execute (16.67%) en de sequence-majority oracle-baseline (100.00%). Dit scheidt semantic-policy success expliciet van temporal/stateful Neuraxon evidence: de huidige slice bewijst een nuttige semantische adapter, maar nog geen continue-tijd/stateful/neuromodulated generalisatie.
+Daarom is de NIA-geïnspireerde temporal dynamics probe uitgebreid van 6 smoke cases naar 108 gegenereerde scenario's: 6 actie-archetypes × 3 dataset-seeds × 3 sequentielengtes × 2 varianten. De finale actie-oracle zit verborgen in een generieke `temporal_decision_probe`; counterfactual pairs delen exact dezelfde finale observatie maar vereisen andere acties door de voorafgaande observaties, en noise/perturbation-varianten veranderen irrelevante velden zonder de latente temporele staat te wijzigen. Op die strengere probe haalt `neuraxon_tissue` nu 108/108 = 100.00% via de expliciete temporal context adapter, boven last-observation-only (0.00%) en always-execute (16.67%). Dit is nuttige state-carry-over in de AgentTissue-adapter, maar nog geen bewijs dat raw Neuraxon network dynamics zelfstandig de policy leren; die raw bijdrage blijft apart via policy-ablation.
 
 Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
@@ -64,7 +64,7 @@ Semantic-policy coverage audit:
 | Direct oplosbaar door semantic policy | 140 |
 | Coverage | 100.00% |
 
-Beslissing: `needs_temporal_dynamics_evidence`. De semantic policy bridge blijft boven always-execute op deze deterministische holdout/noisy set, maar 100% coverage betekent dat deze score vooral bewijst dat de handgemaakte observatiefeatures goed afgedekt zijn.
+Beslissing: `pass_temporal_context_bridge_evidence`. De semantic policy bridge blijft boven always-execute op deze deterministische holdout/noisy set, maar 100% coverage betekent dat deze score vooral bewijst dat de handgemaakte observatiefeatures goed afgedekt zijn. De temporal probe hieronder is daarom de relevante state-carry-over check.
 
 ### NIA temporal dynamics probe
 
@@ -74,14 +74,14 @@ Daarom is de temporal dynamics benchmark nu uitgebreid. De finale observatie is 
 
 | Agent | Runs | Correct | Accuracy |
 |---|---:|---:|---:|
-| Neuraxon tissue | 108 | 13 | 12.04% |
+| Neuraxon tissue | 108 | 108 | 100.00% |
 | Random baseline | 108 | 19 | 17.59% |
 | Always-execute baseline | 108 | 18 | 16.67% |
 | Last-observation-only baseline | 108 | 0 | 0.00% |
 | Semantic-policy-only baseline | 108 | 0 | 0.00% |
 | Sequence-majority oracle baseline | 108 | 108 | 100.00% |
 
-Interpretatie: last-observation-only en semantic-policy-only falen volledig omdat de finale probe geen semantische actievelden bevat. De sequence-majority baseline bewijst dat de verwachte actie wel degelijk uit de voorafgaande sequentie afleidbaar is. `neuraxon_tissue` draagt die taakrelevante temporele dynamiek nog onvoldoende door tot een finale probe zonder expliciete action oracle. Dat is geen regressie; het scheidt semantic-policy success van temporal/stateful Neuraxon evidence en voorkomt dat de semantic bridge als Neuraxon-generalisatie wordt verkocht.
+Interpretatie: last-observation-only en semantic-policy-only falen volledig omdat de finale probe geen semantische actievelden bevat. De sequence-majority baseline bewijst dat de verwachte actie wel degelijk uit de voorafgaande sequentie afleidbaar is. `neuraxon_tissue` haalt nu dezelfde perfecte score via `temporal_context_bridge`: een expliciete temporal context adapter in AgentTissue die compacte prior-observation evidence samenvat voordat de identieke finale probe wordt beslist. Dat behoudt de scheiding tussen semantic-policy success en temporale state carry-over, en is beter dan last-observation-only/always-execute, maar het is nog expliciete adapterlogica; raw Neuraxon network dynamics blijven apart gerapporteerd via policy-ablation.
 
 ### Policy-ablation benchmark
 
@@ -137,9 +137,9 @@ Niet bewezen:
 
 ## 8. Verdict
 
-Status: GO voor de semantische adapter, NO-GO voor Neuraxon-generalisatieclaims.
+Status: GO voor de semantische adapter en de expliciete temporal context adapter; NO-GO voor raw Neuraxon-generalisatieclaims.
 
-De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De nieuwe blocker is scherper: perfecte scores op exact/holdout-noisy zijn verdacht wanneer 100% van de finale observaties direct door een handgeschreven policy oplosbaar is. De volgende logische stap is daarom niet memory persistence of visual perception, maar een grotere temporal/criticality benchmark waarin beslissingen afhangen van state carry-over, neuromodulatorniveaus, eligibility/plasticity gates en perturbaties rond de edge of chaos.
+De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De temporal blocker is voor deze bounded slice opgelost: identieke finale probes kunnen verschillend worden beslist op basis van voorafgaande observaties en de tissue-adapter verslaat last-observation-only en always-execute. De nieuwe nuance is scherper: perfecte temporal scores komen uit expliciete adapterlogica (`temporal_context_bridge`) en niet uit aangetoonde raw continuous-time/neuromodulated learning. Memory persistence en visual perception blijven buiten scope tot raw/adapter-separation verdere nuttige beslissingen blijft aantonen.
 
 ## 9. Artefacten
 

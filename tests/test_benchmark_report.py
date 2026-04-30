@@ -39,8 +39,8 @@ def test_benchmark_report_states_go_and_baseline_comparison() -> None:
     report = REPORT_PATH.read_text(encoding="utf-8")
 
     assert "GO voor de semantische adapter" in report
-    assert "NO-GO voor Neuraxon-generalisatieclaims" in report
-    assert "needs_temporal_dynamics_evidence" in report
+    assert "NO-GO voor raw Neuraxon-generalisatieclaims" in report
+    assert "pass_temporal_context_bridge_evidence" in report
     assert "semantic_policy_coverage=100%" in report
     assert "100.00%" in report
     assert "15.71%" in report
@@ -83,4 +83,6 @@ def test_benchmark_report_states_expanded_temporal_dataset_and_separation() -> N
     assert "sequence-majority" in report.lower()
     assert "semantic-policy-only" in report.lower()
     assert "semantic-policy success" in report.lower()
-    assert "temporal/stateful neuraxon evidence" in report.lower()
+    assert "temporal_context_bridge" in report
+    assert "expliciete temporal context adapter" in report.lower()
+    assert "raw neuraxon network dynamics" in report.lower()

@@ -12,6 +12,7 @@ from neuraxon_agent.memory import TissueMemory
 from neuraxon_agent.modulation import ModulationFeedback
 from neuraxon_agent.perception import PerceptionEncoder
 from neuraxon_agent.semantic_policy import SemanticTissuePolicy
+from neuraxon_agent.temporal_context import TemporalContextBuffer
 from neuraxon_agent.vendor.neuraxon2 import NetworkParameters, NeuraxonNetwork
 
 
@@ -48,12 +49,14 @@ class AgentTissue:
         self.last_action_source: str | None = None
         self.last_raw_decoder_action: AgentAction | None = None
         self._last_observation: dict[str, Any] | None = None
+        self._temporal_context = TemporalContextBuffer()
         self._feedback = ModulationFeedback()
         self.memory = TissueMemory(self.params)
 
     def observe(self, observation: dict[str, Any]) -> None:
         """Encode an observation and feed it to the network input neurons."""
         self._last_observation = observation
+        self._temporal_context.observe(observation)
         encoded = self.encoder.encode(observation)
         self.network.set_input_states(encoded)
 
@@ -65,6 +68,10 @@ class AgentTissue:
         raw_action = self.decoder.decode(output_states)
         self.last_raw_decoder_action = raw_action
         if self.semantic_policy_enabled and self._last_observation is not None:
+            temporal_action = self._temporal_context.decide(self._last_observation)
+            if temporal_action is not None:
+                self.last_action_source = "temporal_context_bridge"
+                return temporal_action
             semantic_action = self.semantic_policy.decide(self._last_observation)
             if semantic_action is not None:
                 self.last_action_source = "semantic_bridge"
