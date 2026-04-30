@@ -115,9 +115,16 @@ def run_neuraxon_tissue_benchmark(
     """
     if steps_per_observation < 1:
         raise ValueError("steps_per_observation must be >= 1")
-    if policy_mode not in {"semantic_bridge", "raw_network", "semantic_coverage_audit"}:
+    if policy_mode not in {
+        "semantic_bridge",
+        "raw_network",
+        "semantic_coverage_audit",
+        "semantic_policy_only",
+        "temporal_context_adapter",
+    }:
         raise ValueError(
-            "policy_mode must be one of: semantic_bridge, raw_network, semantic_coverage_audit"
+            "policy_mode must be one of: semantic_bridge, raw_network, "
+            "semantic_coverage_audit, semantic_policy_only, temporal_context_adapter"
         )
 
     scenario_list = scenarios if scenarios is not None else load_mock_agent_scenarios()
@@ -194,7 +201,13 @@ def _run_one_seeded_scenario(
     rng_state = random.getstate()
     try:
         random.seed(_scenario_seed(seed, scenario_index))
-        tissue = AgentTissue(params, semantic_policy_enabled=policy_mode != "raw_network")
+        tissue = AgentTissue(
+            params,
+            semantic_policy_enabled=policy_mode
+            in {"semantic_bridge", "semantic_coverage_audit", "semantic_policy_only"},
+            temporal_context_enabled=policy_mode
+            in {"semantic_bridge", "semantic_coverage_audit", "temporal_context_adapter"},
+        )
         start = perf_counter()
         action = None
         dynamics_samples: list[dict[str, Any]] = []

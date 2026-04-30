@@ -8,7 +8,9 @@ Resultaat: `neuraxon_tissue` haalt nu 700/700 correcte runs = 100.00% accuracy. 
 
 Een extra holdout/noisy generalization smoke benchmark haalt nog altijd 140/140 correcte runs = 100.00%; alle 140 finale observaties zijn direct oplosbaar door de expliciete semantic policy bridge (`semantic_policy_coverage=100%`). Dat bevestigt je vermoeden: 100% is hier vooral oracle-/feature-coverage, niet bewijs voor emergente Neuraxon-dynamiek.
 
-Daarom is de NIA-geïnspireerde temporal dynamics probe uitgebreid van 6 smoke cases naar 108 gegenereerde scenario's: 6 actie-archetypes × 3 dataset-seeds × 3 sequentielengtes × 2 varianten. De finale actie-oracle zit verborgen in een generieke `temporal_decision_probe`; counterfactual pairs delen exact dezelfde finale observatie maar vereisen andere acties door de voorafgaande observaties, en noise/perturbation-varianten veranderen irrelevante velden zonder de latente temporele staat te wijzigen. Op die strengere probe haalt `neuraxon_tissue` nu 108/108 = 100.00% via de expliciete temporal context adapter, boven last-observation-only (0.00%) en always-execute (16.67%). Dit is nuttige state-carry-over in de AgentTissue-adapter, maar nog geen bewijs dat raw Neuraxon network dynamics zelfstandig de policy leren; die raw bijdrage blijft apart via policy-ablation.
+Daarom is de NIA-geïnspireerde temporal dynamics probe uitgebreid van 6 smoke cases naar 108 gegenereerde scenario's: 6 actie-archetypes × 3 dataset-seeds × 3 sequentielengtes × 2 varianten. De finale actie-oracle zit verborgen in een generieke `temporal_decision_probe`; counterfactual pairs delen exact dezelfde finale observatie maar vereisen andere acties door de voorafgaande observaties, en noise/perturbation-varianten veranderen irrelevante velden zonder de latente temporele staat te wijzigen. Op die probe haalt `neuraxon_tissue` nu 108/108 = 100.00% via de expliciete temporal context adapter, maar de sequence-majority oracle baseline haalt ook 108/108.
+
+Issue #70 voegt daarom een strengere anti-oracle temporal benchmark toe: 48 scenario's met task-family train/test split, identieke finale probes, gemaskeerde schema-/field-namen, counterfactual pairs met dezelfde aggregate sequence statistics en irrelevante perturbatievelden. Daarop haalt sequence-majority 0/48 = 0.00% in plaats van 100%, terwijl `temporal_context_adapter` en de full `semantic_bridge` mode 48/48 = 100.00% halen. Raw-network-only haalt 7/48 = 14.58%, waardoor de output expliciet adapter-success van raw-network-success scheidt.
 
 Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit bewijst dat de runtime nu een werkende semantische beslisbrug heeft voor de huidige mock-scenario's. De biologische/trinary tissue blijft daarmee instrumenteerbaar, maar de bruikbare policy komt in deze slice uit expliciete observatiesemantiek.
 
@@ -17,13 +19,13 @@ Belangrijke nuance: dit bewijst nog geen algemene Neuraxon-intelligentie. Dit be
 Proven:
 
 - semantic bridge performance: 700/700 correcte runs (100.00%) op de huidige mock benchmark.
-- explicit temporal context adapter performance: 108/108 correcte runs (100.00%) op de temporal dynamics probe met identieke finale observaties.
-- simple baseline performance: random haalt 22/140 (15.71%) en always-execute haalt 40/140 (28.57%) op de mock benchmark; de temporal baselines halen 0.00% tot 17.59%, behalve de sequence-majority oracle op 100.00%.
+- explicit temporal context adapter performance: 108/108 correcte runs (100.00%) op de temporal dynamics probe met identieke finale observaties, plus 48/48 (100.00%) op de anti-oracle masked temporal probe.
+- simple baseline performance: random haalt 22/140 (15.71%) en always-execute haalt 40/140 (28.57%) op de mock benchmark; op de oudere temporal probe haalt sequence-majority nog 100.00%, maar op de anti-oracle split zakt sequence-majority naar 0/48 (0.00%).
 - criticality/dynamics instrumentation evidence: `dynamics_metrics.csv` bevat 11.000 per-step samples en `criticality_summary.csv` classificeert de tissue-run als `near_useful_dynamic_regime` met neutral-state occupancy 0.757844, transition entropy 0.332013 en modulation action-change rate 0.000000.
 
 Not proven:
 
-- raw Neuraxon network generalization: policy-ablation `raw_network` haalt 110/700 (15.71%), dus geen claim dat de ruwe continuous-time/trinary dynamics zelfstandig een nuttige policy boven eenvoudige baselines leren.
+- raw Neuraxon network generalization: policy-ablation `raw_network` haalt 110/700 (15.71%) op de mock benchmark en 7/48 (14.58%) op de anti-oracle temporal benchmark, dus geen claim dat de ruwe continuous-time/trinary dynamics zelfstandig een nuttige policy boven eenvoudige baselines leren.
 - learned policy uit feedback: modulation verandert interne state, maar deze regeneratie toont geen post-feedback behavioral action changes.
 - memory persistence of visual perception value: beide blijven buiten scope tot raw/adapter separation sterker bewijs levert.
 
@@ -38,6 +40,7 @@ Not proven:
 - Metrics: accuracy, confidence, per-scenario breakdown, learning curve, simple two-proportion z-tests
 - Holdout/noisy smoke benchmark: 140 deterministische varianten, 1 seed, originele scenario-type labels vervangen door `holdout_<expected_action>`; 100% semantic-policy coverage, dus niet als echte generalisatieclaim behandelen
 - Temporal dynamics benchmark: 108 NIA-geïnspireerde scenario's (6 actie-archetypes × 3 dataset-seeds × 3 sequentielengtes × counterfactual/noise-perturbation varianten), 1 tissue seed; finale observatie bevat geen actie-oracle en counterfactual pairs kunnen exact dezelfde finale probe met verschillende verwachte acties hebben
+- Anti-oracle temporal benchmark: 48 scenario's met task-family train/test split (24 train, 24 test), identieke finale probes, gemaskeerde schema-/field-namen, counterfactual pairs met dezelfde aggregate sequence statistics, perturbation/noise fields, en aparte scores voor full tissue runtime, raw-network-only, semantic-policy-only, temporal-context-adapter, random, always-execute, last-observation-only en sequence-majority.
 
 ## 3. Resultaten
 
@@ -97,6 +100,23 @@ Daarom is de temporal dynamics benchmark nu uitgebreid. De finale observatie is 
 | Sequence-majority oracle baseline | 108 | 108 | 100.00% |
 
 Interpretatie: last-observation-only en semantic-policy-only falen volledig omdat de finale probe geen semantische actievelden bevat. De sequence-majority baseline bewijst dat de verwachte actie wel degelijk uit de voorafgaande sequentie afleidbaar is. `neuraxon_tissue` haalt nu dezelfde perfecte score via `temporal_context_bridge`: een expliciete temporal context adapter in AgentTissue die compacte prior-observation evidence samenvat voordat de identieke finale probe wordt beslist. Dat behoudt de scheiding tussen semantic-policy success en temporale state carry-over, en is beter dan last-observation-only/always-execute, maar het is nog expliciete adapterlogica; raw Neuraxon network dynamics blijven apart gerapporteerd via policy-ablation.
+
+### Anti-oracle temporal generalization probe (#70)
+
+De nieuwe anti-oracle variant maakt de vorige temporal probe strenger op precies de failure mode uit issue #70: semantic labels, duidelijke field names en sequence-majority heuristieken mogen de benchmark niet triviaal oplossen. De scenario's gebruiken een task-family train/test split, maskeren schema-/field-namen (`x*`/`z*` i.p.v. `signal`, `risk`, `missing_count`, enz.), delen dezelfde finale probe (`{"z0": 0, "z1": "probe", "z2": 1}`), en bevatten counterfactual pairs waarvan aggregate sequence statistics overeenkomen terwijl de juiste actie verschilt.
+
+| Agent / mode | Runs | Correct | Accuracy |
+|---|---:|---:|---:|
+| Full tissue runtime (`semantic_bridge`) | 48 | 48 | 100.00% |
+| Temporal-context-adapter mode | 48 | 48 | 100.00% |
+| Raw-network-only mode | 48 | 7 | 14.58% |
+| Semantic-policy-only mode | 48 | 7 | 14.58% |
+| Random baseline | 48 | 5 | 10.42% |
+| Always-execute baseline | 48 | 8 | 16.67% |
+| Last-observation-only baseline | 48 | 0 | 0.00% |
+| Sequence-majority baseline | 48 | 0 | 0.00% |
+
+Interpretatie: de anti-oracle benchmark voldoet aan de strengere acceptatie voor deze fase: de sequence-majority baseline bereikt niet langer triviaal 100%, counterfactuals vereisen prior state, output is deterministisch voor vaste seeds, en de metrics scheiden adapter-success van raw-network-success. De 100% score is nog altijd adaptergedreven (`temporal_context_bridge`), niet raw Neuraxon learning.
 
 ### Policy-ablation benchmark
 
@@ -162,13 +182,13 @@ Niet bewezen:
 - Geen learned policy uit feedback.
 - Geen memory persistence waarde.
 - Geen visuele of multimodale perceptie.
-- Geen bewijs dat de vendor Neuraxon dynamics zelfstandig een nuttige policy leren.
+- Geen bewijs dat de vendor Neuraxon dynamics zelfstandig een nuttige policy leren; de anti-oracle split maakt dat expliciet met raw-network-only 14.58% versus temporal-context-adapter 100.00%.
 
 ## 8. Verdict
 
 Status: GO voor de semantische adapter en de expliciete temporal context adapter; NO-GO voor raw Neuraxon-generalisatieclaims.
 
-De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De temporal blocker is voor deze bounded slice opgelost: identieke finale probes kunnen verschillend worden beslist op basis van voorafgaande observaties en de tissue-adapter verslaat last-observation-only en always-execute. De nieuwe nuance is scherper: perfecte temporal scores komen uit expliciete adapterlogica (`temporal_context_bridge`) en niet uit aangetoonde raw continuous-time/neuromodulated learning. Memory persistence en visual perception blijven buiten scope tot raw/adapter-separation verdere nuttige beslissingen blijft aantonen.
+De vorige NO-GO blocker (niet beter dan random/always-execute) is opgelost voor de huidige mock benchmark. De temporal blocker is voor deze bounded slice sterker opgelost: identieke finale probes kunnen verschillend worden beslist op basis van voorafgaande observaties, de anti-oracle split verslaat sequence-majority/last-observation-only, en de rapportage scheidt full tissue, raw-network, semantic-policy-only en temporal-context-adapter modes. De nuance blijft scherp: perfecte anti-oracle temporal scores komen uit expliciete adapterlogica (`temporal_context_bridge`) en niet uit aangetoonde raw continuous-time/neuromodulated learning. Memory persistence en visual perception blijven buiten scope tot raw/adapter-separation verdere nuttige beslissingen blijft aantonen.
 
 ## 9. Artefacten
 

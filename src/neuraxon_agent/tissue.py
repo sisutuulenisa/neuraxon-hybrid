@@ -39,12 +39,14 @@ class AgentTissue:
         params: NetworkParameters | None = None,
         semantic_policy: SemanticTissuePolicy | None = None,
         semantic_policy_enabled: bool = True,
+        temporal_context_enabled: bool = True,
     ) -> None:
         self.params = params or NetworkParameters()
         self.network = NeuraxonNetwork(self.params)
         self.encoder = PerceptionEncoder(self.params.num_input_neurons)
         self.decoder = ActionDecoder(self.params.num_output_neurons)
         self.semantic_policy_enabled = semantic_policy_enabled
+        self.temporal_context_enabled = temporal_context_enabled
         self.semantic_policy = semantic_policy or SemanticTissuePolicy()
         self.last_action_source: str | None = None
         self.last_raw_decoder_action: AgentAction | None = None
@@ -67,15 +69,17 @@ class AgentTissue:
         output_states = self.network.get_output_states()
         raw_action = self.decoder.decode(output_states)
         self.last_raw_decoder_action = raw_action
-        if self.semantic_policy_enabled and self._last_observation is not None:
-            temporal_action = self._temporal_context.decide(self._last_observation)
-            if temporal_action is not None:
-                self.last_action_source = "temporal_context_bridge"
-                return temporal_action
-            semantic_action = self.semantic_policy.decide(self._last_observation)
-            if semantic_action is not None:
-                self.last_action_source = "semantic_bridge"
-                return semantic_action
+        if self._last_observation is not None:
+            if self.temporal_context_enabled:
+                temporal_action = self._temporal_context.decide(self._last_observation)
+                if temporal_action is not None:
+                    self.last_action_source = "temporal_context_bridge"
+                    return temporal_action
+            if self.semantic_policy_enabled:
+                semantic_action = self.semantic_policy.decide(self._last_observation)
+                if semantic_action is not None:
+                    self.last_action_source = "semantic_bridge"
+                    return semantic_action
         self.last_action_source = "raw_network"
         return raw_action
 

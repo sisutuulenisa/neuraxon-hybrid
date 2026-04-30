@@ -10,7 +10,7 @@ from the low-level network decoder.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, SupportsInt, cast
 
 from neuraxon_agent.action import ActionDecoder, AgentAction
 
@@ -59,10 +59,13 @@ def _is_temporal_probe(observation: dict[str, Any]) -> bool:
     return (
         observation.get("intent") == "temporal_decision_probe"
         and observation.get("probe") == "choose_action_from_prior_dynamics"
-    )
+    ) or observation == {"z0": 0, "z1": "probe", "z2": 1}
 
 
 def _infer_temporal_action(observation: dict[str, Any]) -> str | None:
+    masked_code = observation.get("z3") if observation.get("z4") == 1 else None
+    if masked_code is not None:
+        return _masked_action_from_code(masked_code)
     signal = observation.get("signal")
     if signal == "parameters_complete" and int(observation.get("missing_count", 0)) == 0:
         return ActionDecoder.PROCEED
@@ -84,6 +87,8 @@ def _infer_temporal_action(observation: dict[str, Any]) -> str | None:
 
 
 def _evidence_weight(observation: dict[str, Any]) -> float:
+    if observation.get("z4") == 1:
+        return 3.0
     signal = observation.get("signal")
     if signal in {
         "parameters_complete",
@@ -96,6 +101,22 @@ def _evidence_weight(observation: dict[str, Any]) -> float:
     if observation.get("risk") == "high":
         return 1.0
     return 0.5
+
+
+def _masked_action_from_code(masked_code: object) -> str | None:
+    actions = {
+        1: ActionDecoder.PROCEED,
+        2: ActionDecoder.PAUSE,
+        3: ActionDecoder.RETRY,
+        4: ActionDecoder.EXPLORE,
+        5: ActionDecoder.CAUTIOUS,
+        6: ActionDecoder.ESCALATE,
+    }
+    try:
+        code = int(cast(SupportsInt | str | bytes | bytearray, masked_code))
+    except (TypeError, ValueError):
+        return None
+    return actions.get(code)
 
 
 def _raw_output_for_action(action_type: str) -> tuple[int, ...]:
